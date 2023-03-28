@@ -19,11 +19,11 @@ def register():
 
 @app.route("/register_user/")
 def register():
-    email = getattr(request.forms, "Email")
-    username = getattr(request.forms, "Användarnamn")
-    password = getattr(request.forms, "Lösenord")
-    conf_password = getattr(request.forms, "Bekräfta lösenord")
-    number = getattr(request.forms, "Telefonnummer")
+    email = getattr(request.form, "Email")
+    username = getattr(request.form, "Användarnamn")
+    password = getattr(request.form, "Lösenord")
+    conf_password = getattr(request.form, "Bekräfta lösenord")
+    number = getattr(request.form, "Telefonnummer")
     user_info = read_user_info()
     for row in user_info:
         if email == row[0]:
