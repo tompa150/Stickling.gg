@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import psycopg2
 app = Flask(__name__)
 
+username = None
+password = None
 
 def read_user_info():
     conn_str = "dbname=server user= password= host=pgserver.mau.se port=5432"
@@ -13,6 +15,32 @@ def read_user_info():
     conn.close()
     return products
 
+app.route("/login/")
+def login():
+    return render_template("login.html")
+
+app.route("/validation/"):
+def validation():
+    global username 
+    global password
+    username = getattr(request.form, "Användarnamn")
+    password = getattr(request.form, "Lösenord")
+    user_info = read_user_info()
+    for row in user_info:
+        if username == row[1] and password == row[2]:
+            return render_template("homepage.html")
+        elif username != row[1] and password == row[2]:
+            wrong_user = "Felaktigt användarnamn, vänligen ange ett giltigt sådant."
+            return render_template("login.html", wrong_user = wrong_user)
+        elif username == row[1] and password != row[2]:
+            wrong_pass = "Lösenordet är inkorrekt, vänligen ange ett giltigt lösenord"
+            return render_template("login.html", wrong_pass = wrong_pass)
+        else:
+            wrong_user_pass = "Både användarnamn och lösenord är felaktiga, vänligen ange ett giltigt input"
+            return render_template("login.html", wrong_user_pass = wrong_user_pass)
+
+            
+       
 @app.route("/register/")
 def register():
     return render_template("register.html")
