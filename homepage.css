@@ -1,64 +1,109 @@
-.HP_link {
-    background-color: #8fcb9b;
-    border: none;
-    color: #ffffff;
-    padding: 12px 16px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  /* Darker background on mouse-over */
-  .HP_link:hover {
-    background-color: #83be8f;
-  }
+body{
+  background-color: #f1e8e0;
+}
 
 
-.overlay {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
-    overflow-x: hidden;
-    transition: 0.5s;
-  }
+.img{
+  width: 50px;
+  height: auto;
+
+
+}
+
+.bars{
+  width: 35px;
+  height: 3px;
+  background-color: black;
+  margin: 4px 0;
+}
+
+
+
+
+/* Links inside the navbar */
+.navbar a{
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  color: #8FCB9B;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The dropdown container */
+.dropdown {
+  font-weight: bold;
+  background-color: #e9dfd6;
+  border-radius: 1rem;
+  float: right;
+  overflow: hidden;
+  cursor: pointer;
+  margin-top: 35px;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-weight: bold;
+  font-size: 16px; 
+  border: none;
+  outline: none;
+  color: #8FCB9B;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+  cursor: pointer;
+}
+
+/* Add a red background color to navbar links on hover */
+.dropdown:hover .dropbtn {
+  border-radius: 1rem;
+  background-color: #5B9279;
+  cursor: pointer;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  border-radius: 1rem;
+  right: 1.1%;
+  display: none;
+  position: absolute;
+  background-color: #8FCB9B;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: pointer;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #5B9279;
+  cursor: pointer;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+  cursor: pointer;
+}
+
+@media  (max-width: 600px) {
   
-  .overlay-content {
-    position: relative;
-    top: 25%;
-    width: 100%;
-    text-align: center;
-    margin-top: 30px;
-  }
+
   
-  .overlay a {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-  }
-  
-  .overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
-  }
-  
-  .overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
-  }
-  
-  @media screen and (max-height: 450px) {
-    .overlay a {font-size: 20px}
-    .overlay .closebtn {
-    font-size: 40px;
-    top: 15px;
-    right: 35px;
-    }
-  }
+}
