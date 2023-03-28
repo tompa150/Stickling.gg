@@ -10,12 +10,12 @@
 
 <body>
   <div class="RegisterMain">
-    <p class="RegisterSign" align="center">Skapa ny användare</p>
-    <form class="form1">
-      <input class="RegisterUn " type="text" align="center" placeholder="Email">
-      <input class="RegisterUn " type="text" align="center" placeholder="Användarnamn">
-      <input class="RegisterPass" type="password" align="center" placeholder="Lösenord">
-      <input class="RegisterPass" type="password" align="center" placeholder="Bekräfta lösenord">
+    <p class="RegisterSign" align="center">Registrera ny användare</p>
+    <form action="http://127.0.0.1:8080/register_user/" method="POST" class="form1">
+      <input class="RegisterUn " id="Email" type="text" align="center" placeholder="Email">
+      <input class="RegisterUn " id="Användarnamn" type="text" align="center" placeholder="Användarnamn">
+      <input class="RegisterPass" id="Lösenord" type="password" align="center" placeholder="Lösenord">
+      <input class="RegisterPass" id="BekräftaLösenord" type="password" align="center" placeholder="Bekräfta lösenord">
       <input class="RegisterUn " type="text" align="center" placeholder="Mobilnummer: +46....">
       <a class="RegisterSubmit" align="center">Skapa konto</a>
 
