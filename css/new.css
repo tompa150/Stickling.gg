@@ -4,25 +4,30 @@ body{
 
 
 .card {
-    background-color: #f1e8e0;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #eaddd0;
     transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
+    border-radius: 10px; /* 5px rounded corners */
     width: 30%;
     height: auto;
     margin-top: 5%;
     margin-bottom: 2%;
+
   }
   
   /* Add rounded corners to the top left and the top right corner of the image */
   .annons {
-    border-radius: 5px 5px 0 0;
+    border-radius: 10px;
     width: 100%;
     height: auto;
   }
   /* On mouse-over, add a deeper shadow */
   .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
+    background-color: #f1e8e0;
+  }
+
+  .annons:hover{
+    border-radius: 5px 5px 0 0;
   }
   
   /* Add some padding inside the card container */
