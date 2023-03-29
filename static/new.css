@@ -3,14 +3,17 @@ body{
 }
 
 
+
 .card {
-    background-color: #eaddd0;
-    transition: 0.3s;
-    border-radius: 10px; /* 5px rounded corners */
-    width: 30%;
-    height: auto;
-    margin-top: 5%;
-    margin-bottom: 2%;
+  background-color: #eaddd0;
+  transition: 0.3s;
+  border-radius: 10px; /* 5px rounded corners */
+  height: auto;
+  margin-bottom: 20%;
+  break-inside: avoid;
+  display: grid;
+  grid-template-rows: 1fr auto;
+
 
   }
   
@@ -24,11 +27,15 @@ body{
   .card:hover {
     box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
     background-color: #f1e8e0;
+
+  }
+  .card:hover > img {
+    border-radius: 10px 10px 0 0;
+
+
+
   }
 
-  .annons:hover{
-    border-radius: 5px 5px 0 0;
-  }
   
   /* Add some padding inside the card container */
   .container {
@@ -146,16 +153,15 @@ nav{
     
     main{
     background-color: #eaddd0;
-    padding: 5%;
+    padding: 10%;
    }
 
 
         
 #main{
-    margin-right: 0%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    margin-top: 5%;
+    column-count: 4;
+    column-gap: 20px;
 }
 
 
@@ -199,16 +205,15 @@ nav{
     }
     .card {
 
-        width: 50%;
+        width: 100%;
 
     }
 
 
     #main{
-        margin-right: 0%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
+      justify-content: space-evenly;
+      column-count: 2;
+      column-gap: 20px;
     
     }    
 
