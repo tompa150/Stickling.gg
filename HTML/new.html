@@ -8,7 +8,7 @@
     <body> 
         <nav>
             <div class="navbar">
-                <a href="new.html"> <img class="img"src="pngwing.com-6.png"> Stickling</a>
+                <a href="new.html"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
                 <div class="dropdown">
                     <button class="dropbtn">
                          <div class="bars"></div>
@@ -23,137 +23,121 @@
                     </div>
             </div>
         </nav>
-          <main> 
-            <div class="container.2">
-              <article id="main">
+        <main> 
+            <article id="main">
+                <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.34.58.png') }}" alt="Avatar">
+                    <div class="container">
+                      <h4><b>lucas566</b></h4> 
+                      <p>cactus stickling tror jag</p> 
+                    </div>
+                  </div>
                   <div class="card">
-                      <img class="annons" src="{{ url_for('images', filename='Screenshot 2023-03-28 at 18.34.58.png') }}">
-                      <div class="container">
-                        <h4><b>lucas566</b></h4> 
-                        <p>cactus stickling tror jag</p> 
-                      </div>
+                    <img class="annons" src="{{ url_for('static', filename='andy.jpg') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>Andy_big_boss</b></h4> 
+                      <p>Stickling till salu ;)</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="andy.jpg" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>Andy_big_boss</b></h4> 
-                        <p>Stickling till salu ;)</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.58.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>BW2000</b></h4> 
+                      <p>Ingen aning vad det är</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.58.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>BW2000</b></h4> 
-                        <p>Ingen aning vad det är</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.36.12.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>John Doe</b></h4> 
+                      <p>Fina sticklingar till salu</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.07.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>Andy_big_boss</b></h4> 
-                        <p>Här har vi min fina banan stickling</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.34.58.png') }}" alt="Avatar">
+                    <div class="container">
+                      <h4><b>lucas566</b></h4> 
+                      <p>cactus stickling tror jag</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.58.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>BW2000</b></h4> 
-                        <p>Ingen aning vad det är</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.07.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>Andy_big_boss</b></h4> 
+                      <p>Här har vi min fina banan stickling</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.36.12.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>John Doe</b></h4> 
-                        <p>Fina sticklingar till salu</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.58.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>BW2000</b></h4> 
+                      <p>Ingen aning vad det är</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.36.12.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>John Doe</b></h4> 
-                        <p>Fina sticklingar till salu</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.36.12.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>John Doe</b></h4> 
+                      <p>Fina sticklingar till salu</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.34.58.png" alt="Avatar">
-                      <div class="container">
-                        <h4><b>lucas566</b></h4> 
-                        <p>cactus stickling tror jag</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.34.58.png') }}" alt="Avatar">
+                    <div class="container">
+                      <h4><b>lucas566</b></h4> 
+                      <p>cactus stickling tror jag</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.34.58.png" alt="Avatar">
-                      <div class="container">
-                        <h4><b>lucas566</b></h4> 
-                        <p>cactus stickling tror jag</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.07.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>Andy_big_boss</b></h4> 
+                      <p>Här har vi min fina banan stickling</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.07.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>Andy_big_boss</b></h4> 
-                        <p>Här har vi min fina banan stickling</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.58.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>BW2000</b></h4> 
+                      <p>Ingen aning vad det är</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.58.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>BW2000</b></h4> 
-                        <p>Ingen aning vad det är</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.36.12.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>John Doe</b></h4> 
+                      <p>Fina sticklingar till salu</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.36.12.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>John Doe</b></h4> 
-                        <p>Fina sticklingar till salu</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.34.58.png') }}" alt="Avatar">
+                    <div class="container">
+                      <h4><b>lucas566</b></h4> 
+                      <p>cactus stickling tror jag</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.34.58.png" alt="Avatar">
-                      <div class="container">
-                        <h4><b>lucas566</b></h4> 
-                        <p>cactus stickling tror jag</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.07.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>Andy_big_boss</b></h4> 
+                      <p>Här har vi min fina banan stickling</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.34.58.png" alt="Avatar">
-                      <div class="container">
-                        <h4><b>lucas566</b></h4> 
-                        <p>cactus stickling tror jag</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.35.58.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>BW2000</b></h4> 
+                      <p>Ingen aning vad det är</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.07.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>Andy_big_boss</b></h4> 
-                        <p>Här har vi min fina banan stickling</p> 
-                      </div>
+                  </div>
+                  <div class="card">
+                    <img class="annons" src="{{ url_for('static', filename='Screenshot 2023-03-28 at 18.36.12.png') }}" alt="Avatar" >
+                    <div class="container">
+                      <h4><b>John Doe</b></h4> 
+                      <p>Fina sticklingar till salu</p> 
                     </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.36.12.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>John Doe</b></h4> 
-                        <p>Fina sticklingar till salu lorem</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.35.58.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>BW2000</b></h4> 
-                        <p>Ingen aning vad det är</p> 
-                      </div>
-                    </div>
-                    <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.36.12.png" alt="Avatar" >
-                      <div class="container">
-                        <h4><b>John Doe</b></h4> 
-                        <p>Fina sticklingar till salu</p> 
-                      </div>
-                    </div>
-              </article>
-            </div>
+                  </div>
+            </article>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
