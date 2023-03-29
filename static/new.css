@@ -63,6 +63,10 @@ nav{
         margin: 4px 0;
       }
 
+#logo { font-family: 'Fasthand', cursive;
+
+}
+
 /* Links inside the navbar */
 .navbar a{
     font-weight: bold;
