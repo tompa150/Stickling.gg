@@ -15,6 +15,10 @@ def read_user_info():
     conn.close()
     return products
 
+@app.route("/")
+def index():
+    return render_template("new.html")
+
 @app.route("/login/")
 def login():
     return render_template("login.html")

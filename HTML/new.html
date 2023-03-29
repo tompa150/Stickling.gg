@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Inlämings1</title>
-        <link href="/css/new.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='new.css') }}" rel="stylesheet">
     </head>
     <body> 
         <nav>
@@ -27,7 +27,7 @@
             <div class="container.2">
               <article id="main">
                   <div class="card">
-                      <img class="annons" src="Screenshot 2023-03-28 at 18.34.58.png" alt="Avatar">
+                      <img class="annons" src="{{ url_for('images', filename='Screenshot 2023-03-28 at 18.34.58.png') }}">
                       <div class="container">
                         <h4><b>lucas566</b></h4> 
                         <p>cactus stickling tror jag</p> 
