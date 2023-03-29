@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
@@ -11,7 +11,7 @@
 <body>
   <div class="main">
     <p class="sign" align="center">Logga in</p>
-    <form class="form1">
+    <form class="form1" action="http://127.0.0.1:8080/validation/">
       <input class="un " type="text" align="center" placeholder="Användarnamn">
       <input class="pass" type="password" align="center" placeholder="Lösenord">
       <a class="submit" align="center">Logga in</a>

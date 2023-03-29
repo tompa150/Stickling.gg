@@ -15,11 +15,15 @@ def read_user_info():
     conn.close()
     return products
 
-app.route("/login/")
+@app.route("/")
+def index():
+    return render_template("new.html")
+
+@app.route("/login/")
 def login():
     return render_template("login.html")
 
-app.route("/validation/",methods = ['POST'])
+@app.route("/validation/",methods = ['POST'])
 def validation():
     global username 
     global password
@@ -46,7 +50,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/register_user/",methods = ['POST'])
+@app.route("/register_user/",methods = ['POST', 'Get'])
 def register_user():
     email = getattr(request.form, "Email")
     username = getattr(request.form, "Användarnamn")
