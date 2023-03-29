@@ -19,7 +19,7 @@ app.route("/login/")
 def login():
     return render_template("login.html")
 
-app.route("/validation/")
+app.route("/validation/",methods = ['POST'])
 def validation():
     global username 
     global password
@@ -45,7 +45,7 @@ def validation():
 def register():
     return render_template("register.html")
 
-@app.route("/register_user/")
+@app.route("/register_user/",methods = ['POST'])
 def register():
     email = getattr(request.form, "Email")
     username = getattr(request.form, "Användarnamn")
