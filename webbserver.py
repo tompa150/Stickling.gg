@@ -19,7 +19,7 @@ app.route("/login/")
 def login():
     return render_template("login.html")
 
-app.route("/validation/"):
+app.route("/validation/")
 def validation():
     global username 
     global password
