@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 import psycopg2
-app = Flask(__name__)
+app = Flask(__name__, template_folder='HTML')
 
 username = None
 password = None
@@ -45,8 +45,9 @@ def validation():
 def register():
     return render_template("register.html")
 
+
 @app.route("/register_user/",methods = ['POST'])
-def register():
+def register_user():
     email = getattr(request.form, "Email")
     username = getattr(request.form, "Användarnamn")
     password = getattr(request.form, "Lösenord")
@@ -69,5 +70,6 @@ def register():
         elif number == row[3]:
             number_exists = "That number already exists, please enter your own number!"
             return render_template("register.html", number_exists = number_exists)
-        
-app.run(host="127.0.0.1", port=8080, debug=True)
+
+if __name__ == "__main__":      
+    app.run(host="127.0.0.1", port=8080, debug=True)
