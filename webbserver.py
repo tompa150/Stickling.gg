@@ -6,18 +6,45 @@ username = None
 password = None
 
 def read_user_info():
-    conn_str = "dbname=server user= password= host=pgserver.mau.se port=5432"
-    conn = psycopg2.connect(conn_str)
+    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
+    conn = psycopg2.connect(connection)
     cursor = conn.cursor()
-    cursor.execute("SELECT email, username, password, number FROM user_info;")
+    cursor.execute("SELECT username, password, email number FROM users;")
     products = cursor.fetchall()
     cursor.close()
     conn.close()
     return products
 
+def ad_read():
+    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
+    conn = psycopg2.connect(connection)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM ads;")
+    products = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return products
+
+@app.route("/ad/<id>")
+def ad(id):
+    ads = ad_read()
+    for ad in ads:
+        if int(id) == ad[0]:
+            connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
+            conn = psycopg2.connect(connection)
+            cursor = conn.cursor()
+            cursor.execute(f""" SELECT image_path FROM images WHERE ad_id = {id} """)
+            images = cursor.fetchall()
+            image_paths = [image[0] for image in images]
+            cursor.close()
+            conn.close()
+            return render_template("annonsen.html", ad = ad, image_paths = image_paths)
+
+
 @app.route("/")
 def index():
-    return render_template("new.html")
+    """ads = ad_read()"""
+    return render_template("new.html", ads = ads)
 
 @app.route("/login/")
 def login():
@@ -32,7 +59,7 @@ def validation():
     user_info = read_user_info()
     for row in user_info:
         if username == row[1] and password == row[2]:
-            return render_template("homepage.html")
+            return render_template("new.html")
         elif username != row[1] and password == row[2]:
             wrong_user = "Felaktigt användarnamn, vänligen ange ett giltigt sådant."
             return render_template("login.html", wrong_user = wrong_user)
@@ -44,7 +71,6 @@ def validation():
             return render_template("login.html", wrong_user_pass = wrong_user_pass)
 
             
-       
 @app.route("/register/")
 def register():
     return render_template("register.html")
@@ -76,14 +102,9 @@ def register_user():
             return render_template("register.html", number_exists = number_exists)
         elif email !=row[0] and username != row[1] and password != row[2] and number != row[3]:
             try: 
-                connection = psycopg2.connect(database="",
-                                            user="",
-                                            password="",
-                                            host='pgserver.mau.se',
-                                            port="")
-
+                connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
                 cursor = connection.cursor()
-                cursor.execute(f'INSERT INTO users(username, email, password, number) VALUES ({username}, {email}, {password}, {number});')
+                cursor.execute(f'INSERT INTO users(username, password, email, number) VALUES ({username}, {password}, {email}, {number});')
                 cursor.close()
                 connection.close()
                 return render_template("login.html")
