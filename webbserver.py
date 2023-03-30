@@ -74,6 +74,21 @@ def register_user():
         elif number == row[3]:
             number_exists = "That number already exists, please enter your own number!"
             return render_template("register.html", number_exists = number_exists)
+        elif email !=row[0] and username != row[1] and password != row[2] and number != row[3]:
+            try: 
+                connection = psycopg2.connect(database="",
+                                            user="",
+                                            password="",
+                                            host='pgserver.mau.se',
+                                            port="")
+
+                cursor = connection.cursor()
+                cursor.execute(f'INSERT INTO users(username, email, password, number) VALUES ({username}, {email}, {password}, {number});')
+                cursor.close()
+                connection.close()
+                return render_template("login.html")
+            except (Exception) as error:
+               pass
 
 if __name__ == "__main__":      
     app.run(host="127.0.0.1", port=8080, debug=True)
