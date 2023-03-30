@@ -3,9 +3,6 @@ import psycopg2
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
 
-username = None
-password = None
-
 def new_ad_id():
     largest_id = 1
     ads = ad_read()
@@ -13,7 +10,6 @@ def new_ad_id():
         if ad[0] >= largest_id:
             largest_id = ad[0] + 1
     return largest_id
-
 
 def read_user_info():
     connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
@@ -35,13 +31,70 @@ def ad_read():
     conn.close()
     return products
 
-def image_ad_read():
-    
+def image_ad_read(user):
+    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
+    conn = psycopg2.connect(connection)
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, images.image_path FROM ads JOIN images ON ads.ad_id = images.ad_id WHERE ads.username = {user} """)
+    results = cursor.fetchall()
+    ads = {}
+    for row in results:
+        ad_id = row[0]
+        ad_title = row[1]
+        ad_description = row[2]
+        image_path = row[3]
+        if ad_id not in ads:
+            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': []}
+        ads[ad_id]['images'].append(image_path)
+        conn.close()
+    return ads
+
+def insert_image_path(images, ad_id):
+    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
+    conn = psycopg2.connect(connection)
+    cursor = conn.cursor()
+    ad_id = new_ad_id()
+    for path in images:
+        cursor.execute(""" INSERT INTO images (image_path, ad_id) VALUES (?, ?) """, (path, ad_id) )
+    products = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return
+
+def insert_ad(title, description, price, type, username, image_paths):
+    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
+    conn = psycopg2.connect(connection)
+    cursor = conn.cursor()
+    ad_id = new_ad_id()
+    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type) VALUES ({ad_id}, {username}, {title}, {price}, {description}); """)
+    products = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    if image_paths == "":
+        return
+    else:
+        insert_image_path(image_paths, ad_id)
+        return
+
+@app.route("/profile/")
+def profile():
+    if g.user:
+        user = session['user']
+        user_info = read_user_info()
+        for one_user in user_info:
+            if user == one_user[0]:
+                user_ads = image_ad_read(user)
+                return render_template("profile.html", one_user = one_user, user_ads = user_ads)
+        else:
+            return redirect(url_for('/login/'))
+    else:
+        return redirect(url_for('/login/'))
+            
 
 @app.route("/ad/<id>")
 def ad(id):
     user_info = read_user_info()
-    for user in user_info
+    for user in user_info:
         if "user" in session == user[0]:
             ads = ad_read()
             for ad in ads:
@@ -59,8 +112,50 @@ def ad(id):
                 pass
     else:
         return redirect(url_for("/"))
+    
+@app.route("/new/")
+def create_ad():
+    if g.user:
+        user = session['user']
+        user_info = read_user_info()
+        for one_user in user_info:
+            if user == one_user[0]:
+                return render_template("ad_creation.html", one_user = one_user)
+        else:
+            return redirect(url_for('/login/'))
+    else:
+        return redirect(url_for('/login/'))
+    
+@app.route("/save/", methods = ['POST', 'GET'])
+def save():
+    if request.method == 'POST':
+        title = getattr(request.form, "Title")
+        description = getattr(request.form, "Description")
+        price = getattr(request.form, "Price")
+        type = getattr(request.form, "Typ")
+        username = getattr(request.form, "Username")
+        images = request.files.getlist('images')
+        if title == "":
+            return render_template("ad_creation.html", description = description, price = price, type = type, username = username)
+        elif description == "":
+            return render_template("ad_creation.html", title = title, price = price, type = type, username = username)
+        elif price == "":
+            return render_template("ad_creation.html", title = title, description = description, type = type, username = username)
+        elif type == "":
+            return render_template("ad_creation.html", description = description, price = price, username = username)
+        else:
+            image_paths = []
+            for image in images:
+                if image.filename.endswith('.jpg'):
+                    # Save the file to a directory
+                    image.save('Stickling.gg\Static' + image.filename)
+                    # Append the file path to the list of image paths
+                    image_paths.append('path/to/save/directory/' + image.filename)
+            insert_ad(title, description, price, type, username, image_paths)
+            return {'image_paths': image_paths}
 
-
+    return render_template("ad_creation.html")
+        
 @app.route("/")
 def index():
     """ads = ad_read()"""
@@ -70,10 +165,13 @@ def index():
 def login():
     return render_template("login.html")
 
+@app.route("/logout/")
+def logout():
+    session.pop('user', None)
+    return redirect(url_for("/"))
+
 @app.route("/validation/", methods = ['POST', 'GET'])
 def validation():
-    global username 
-    global password
     if request.method == 'POST':
         session.pop('user', None)
         username = getattr(request.form, "Användarnamn")
@@ -95,12 +193,10 @@ def validation():
                 return render_template("login.html", wrong_user_pass = wrong_user_pass)
             
     return render_template("login.html")
-
-            
+           
 @app.route("/register/")
 def register():
     return render_template("register.html")
-
 
 @app.route("/register_user/",methods = ['POST', 'GET'])
 def register_user():
@@ -137,19 +233,6 @@ def register_user():
             except (Exception) as error:
                pass
 
-@app.route("/profile/")
-def profile():
-    if g.user:
-        user = session['user']
-        user_info = read_user_info()
-        user_ads = ad_read
-        for one_user in user_info:
-            if user == one_user[0]:
-                for ads in user_ads:
-                    if 
-                return render_template("profile.html", one_user = one_user)
-    else:
-        return redirect(url_for('/login/'))
 
 
 if __name__ == "__main__":      
