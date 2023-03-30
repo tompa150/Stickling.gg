@@ -6,6 +6,15 @@ app.secret_key = "stickling.gg"
 username = None
 password = None
 
+def new_ad_id():
+    largest_id = 1
+    ads = ad_read()
+    for ad in ads:
+        if ad[0] >= largest_id:
+            largest_id = ad[0] + 1
+    return largest_id
+
+
 def read_user_info():
     connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
     conn = psycopg2.connect(connection)
@@ -25,6 +34,9 @@ def ad_read():
     cursor.close()
     conn.close()
     return products
+
+def image_ad_read():
+    
 
 @app.route("/ad/<id>")
 def ad(id):
@@ -90,7 +102,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/register_user/",methods = ['POST', 'Get'])
+@app.route("/register_user/",methods = ['POST', 'GET'])
 def register_user():
     email = getattr(request.form, "Email")
     username = getattr(request.form, "Användarnamn")
@@ -130,9 +142,12 @@ def profile():
     if g.user:
         user = session['user']
         user_info = read_user_info()
-        for username in user_info:
-            if user == username:
-                return render_template("profile.html")
+        user_ads = ad_read
+        for one_user in user_info:
+            if user == one_user[0]:
+                for ads in user_ads:
+                    if 
+                return render_template("profile.html", one_user = one_user)
     else:
         return redirect(url_for('/login/'))
 
