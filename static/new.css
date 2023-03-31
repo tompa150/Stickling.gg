@@ -36,6 +36,20 @@ body{
 
   }
 
+  .logga.in.button:link, .logga.in.button:visited {
+    background-color: #eaddd0;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    float: right;
+  }
+  
+  .logga.in.button:hover, .logga.in.button:active {
+    background-color: #f1e8e0;
+    color: black;
+  }
   
   /* Add some padding inside the card container */
   .container {
