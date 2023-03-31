@@ -29,13 +29,15 @@
         <main> 
             <article id="main">
               {% for ad in ads %}
-                <div class="card">
-                    <img class="annons" src="{{ ad[3] }}" data-col="0" alt="Avatar">
-                    <div class="container">
-                      <h4><b>{{ ad[1] }}</b></h4> 
-                      <p>{{ ad[2] }};</p> 
+                <a href="http://127.0.0.1:8080/ad/{{ad[0]}}/">
+                    <div class="card">
+                        <img class="annons" src="{{ ad[3] }}" data-col="0" alt="Avatar">
+                        <div class="container">
+                        <h4><b>{{ ad[1] }}</b></h4> 
+                        <p>{{ ad[2] }};</p> 
+                        </div>
                     </div>
-                  </div>
+                </a>
                 {% endfor %}
 
             </article>

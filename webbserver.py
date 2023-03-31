@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, session, g, redirect
+from flask import Flask, render_template, request, url_for, session, g, redirect 
 import psycopg2
 
 app = Flask(__name__, template_folder='HTML')
@@ -90,7 +90,7 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type) VALUES ({ad_id}, {username}, {title}, {price}, {description}); """)
+    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, {username}, {title}, {price}, {description}, 'active'); """)
     products = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -115,7 +115,7 @@ def profile():
         return redirect(url_for('/login/'))
             
 
-@app.route("/ad/<id>")
+@app.route("/ad/<id>/")
 def ad(id):
     user_info = read_user_info()
     for user in user_info:
@@ -125,7 +125,7 @@ def ad(id):
                 if int(id) == ad[0]:
                     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
                     cursor = conn.cursor()
-                    cursor.execute(f""" SELECT image_path FROM images WHERE ad_id = {id} """)
+                    cursor.execute(f""" SELECT image_path FROM image_pointer WHERE ad_id = {id} """)
                     images = cursor.fetchall()
                     image_paths = [image[0] for image in images]
                     cursor.close()
@@ -134,7 +134,7 @@ def ad(id):
             else:
                 pass
     else:
-        return redirect(url_for("/"))
+        return redirect('/')
     
 @app.route("/new/")
 def create_ad():
