@@ -60,7 +60,7 @@ def image_ad_read_index():
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
-    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path FROM ads JOIN image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active'; """)
+    cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path FROM ads JOIN image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' LIMIT 1; """)
     results = cursor.fetchall()
     ads = {}
     for row in results:
@@ -69,17 +69,18 @@ def image_ad_read_index():
         ad_description = row[2]
         image_path = row[3]
         if ad_id not in ads:
-            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': []}
-        ads[ad_id]['images'].append(image_path)
-        conn.close()
-    return ads
+            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_path': []}
+        ads[ad_id]['image_path'].append(image_path)
+    print(ads)
+    conn.close()
+    return results
 
 def insert_image_path(images, ad_id):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
     for path in images:
-        cursor.execute(""" INSERT INTO images (image_path, ad_id) VALUES (?, ?) """, (path, ad_id) )
+        cursor.execute(""" INSERT INTO image_pointer(image_path, ad_id) VALUES (?, ?) """, (path, ad_id) )
     products = cursor.fetchall()
     cursor.close()
     conn.close()

@@ -30,10 +30,10 @@
             <article id="main">
               {% for ad in ads %}
                 <div class="card">
-                    <img class="annons" src="{{ ad.images[0] }}" alt="Avatar">
+                    <img class="annons" src="{{ ad[3] }}" data-col="0" alt="Avatar">
                     <div class="container">
-                      <h4><b>{{ ad.title }}</b></h4> 
-                      <p>{{ ad.description }}</p> 
+                      <h4><b>{{ ad[1] }}</b></h4> 
+                      <p>{{ ad[2] }};</p> 
                     </div>
                   </div>
                 {% endfor %}
