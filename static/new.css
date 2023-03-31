@@ -36,7 +36,7 @@ body{
 
   }
 
-  .logga.in.button:link, .logga.in.button:visited {
+  .logga_in_button:link, .logga_in_button:visited {
     background-color: #eaddd0;
     color: black;
     padding: 10px 20px;
@@ -46,7 +46,7 @@ body{
     float: right;
   }
   
-  .logga.in.button:hover, .logga.in.button:active {
+  .logga_in_button:hover, .logga_in_button:active {
     background-color: #f1e8e0;
     color: black;
   }
@@ -98,7 +98,6 @@ nav{
     padding: 14px 16px;
     text-decoration: none;
     cursor: pointer;
-    font-family: 'Fasthand', cursive;
   }
   
 
