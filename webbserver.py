@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, session, g, redirect
 import psycopg2
+
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
 
@@ -11,9 +12,17 @@ def new_ad_id():
             largest_id = ad[0] + 1
     return largest_id
 
+def connect_to_db():
+    
+    """Skapat en funktion som ansluter till databasen. Den här funktionen kan vi sedan kalla på i alla andra funktioner. 
+    Så slipper vi skriva ut strängen varje gång, eller bara ändra på ett ställe om vi ska ändra något. """
+    
+    connection = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    return connection
+    
+
 def read_user_info():
-    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-    conn = psycopg2.connect(connection)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute("SELECT username, password, email number FROM users;")
     products = cursor.fetchall()
@@ -22,18 +31,16 @@ def read_user_info():
     return products
 
 def ad_read():
-    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-    conn = psycopg2.connect(connection)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(""" SELECT * FROM ads; """)
+    cursor.execute(""" SELECT * FROM ads WHERE ads.status = active; """)
     products = cursor.fetchall()
     cursor.close()
     conn.close()
     return products
 
 def image_ad_read(user):
-    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-    conn = psycopg2.connect(connection)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, images.image_path FROM ads JOIN images ON ads.ad_id = images.ad_id WHERE ads.username = {user} """)
     results = cursor.fetchall()
@@ -48,10 +55,27 @@ def image_ad_read(user):
         ads[ad_id]['images'].append(image_path)
         conn.close()
     return ads
+    
+def image_ad_read_index():
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
+    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path FROM ads JOIN image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active'; """)
+    results = cursor.fetchall()
+    ads = {}
+    for row in results:
+        ad_id = row[0]
+        ad_title = row[1]
+        ad_description = row[2]
+        image_path = row[3]
+        if ad_id not in ads:
+            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': []}
+        ads[ad_id]['images'].append(image_path)
+        conn.close()
+    return ads
 
 def insert_image_path(images, ad_id):
-    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-    conn = psycopg2.connect(connection)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
     for path in images:
@@ -62,8 +86,7 @@ def insert_image_path(images, ad_id):
     return
 
 def insert_ad(title, description, price, type, username, image_paths):
-    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-    conn = psycopg2.connect(connection)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
     cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type) VALUES ({ad_id}, {username}, {title}, {price}, {description}); """)
@@ -99,8 +122,7 @@ def ad(id):
             ads = ad_read()
             for ad in ads:
                 if int(id) == ad[0]:
-                    connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-                    conn = psycopg2.connect(connection)
+                    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
                     cursor = conn.cursor()
                     cursor.execute(f""" SELECT image_path FROM images WHERE ad_id = {id} """)
                     images = cursor.fetchall()
@@ -158,7 +180,7 @@ def save():
         
 @app.route("/")
 def index():
-    """ads = ad_read()"""
+    ads = image_ad_read_index()
     return render_template("new.html", ads = ads)
 
 @app.route("/login/")
@@ -223,12 +245,12 @@ def register_user():
             number_exists = "That number already exists, please enter your own number!"
             return render_template("register.html", number_exists = number_exists)
         elif email !=row[0] and username != row[1] and password != row[2] and number != row[3]:
-            try: 
-                connection = psycopg2.connect(database="postgres", user="postgres", password="stickling", host='localhost', port="5432")
-                cursor = connection.cursor()
+            try:
+                conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
+                cursor = conn.cursor()
                 cursor.execute(f'INSERT INTO users(username, password, email, number) VALUES ({username}, {password}, {email}, {number});')
                 cursor.close()
-                connection.close()
+                conn.close()
                 return render_template("login.html")
             except (Exception) as error:
                pass
