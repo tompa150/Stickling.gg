@@ -39,10 +39,10 @@ def ad_read():
     conn.close()
     return products
 
-def image_ad_read(user):
+def image_ad_read_active(user):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, images.image_path FROM ads JOIN images ON ads.ad_id = images.ad_id WHERE ads.username = {user} """)
+    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.username = '{user}' AND ads.status = 'active' """)
     results = cursor.fetchall()
     ads = {}
     for row in results:
@@ -50,10 +50,29 @@ def image_ad_read(user):
         ad_title = row[1]
         ad_description = row[2]
         image_path = row[3]
+        status = row[4]
         if ad_id not in ads:
-            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': []}
-        ads[ad_id]['images'].append(image_path)
-        conn.close()
+            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': [], 'status': status}
+        ads[ad_id]['image_paths'].append(image_path)
+    conn.close()
+    return ads
+
+def image_ad_read_inactive(user):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.username = '{user}' AND ads.status = 'active' """)
+    results = cursor.fetchall()
+    ads = {}
+    for row in results:
+        ad_id = row[0]
+        ad_title = row[1]
+        ad_description = row[2]
+        image_path = row[3]
+        status = row[4]
+        if ad_id not in ads:
+            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': [], 'status': status}
+        ads[ad_id]['image_paths'].append(image_path)
+    conn.close()
     return ads
     
 def image_ad_read_index():
@@ -102,17 +121,16 @@ def insert_ad(title, description, price, type, username, image_paths):
 
 @app.route("/profile/")
 def profile():
-    if g.user:
-        user = session['user']
-        user_info = read_user_info()
-        for one_user in user_info:
-            if user == one_user[0]:
-                user_ads = image_ad_read(user)
-                return render_template("profile.html", one_user = one_user, user_ads = user_ads)
+    user_info = read_user_info()
+    user = session['user']
+    for one_user in user_info:
+        if user == one_user[0]:
+            active_ads = image_ad_read_active(user)
+            inactive_ads = image_ad_read_inactive(user)
+            print(active_ads)
+            return render_template("profile.html", active_ads = active_ads, inactive_ads = inactive_ads)
         else:
             return redirect(url_for('/login/'))
-    else:
-        return redirect(url_for('/login/'))
             
 
 @app.route("/ad/<id>/")

@@ -31,13 +31,34 @@
         </nav>
         <main> 
             <article id="main">
-                <div id="active_ads">
-
-                </div>
-                <div id="old_ads">
-                    
-                </div>
-
+                        <div id="active_ads">
+                            <h3>Active ads</h3>
+                            {% for active in active_ads %}
+                                <div id="images">
+                                    <img id="bild" src="{{ active[3] }}" alt="bild på stickling">
+                                </div>
+                                <div id="Title">
+                                    <h2>{{ active[1] }}</h2>
+                                </div>
+                                <div id="Description">
+                                    <p>{{ active[2] }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div id="old_ads">
+                            <h3>Old ads</h3>
+                            {% for ad in inactive_ads %}
+                                <div id="images">
+                                    <img id="bild" src="{{ ad[3]}}" alt="bild på stickling">
+                                </div>
+                                <div id="Title">
+                                    <h2>{{ ad[1] }}</h2>
+                                </div>
+                                <div id="Description">
+                                    <p>{{ ad[2] }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
             </article>
         </main>
         <footer id="information">
