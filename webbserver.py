@@ -33,7 +33,7 @@ def read_user_info():
 def ad_read():
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(""" SELECT * FROM ads WHERE ads.status = active; """)
+    cursor.execute(""" SELECT * FROM ads WHERE ads.status = 'active'; """)
     products = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -119,7 +119,8 @@ def profile():
 def ad(id):
     user_info = read_user_info()
     for user in user_info:
-        if "user" in session == user[0]:
+        print(session['user'])
+        if session['user'] == user[0]:
             ads = ad_read()
             for ad in ads:
                 if int(id) == ad[0]:
@@ -197,18 +198,18 @@ def logout():
 def validation():
     if request.method == 'POST':
         session.pop('user', None)
-        username = getattr(request.form, "Användarnamn")
-        password = getattr(request.form, "Lösenord")
+        username = request.form.get("Username")
+        password = request.form.get("Password")
         user_info = read_user_info()
         for row in user_info:
-            if username == row[1] and password == row[2]:
+            if username == row[0] and password == row[1]:
                 session['user'] = username
-                return render_template("new.html")
+                return redirect("/")
         else:
-            if username != row[1] and password == row[2]:
+            if username != row[0] and password == row[1]:
                 wrong_user = "Felaktigt användarnamn, vänligen ange ett giltigt sådant."
                 return render_template("login.html", wrong_user = wrong_user)
-            elif username == row[1] and password != row[2]:
+            elif username == row[0] and password != row[1]:
                 wrong_pass = "Lösenordet är inkorrekt, vänligen ange ett giltigt lösenord"
                 return render_template("login.html", wrong_pass = wrong_pass)
             else:

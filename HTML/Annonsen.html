@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <meta charset="utf-8">
-    <meta name="Homepage" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
-    <title>Homepage</title>
-    <link rel="stylesheet" href="/css/annonsen.css">
+        <meta charset="utf-8">
+        <meta name="Homepage" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
+        <title>Homepage</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='annonsen.css') }}">
     </head>
     <body>
         <nav>
             <div class="navbar">
-                <a id="logo" href="homepage.html"> <img class="img"src="pngwing.com-6.png"> Stickling</a>
+                <a id="logo" href="homepage.html"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
                 <div class="dropdown">
                   <button class="dropbtn">
                     <div class="bars"></div>
@@ -33,9 +33,11 @@
 
         </header>
         <main>
-            <div id="images">
-                <img id="bild" src="Screenshot 2023-03-28 at 18.36.12.png" alt="bild på stickling">
-            </div>
+            {% for image in image_paths %}
+                <div id="images">
+                    <img id="bild" src="{{ image }}" alt="bild på stickling">
+                </div>
+                {% endfor %}
             <div id="Title">
                 <h2>Stickling 1</h2>
             </div>
