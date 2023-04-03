@@ -55,7 +55,7 @@ def image_ad_read_active(user):
             ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': [], 'status': status}
         ads[ad_id]['image_paths'].append(image_path)
     conn.close()
-    return ads
+    return results
 
 def image_ad_read_inactive(user):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -73,7 +73,7 @@ def image_ad_read_inactive(user):
             ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_paths': [], 'status': status}
         ads[ad_id]['image_paths'].append(image_path)
     conn.close()
-    return ads
+    return results
     
 def image_ad_read_index():
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -90,7 +90,6 @@ def image_ad_read_index():
         if ad_id not in ads:
             ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_path': []}
         ads[ad_id]['image_path'].append(image_path)
-    print(ads)
     conn.close()
     return results
 
@@ -201,6 +200,7 @@ def save():
 @app.route("/")
 def index():
     ads = image_ad_read_index()
+    print(ads)
     return render_template("new.html", ads = ads)
 
 @app.route("/login/")
