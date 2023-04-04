@@ -2,6 +2,15 @@ body{
     margin: 0%;
 }
 
+
+.redigera_profile
+{
+  padding-top: 20%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+}
+
 .new-old-box{
   padding: 10px;
   display: flex;
@@ -184,6 +193,7 @@ nav{
     display: block;
     text-align: left;
     cursor: pointer;
+    font-size: 20px;
   }
   
   /* Add a grey background color to dropdown links on hover */
@@ -198,11 +208,10 @@ nav{
     cursor: pointer;
   }
     
-    main{
+  main{
     background-color: #eaddd0;
-    
+    padding: 10%;
    }
-
                 
   footer{
         padding: 5px;
@@ -240,25 +249,6 @@ nav{
         
     
     
-    }
-    .card {
-
-        width: 100%;
-
-    }
-
-
-    #main{
-      justify-content: space-evenly;
-      column-count: 2;
-      column-gap: 20px;
-    
-    }    
-
-    #main{
-        margin-bottom: 10%;
-        margin-right: 0%;
-
     }
   }
 

@@ -184,6 +184,7 @@ nav{
     display: block;
     text-align: left;
     cursor: pointer;
+    font-size: 20px;
   }
   
   /* Add a grey background color to dropdown links on hover */
