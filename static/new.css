@@ -3,7 +3,6 @@ body{
 }
 
 
-
 .card {
   background-color: #eaddd0;
   transition: 0.3s;
@@ -13,6 +12,8 @@ body{
   break-inside: avoid;
   display: grid;
   grid-template-rows: 1fr auto;
+  border-bottom: #2d2d2d solid;
+  border-bottom-width: thin;
 
 
   }
@@ -27,6 +28,7 @@ body{
   .card:hover {
     box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
     background-color: #f1e8e0;
+    border-bottom: none;
 
   }
   .card:hover > img {
