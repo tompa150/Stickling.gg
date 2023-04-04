@@ -134,6 +134,9 @@ def profile():
 
 @app.route("/ad/<id>/")
 def ad(id):
+    if 'user' not in session:
+        return redirect('/')
+    
     user_info = read_user_info()
     for user in user_info:
         if session['user'] == user[0]:
@@ -150,7 +153,7 @@ def ad(id):
                     return render_template("annonsen.html", ad = ad, image_paths = image_paths)
             else:
                 pass
-        elif session['user'] == "":
+        else:
             return redirect('/')
     
 @app.route("/new/")
