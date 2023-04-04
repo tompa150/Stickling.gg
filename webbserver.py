@@ -150,8 +150,8 @@ def ad(id):
                     return render_template("annonsen.html", ad = ad, image_paths = image_paths)
             else:
                 pass
-    else:
-        return redirect('/')
+        elif session['user'] == "":
+            return redirect('/')
     
 @app.route("/new/")
 def create_ad():
