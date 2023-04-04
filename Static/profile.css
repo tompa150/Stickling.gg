@@ -2,6 +2,18 @@ body{
     margin: 0%;
 }
 
+.new-old-box{
+  padding: 10px;
+  display: flex;
+  
+}
+        
+.box{
+    column-count: 2;
+    column-gap: 20px;
+    padding: 10%;
+}
+
 
 
 .card {
@@ -12,6 +24,7 @@ body{
   margin-bottom: 20%;
   break-inside: avoid;
   display: grid;
+  grid-template-columns: 2;
   grid-template-rows: 1fr auto;
 
 
@@ -36,21 +49,29 @@ body{
 
   }
 
+
   .logga_in_button:link, .logga_in_button:visited {
-    background-color: #eaddd0;
+    background-color: #f1e8e0;
     color: black;
     padding: 10px 20px;
-    text-align: center;
     text-decoration: none;
-    display: inline;
-    float: right;
+    font-size: 20px;
+    border-radius: 10px
+    
   }
   
   .logga_in_button:hover, .logga_in_button:active {
-    background-color: #f1e8e0;
+    background-color: #eaddd0;
     color: black;
   }
-  
+
+
+.logga_in_box{
+  margin-top: 35px;
+  margin-right: 5px;
+
+}
+
   /* Add some padding inside the card container */
   .container {
     padding: 2px 16px;
@@ -88,13 +109,6 @@ nav{
 
 }
 
-
-
-#bild{
-    max-width: 500px;
-    max-height: 600px;
-}
-
 /* Links inside the navbar */
 .navbar a{
     font-weight: bold;
@@ -118,9 +132,14 @@ nav{
     cursor: pointer;
     margin-top: 18px;
     margin-right: 5px;
-    display: inline;
   }
-  
+
+  .RBOX{
+    float: right;
+    display: flex;
+    text-align: center;
+    
+  }
   /* Dropdown button */
   .dropdown .dropbtn {
     border: none;
@@ -180,17 +199,6 @@ nav{
     background-color: #eaddd0;
     
    }
-
-
-        
-#main{
-    column-count: 4;
-    column-gap: 20px;
-    padding: 10%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
 
                 
   footer{

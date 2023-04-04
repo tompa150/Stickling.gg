@@ -12,53 +12,76 @@
         <nav>
             <div class="navbar">
                 <a href="http://127.0.0.1:8080/"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
-                <div class="dropdown">
-                    <button class="dropbtn">
-                         <div class="bars"></div>
-                         <div class="bars"></div>
-                         <div class="bars"></div>
-                    </button>
-
-                    <div>
+                <div class="RBOX">
+                    <div class="logga_in_box">
                         <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
                     </div>
-                    <div class="dropdown-content">   
-                        <a href="#"><img class="bar_icons" src=""> Profil</a>
-                        <a href="#"><img class="bar_icons" src=""> Sparade</a>
-                        <a href="#"><img class="bar_icons" src=""> Chats</a>
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                        </button>
+                        <div class="dropdown-content">   
+                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src=""> Profil</a>
+                            <a href="#"><img class="bar_icons" src=""> Sparade</a>
+                            <a href="#"><img class="bar_icons" src=""> Chats</a>
+                        </div>
                     </div>
+                </div>
             </div>
         </nav>
         <main> 
-            <article id="main">
+
+
+
+
+
+
+
+
+
+            <article class="new-old-box">
+                    <div class="box">
                         <div id="active_ads">
                             <h3>Active ads</h3>
                             {% for active in active_ads %}
-                                <div id="images">
-                                    <img id="bild" src="{{ active[3] }}" alt="bild på stickling">
+                            <div class="card">
+                                <div>
+                                    <img class="annons" id="bild" src="{{ active[3] }}" alt="bild på stickling">
                                 </div>
-                                <div id="Title">
-                                    <h2>{{ active[1] }}</h2>
+                                <div class="container">
+                                    <div id="Title">
+                                        <h2>{{ active[1] }}</h2>
+                                    </div>
+                                    <div id="Description">
+                                        <p>{{ active[2] }}</p>
+                                    </div>
                                 </div>
-                                <div id="Description">
-                                    <p>{{ active[2] }}</p>
-                                </div>
+                            </div>
                             {% endfor %}
                         </div>
+                    </div>
+                    <div class="box">
                         <div id="old_ads">
                             <h3>Old ads</h3>
                             {% for ad in inactive_ads %}
+                            <div class="card">
                                 <div id="images">
                                     <img id="bild" src="{{ ad[3]}}" alt="bild på stickling">
                                 </div>
-                                <div id="Title">
-                                    <h2>{{ ad[1] }}</h2>
+                                <div class="container">
+                                    <div id="Title">
+                                        <h2>{{ ad[1] }}</h2>
+                                    </div>
+                                    <div id="Description">
+                                        <p>{{ ad[2] }}</p>
+                                    </div>
                                 </div>
-                                <div id="Description">
-                                    <p>{{ ad[2] }}</p>
-                                </div>
+                            </div>
                             {% endfor %}
                         </div>
+                    </div>
             </article>
         </main>
         <footer id="information">
