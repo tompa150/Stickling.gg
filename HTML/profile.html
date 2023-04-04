@@ -42,45 +42,33 @@
 
 
             <article class="new-old-box">
-                    <div class="box">
-                        <div id="active_ads">
-                            <h3>Active ads</h3>
+                    <div id="active_ads" class="box">
+                            <h3 class="A-title">Active ads</h3>
                             {% for active in active_ads %}
                             <div class="card">
                                 <div>
                                     <img class="annons" id="bild" src="{{ active[3] }}" alt="bild på stickling">
                                 </div>
                                 <div class="container">
-                                    <div id="Title">
-                                        <h2>{{ active[1] }}</h2>
-                                    </div>
-                                    <div id="Description">
-                                        <p>{{ active[2] }}</p>
-                                    </div>
+                                    <h4><b>{{ active[1] }}</b></h4> 
+                                    <p>{{ active[2] }}</p> 
                                 </div>
                             </div>
                             {% endfor %}
-                        </div>
                     </div>
-                    <div class="box">
-                        <div id="old_ads">
-                            <h3>Old ads</h3>
+                    <div id="old_ads" class="box">
+                            <h3 class="A-title">Old ads</h3>
                             {% for ad in inactive_ads %}
                             <div class="card">
                                 <div id="images">
                                     <img id="bild" src="{{ ad[3]}}" alt="bild på stickling">
                                 </div>
                                 <div class="container">
-                                    <div id="Title">
-                                        <h2>{{ ad[1] }}</h2>
-                                    </div>
-                                    <div id="Description">
-                                        <p>{{ ad[2] }}</p>
-                                    </div>
+                                    <h4><b>{{ ad[1] }}</b></h4> 
+                                    <p>{{ ad[2] }}</p> 
                                 </div>
                             </div>
                             {% endfor %}
-                        </div>
                     </div>
             </article>
         </main>
