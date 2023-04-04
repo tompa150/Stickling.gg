@@ -45,19 +45,24 @@ body{
 
   }
 
+.logga_in_box{
+  margin-top: 35px;
+  margin-right: 5px;
+
+}
 
   .logga_in_button:link, .logga_in_button:visited {
-    background-color: #eaddd0;
+    background-color: #f1e8e0;
     color: black;
     padding: 10px 20px;
-    text-align: center;
     text-decoration: none;
-    display: inline;
-    float: right;
+    font-size: 20px;
+    border-radius: 10px
+    
   }
   
   .logga_in_button:hover, .logga_in_button:active {
-    background-color: #f1e8e0;
+    background-color: #eaddd0;
     color: black;
   }
   
@@ -121,7 +126,13 @@ nav{
     cursor: pointer;
     margin-top: 18px;
     margin-right: 5px;
-    display: inline;
+  }
+
+  .RBOX{
+    float: right;
+    display: flex;
+    text-align: center;
+    
   }
   
   /* Dropdown button */
@@ -254,6 +265,6 @@ nav{
 
   @media screen and (min-width: 800px) {
 
-  }
 
+  }
 
