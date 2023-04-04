@@ -11,7 +11,7 @@ body{
 .box{
     column-count: 2;
     column-gap: 20px;
-    padding: 10%;
+    padding: 20% 20% 20% 5%;
 }
 
 
