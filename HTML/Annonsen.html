@@ -10,51 +10,69 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='annonsen.css') }}">
     </head>
     <body>
-        <nav>
-            <div class="navbar">
-                <a id="logo" href="homepage.html"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
-                <div class="dropdown">
-                  <button class="dropbtn">
-                    <div class="bars"></div>
-                    <div class="bars"></div>
-                    <div class="bars"></div>
-                    
-                    <i class="fa fa-caret-down"></i>
-                  </button>
-                  <div class="dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
-                  </div>
-                </div> 
-              </div>
-        </nav>
+    
+            <nav>
+                <div class="navbar">
+                    <a href="http://127.0.0.1:8080/"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
+                    <div class="RBOX">
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <div class="bars"></div>
+                                <div class="bars"></div>
+                                <div class="bars"></div>
+                            </button>
+                            <div class="dropdown-content">   
+                                <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src=""> Profil</a>
+                                <a href="#"><img class="bar_icons" src=""> Sparade</a>
+                                <a href="#"><img class="bar_icons" src=""> Chats</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         <header>
 
         </header>
         <main>
-            {% for image in image_paths %}
-                <div id="images">
-                    <img id="bild" src="{{ image }}" alt="bild på stickling">
-                </div>
-            {% endfor %}
-            <div id="Title">
-                <h2>Stickling 1</h2>
+            <div class="annons_bilder">
+                {% for image in image_paths %}
+                    <div>
+                        <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
+                    </div>
+                    <div>
+                        <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
+                    </div>
+                    <div>
+                        <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
+                    </div>
+                {% endfor %}
             </div>
             <div id="pris">
                 <h4>Pris: 80 SEK</h5>
             </div>
-            <div id="Description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error maxime voluptas consequatur corporis. Fugiat eaque repudiandae repellendus eveniet consequatur ad laudantium magni neque nam. Ex in dolores hic maxime ipsam!</p>
+            <div class="secondary">
+                <article>
+                <p id="Description">Lorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum dolor sit amet consec
+                tetur adipisicing elit. Error maxime
+                voluptas consequatur corporis. Fugiat eaque re
+                pudiandae repellendus eveniet consequatur ad lauda
+                ntium magni neque nam. Ex in dolores hic maxime ipsam!</p>
+                </article>
+                <aside id="aside">
+                    <form>
+                        <label for="Meddelande">Meddelande:</label>
+                        <textarea placeholder="...."></textarea>
+                        <label for="email">Email:</label>
+                        <input type="text" required name="email" id="mail" placeholder="...">
+                        <input type="submit" value="skicka">
+                    </form>
+                </aside>
             </div>
-
         </main>
-
-
-        <footer>
-
+        <footer id="information">
+            <p class="linkfoot">  © 2023 Stickling, Inc.</p>
+            <a class="linkfoot" href="idk">·Terms</a>
+            <a class="linkfoot" href="idk">·Privacy</a>
         </footer>
-
-
     </body>
-</html>
+    </html>

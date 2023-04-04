@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Sparade</title>
-        <link href="{{ url_for('static', filename='liked_chats.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='liked_annons.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -19,9 +19,10 @@
                         <div class="bars"></div>
                         <div class="bars"></div>
                     </button>
-                    <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src=""> Profil</a>
-                    <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src=""> Sparade</a>
-                    <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src=""> Chats</a>
+                    <div class="dropdown-content">   
+                        <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src=""> Profil</a>
+                        <a href="#"><img class="bar_icons" src=""> Sparade</a>
+                        <a href="#"><img class="bar_icons" src=""> Chats</a>
                     </div>
                 </div>
             </div>
