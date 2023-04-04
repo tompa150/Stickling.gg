@@ -120,6 +120,9 @@ def insert_ad(title, description, price, type, username, image_paths):
 
 @app.route("/profile/")
 def profile():
+    if 'user' not in session:
+        return redirect('/')
+    
     user_info = read_user_info()
     user = session['user']
     for one_user in user_info:
