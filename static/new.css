@@ -32,9 +32,19 @@ body{
   .card:hover > img {
     border-radius: 10px 10px 0 0;
 
+    
+
+  }
+
+
+
+  #main > a {
+    text-decoration: none;
+    color: black;
 
 
   }
+
 
   .logga_in_button:link, .logga_in_button:visited {
     background-color: #eaddd0;
