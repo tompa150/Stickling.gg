@@ -226,22 +226,8 @@ nav{
     
     }
 
-    #main{
-      justify-content: space-evenly;
-      column-count: 2;
-      column-gap: 20px;
-    
-    }    
-
-    #main{
-        margin-bottom: 10%;
-        margin-right: 0%;
-
-    }
-  }
-
   @media screen and (min-width: 800px) {
 
   }
 
-
+}
