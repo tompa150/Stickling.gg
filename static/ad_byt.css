@@ -3,6 +3,25 @@ body{
 }
 
 
+
+
+.ad_creation_box{
+    display: flex;
+    padding: 10%;
+    justify-content:center;
+}
+
+.ad_images{
+    padding: 5%;
+
+}
+
+.ad_information{
+    padding: 5%;
+
+}
+
+
   .logga_in_button:link, .logga_in_button:visited {
     background-color: #f1e8e0;
     color: black;
@@ -145,59 +164,7 @@ nav{
     
    }
 
-   .kategori_box{
-    display: flex;
-    padding: 10%;
-    justify-content:center;
-    gap: 10%;
-
-    
-
-   }
-
-
-.ad_link {
-    text-decoration: none;
-    font-size: 50px;
-    color: #f1e8e0;
-}
-
-
-   .card1{ background-color: #5B9279;
-    padding: 20px;
-    width: 200px;
-    height: 200px;
-    border-radius: 10%;
-   
-   
-   
-   }
-   .card2{ background-color: #0c5735;
-    padding: 20px;
-    width: 200px;
-    height: 200px;
-    border-radius: 10%;
-
-   
-   
-   
-   
-   
-   }
-   .card3{ background-color: #5B9279;
-    padding: 20px;
-    width: 200px;
-    height: 200px;
-    border-radius: 10%;
-   
-   
-   
-   
-   
-   
-   }
-   
-
+ 
                 
   footer{
         padding: 5px;
