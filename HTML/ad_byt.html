@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='choose_ad.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='ad_byt.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -29,16 +29,17 @@
             </div>
         </nav>
         <main> 
-            <article id="main">
-                <div id="Title_annons">
-                    <h1>Välj Vilken kategori</h1>
-                </div>
-                    <div class="kategori_box">
-                        <div class="card1"><a class="ad_link" href="ad_sälj">Sälj</a></div>
-                        <div class="card2"><a class="ad_link" href="ad_byt">Byt</a></div>
-                        <div class="card3"><a class="ad_link" href="ad_efterfråga">Efterfråga</a></div>
-                    </div>
-            </article>
+            <div class="ad_creation_box">
+                <form class="ad_images" action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" multiple>
+                    <button type="submit">Upload</button>
+                </form>
+                <form class="ad_information">
+                    <input type="text" name="title" id="title" >
+                    <input type="number" name="price" id="price">
+                    <input type="text" name="description" id="description"  >
+                </form>
+            </div>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>

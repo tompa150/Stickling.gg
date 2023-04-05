@@ -47,7 +47,6 @@ body{
   }
 
 .logga_in_box{
-  margin-top: 35px;
   margin-right: 5px;
 
 }
@@ -132,7 +131,6 @@ nav{
     float: right;
     overflow: hidden;
     cursor: pointer;
-    margin-top: 18px;
     margin-right: 5px;
   }
 
@@ -140,6 +138,7 @@ nav{
     float: right;
     display: flex;
     text-align: center;
+    margin-top: 18px;
     
   }
   
@@ -148,7 +147,7 @@ nav{
     border: none;
     outline: none;
     color: #f1e8e0;
-    padding: 14px 16px;
+    padding: 14px 14px;
     background-color: inherit;
     font-family: inherit; /* Important for vertical align on mobile phones */
     margin: 0; /* Important for vertical align on mobile phones */
