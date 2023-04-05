@@ -93,11 +93,11 @@ def image_ad_read_index():
     conn.close()
     return results
 
-def insert_image_path(images, ad_id):
+def insert_image_path(image_paths, ad_id):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    for path in images:
+    for path in image_paths:
         cursor.execute(""" INSERT INTO image_pointer(image_path, ad_id) VALUES (?, ?) """, (path, ad_id) )
     products = cursor.fetchall()
     cursor.close()
@@ -116,7 +116,7 @@ def insert_ad(title, description, price, type, username, image_paths):
         return
     else:
         insert_image_path(image_paths, ad_id)
-        return
+        return redirect('/')
 
 @app.route("/profile/")
 def profile():
@@ -158,7 +158,8 @@ def ad(id):
                 pass
         else:
             return redirect('/')
-    
+        
+'''
 @app.route("/new/")
 def create_ad():
     if g.user:
@@ -171,6 +172,7 @@ def create_ad():
             return redirect(url_for('/login/'))
     else:
         return redirect(url_for('/login/'))
+'''
     
 @app.route("/save/", methods = ['POST', 'GET'])
 def save():
@@ -178,7 +180,7 @@ def save():
         title = getattr(request.form, "Title")
         description = getattr(request.form, "Description")
         price = getattr(request.form, "Price")
-        type = getattr(request.form, "Typ")
+        type = getattr(request.form, "Type")
         username = getattr(request.form, "Username")
         images = request.files.getlist('images')
         if title == "":
@@ -192,12 +194,12 @@ def save():
         else:
             image_paths = []
             for image in images:
-                if image.filename.endswith('.jpg'):
+                if image.filename.endswith('.jpg', '.png'):
                     # Save the file to a directory
                     image.save('Stickling.gg\Static' + image.filename)
                     # Append the file path to the list of image paths
-                    image_paths.append('path/to/save/directory/' + image.filename)
-            insert_ad(title, description, price, type, username, image_paths)
+                    image_paths.append(f'/static/{image.filename}')
+                insert_ad(title, description, price, type, username, image_paths)
             return {'image_paths': image_paths}
 
     return render_template("ad_creation.html")
@@ -220,7 +222,10 @@ def login():
 
 @app.route("/new/choose_ad/")
 def choose_ad():
-    return render_template("choose_ad.html")
+    if 'user' not in session:
+        return redirect("/")
+    else:
+        return render_template("choose_ad.html")
 
 @app.route("/logout/")
 def logout():
