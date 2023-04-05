@@ -211,8 +211,7 @@ def index():
     user_info = read_user_info()
     for user in user_info:
         if session['user'] == user[0]:
-            username = [user[0]]
-            return render_template("new.html", ads = ads, username = username)
+            return render_template("new.html", ads = ads, session = session)
 
 @app.route("/login/")
 def login():
