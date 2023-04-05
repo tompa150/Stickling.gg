@@ -13,12 +13,18 @@
             <div class="navbar">
                 <a href="http://127.0.0.1:8080/"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
                 <div class="RBOX">
-                    <div class="logga_in_box">
-                        <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
-                    </div>
-                    <div>
-                        <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="creationB" src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
-                    </div >
+                    {% if username !="" %}
+                        <div class="logga_in_box">
+                            <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="creationB" src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
+                        </div >
+                    {% else %}
+                        <div class="logga_in_box">
+                            <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="creationB" src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
+                        </div >
+                        <div class="logga_in_box">
+                            <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
+                        </div>
+                    {% endif %}
                     <div class="dropdown">
                         <button class="dropbtn">
                             <div class="bars"></div>
