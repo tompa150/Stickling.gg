@@ -20,7 +20,6 @@ def connect_to_db():
     connection = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     return connection
     
-
 def read_user_info():
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
@@ -108,7 +107,7 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, {username}, {title}, {price}, {description}, 'active'); """)
+    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, {username}, {title}, {price}, {description}, {type}, 'active'); """)
     products = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -122,7 +121,7 @@ def insert_ad(title, description, price, type, username, image_paths):
 def profile():
     if 'user' not in session:
         return redirect('/')
-    
+
     user_info = read_user_info()
     user = session['user']
     for one_user in user_info:
@@ -133,7 +132,6 @@ def profile():
             return render_template("profile.html", active_ads = active_ads, inactive_ads = inactive_ads)
         else:
             return redirect(url_for('/login/'))
-            
 
 @app.route("/ad/<id>/")
 def ad(id):
@@ -226,6 +224,27 @@ def choose_ad():
         return redirect("/")
     else:
         return render_template("choose_ad.html")
+
+@app.route("/new/1")
+def new_1():
+    if 'user' not in session:
+        return redirect("/")
+    else:
+        return render_template("ad_sälj.html")
+    
+@app.route("/new/2")
+def new_2():
+    if 'user' not in session:
+        return redirect("/")
+    else:
+        return render_template("ad_byt.html")
+    
+@app.route("/new/3")
+def new_3():
+    if 'user' not in session:
+        return redirect("/")
+    else:
+        return render_template("ad_köp.html")
 
 @app.route("/logout/")
 def logout():
