@@ -225,21 +225,21 @@ def choose_ad():
     else:
         return render_template("choose_ad.html")
 
-@app.route("/new/1")
+@app.route("/new/1/")
 def new_1():
     if 'user' not in session:
         return redirect("/")
     else:
         return render_template("ad_sälj.html")
     
-@app.route("/new/2")
+@app.route("/new/2/")
 def new_2():
     if 'user' not in session:
         return redirect("/")
     else:
         return render_template("ad_byt.html")
     
-@app.route("/new/3")
+@app.route("/new/3/")
 def new_3():
     if 'user' not in session:
         return redirect("/")
