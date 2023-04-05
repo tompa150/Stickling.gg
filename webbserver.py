@@ -243,7 +243,7 @@ def new_3():
     if 'user' not in session:
         return redirect("/")
     else:
-        return render_template("ad_köp.html")
+        return render_template("ad_efterfråga.html")
 
 @app.route("/logout/")
 def logout():

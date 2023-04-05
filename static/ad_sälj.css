@@ -7,7 +7,7 @@ body{
 
 .ad_creation_box{
     display: flex;
-    padding: 10%;
+    padding: 20%;
     justify-content:center;
 }
 
@@ -175,7 +175,7 @@ nav{
         position: fixed;
         bottom: 0%;
         z-index: 2;
-        width: 98%;
+        width: 100%;
 }
 
    
