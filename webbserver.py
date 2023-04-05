@@ -205,12 +205,22 @@ def save():
 @app.route("/")
 def index():
     ads = image_ad_read_index()
-    print(ads)
-    return render_template("new.html", ads = ads)
+    if 'user' not in session:
+        return render_template("new.html", ads = ads)
+    
+    user_info = read_user_info()
+    for user in user_info:
+        if session['user'] == user[0]:
+            username = [user[0]]
+            return render_template("new.html", ads = ads, username = username)
 
 @app.route("/login/")
 def login():
     return render_template("login.html")
+
+@app.route("/new/choose_ad/")
+def choose_ad():
+    return render_template("choose_ad.html")
 
 @app.route("/logout/")
 def logout():
