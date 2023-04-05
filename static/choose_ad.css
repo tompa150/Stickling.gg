@@ -3,55 +3,6 @@ body{
 }
 
 
-.card {
-  background-color: #eaddd0;
-  transition: 0.3s;
-  border-radius: 10px; /* 5px rounded corners */
-  height: auto;
-  margin-bottom: 20%;
-  break-inside: avoid;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  border-bottom: #2d2d2d solid;
-  border-bottom-width: thin;
-
-  }
-  
-  /* Add rounded corners to the top left and the top right corner of the image */
-  .annons {
-    border-radius: 10px;
-    width: 100%;
-    height: auto;
-  }
-  /* On mouse-over, add a deeper shadow */
-  .card:hover {
-    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
-    background-color: #f1e8e0;
-    border-bottom: none;
-
-  }
-  .card:hover > img {
-    border-radius: 10px 10px 0 0;
-
-    
-
-  }
-
-
-
-  #main > a {
-    text-decoration: none;
-    color: black;
-
-
-  }
-
-.logga_in_box{
-  margin-top: 35px;
-  margin-right: 5px;
-
-}
-
   .logga_in_button:link, .logga_in_button:visited {
     background-color: #f1e8e0;
     color: black;
@@ -67,11 +18,7 @@ body{
     color: black;
   }
 
-  
-  /* Add some padding inside the card container */
-  .container {
-    padding: 2px 16px;
-  }
+
 
 nav{
     background-color: #eaddd0;
@@ -137,7 +84,6 @@ nav{
     text-align: center;
     
   }
-  
   /* Dropdown button */
   .dropdown .dropbtn {
     border: none;
@@ -179,7 +125,6 @@ nav{
     display: block;
     text-align: left;
     cursor: pointer;
-    font-size: 20px;
   }
   
   /* Add a grey background color to dropdown links on hover */
@@ -197,16 +142,50 @@ nav{
     main{
     background-color: #eaddd0;
     padding: 10%;
+    
    }
 
+   .kategori_box{
+    display: flex;
+   }
 
-        
-#main{
-    margin-top: 5%;
-    column-count: 4;
-    column-gap: 20px;
-}
+   .card1{ background-color: #5B9279;
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+   
+   
+   
+   
+   
+   
+   }
+   .card2{ background-color: #0c5735;
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
 
+   
+   
+   
+   
+   
+   }
+   .card3{ background-color: #8cf2c4;
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+   
+   
+   
+   
+   
+   
+   }
+   
 
                 
   footer{
@@ -246,12 +225,6 @@ nav{
     
     
     }
-    .card {
-
-        width: 100%;
-
-    }
-
 
     #main{
       justify-content: space-evenly;
@@ -269,6 +242,6 @@ nav{
 
   @media screen and (min-width: 800px) {
 
-
   }
+
 
