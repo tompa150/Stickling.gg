@@ -30,14 +30,12 @@
         </nav>
         <main> 
             <div class="ad_creation_box">
-                <form class="ad_images" action="/upload" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" multiple>
-                    <button type="submit">Upload</button>
-                </form>
                 <form class="ad_information">
+                    <input type="file" name="files[]" multiple max="5" accept="accept="image/*">
                     <input type="text" name="title" id="title" >
                     <input type="number" name="price" id="price">
-                    <input type="text" name="description" id="description"  >
+                    <input type="text" name="description" id="description">
+                    <button type="create">Upload</button>
                 </form>
             </div>
         </main>
