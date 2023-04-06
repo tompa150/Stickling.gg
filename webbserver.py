@@ -198,7 +198,7 @@ def save():
                     # Append the file path to the list of image paths
                     image_paths.append(f'/static/{image.filename}')
                 insert_ad(title, description, price, type, username, image_paths)
-            return {'image_paths': image_paths}
+            return redirect("/")
 
     return render_template("ad_creation.html")
         
