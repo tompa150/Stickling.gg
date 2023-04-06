@@ -98,8 +98,7 @@ def insert_image_path(image_paths, ad_id):
     ad_id = new_ad_id()
     for path in image_paths:
         cursor.execute(""" INSERT INTO image_pointer(image_path, ad_id) VALUES (?, ?) """, (path, ad_id) )
-    products = cursor.fetchall()
-    cursor.close()
+    conn.commit()
     conn.close()
     return
 
@@ -108,8 +107,7 @@ def insert_ad(title, description, price, type, username, image_paths):
     cursor = conn.cursor()
     ad_id = new_ad_id()
     cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, {username}, {title}, {price}, {description}, {type}, 'active'); """)
-    products = cursor.fetchall()
-    cursor.close()
+    conn.commit()
     conn.close()
     if image_paths == "":
         return
