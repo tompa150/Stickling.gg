@@ -97,7 +97,7 @@ def insert_image_path(image_paths, ad_id):
     cursor = conn.cursor()
     ad_id = new_ad_id()
     for path in image_paths:
-        cursor.execute(""" INSERT INTO image_pointer(image_path, ad_id) VALUES (?, ?) """, (path, ad_id) )
+        cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
     conn.commit()
     conn.close()
     return
@@ -106,7 +106,7 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, {username}, {title}, {price}, {description}, {type}, 'active'); """)
+    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
     conn.commit()
     conn.close()
     if image_paths == "":
@@ -205,11 +205,11 @@ def index():
     ads = image_ad_read_index()
     if 'user' not in session:
         return render_template("new.html", ads = ads)
-    
-    user_info = read_user_info()
-    for user in user_info:
-        if session['user'] == user[0]:
-            return render_template("new.html", ads = ads, session = session)
+    else:
+        user_info = read_user_info()
+        for user in user_info:
+            if session['user'] == user[0]:
+                return render_template("new.html", ads = ads, session = session)
 
 @app.route("/login/")
 def login():
@@ -304,8 +304,8 @@ def register_user():
             try:
                 conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
                 cursor = conn.cursor()
-                cursor.execute(f'INSERT INTO users(username, password, email, number) VALUES ({username}, {password}, {email}, {number});')
-                cursor.close()
+                cursor.execute(f""" INSERT INTO users(username, password, email, number) VALUES ('{username}', '{password}', '{email}', {number}); """)
+                conn.commit()
                 conn.close()
                 return render_template("login.html")
             except (Exception) as error:
