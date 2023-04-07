@@ -21,6 +21,7 @@ def connect_to_db():
     return connection
     
 def read_user_info():
+    """Här läses alla användaruppgifter in från databasen"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute("SELECT username, password, email number FROM users;")
@@ -30,6 +31,7 @@ def read_user_info():
     return products
 
 def ad_read():
+    """Här läses alla annonser från databasen där statusen = active """
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(""" SELECT * FROM ads WHERE ads.status = 'active'; """)
@@ -39,6 +41,7 @@ def ad_read():
     return products
 
 def image_ad_read_active(user):
+    """Här läses alla annonser från databasen in, tillsammans med alla dess bilders sökvägar, där statusen = active """
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.username = '{user}' AND ads.status = 'active' """)
@@ -57,6 +60,7 @@ def image_ad_read_active(user):
     return results
 
 def image_ad_read_inactive(user):
+    """Här läses alla annonser in från databasen, tillsammans med 1 bild per annons, där status = inactive"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.username = '{user}' AND ads.status = 'inactive' """)
@@ -75,6 +79,7 @@ def image_ad_read_inactive(user):
     return results
     
 def image_ad_read_index():
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
@@ -93,6 +98,8 @@ def image_ad_read_index():
     return results
 
 def insert_image_path(image_paths, ad_id):
+    """Här tar funktionen emot en lista av sökvägar till bilder och ett annons id, för varje sträng i listan
+    så läggs det in i databasen tillsammans med annons id:et"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
@@ -103,6 +110,8 @@ def insert_image_path(image_paths, ad_id):
     return
 
 def insert_ad(title, description, price, type, username, image_paths):
+    """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
+    skickas användaren tillbaka till hemsidan"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
@@ -117,6 +126,8 @@ def insert_ad(title, description, price, type, username, image_paths):
 
 @app.route("/profile/")
 def profile():
+    """Här för denna URI så returneras profile.html tillsammans med alla aktiva och inaktiva annonser som en 
+    specifik användare har """
     if 'user' not in session:
         return redirect('/')
 
@@ -133,6 +144,8 @@ def profile():
 
 @app.route("/ad/<id>/")
 def ad(id):
+    """Här tar funktionen emot ett id från URI och letar sedan i databasen efter en annons med ett matchande id, finns det
+    så returneras annonsen.html tillsammans med titeln, priset och beskrivningen och bilderna för annonsen."""
     if 'user' not in session:
         return redirect('/')
     
@@ -172,6 +185,8 @@ def create_ad():
     
 @app.route("/save/", methods = ['POST', 'GET'])
 def save():
+    """I denna funktionen tas titel, beskrivning, typ, pris, användarnamn, bildsökvägar emot från ett formulär.
+        om någon av dessa är tomma får användaren göra om annonsen den vill skapa. om ingen av dessa är tomma läggs dessa in i databasen."""
     if request.method == 'POST':
         title = getattr(request.form, "Title")
         description = getattr(request.form, "Description")
@@ -202,6 +217,7 @@ def save():
         
 @app.route("/")
 def index():
+    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index()
     if 'user' not in session:
         return render_template("new.html", ads = ads)
@@ -213,10 +229,12 @@ def index():
 
 @app.route("/login/")
 def login():
+    """Här returneras login.html"""
     return render_template("login.html")
 
 @app.route("/new/choose_ad/")
 def choose_ad():
+    """Här returneras choose_ad.html"""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -224,6 +242,7 @@ def choose_ad():
 
 @app.route("/new/1/")
 def new_1():
+    """Här returneras ad_sälj.html"""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -231,6 +250,7 @@ def new_1():
     
 @app.route("/new/2/")
 def new_2():
+    """Här returneras ad_byt.html"""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -238,6 +258,7 @@ def new_2():
     
 @app.route("/new/3/")
 def new_3():
+    """Här returneras ad_efterfråga.html"""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -245,11 +266,13 @@ def new_3():
 
 @app.route("/logout/")
 def logout():
+    """Här loggas användaren ut och skickar användaren till hemskärmen """
     session.pop('user', None)
-    return redirect(url_for("/"))
+    return redirect("/")
 
 @app.route("/validation/", methods = ['POST', 'GET'])
 def validation():
+    """Här loggas användaren ut om den är inloggad, den tar sen emot användarnamn och lösen ord och sparar användaren i en session"""
     if request.method == 'POST':
         session.pop('user', None)
         username = request.form.get("Username")
@@ -274,10 +297,13 @@ def validation():
            
 @app.route("/register/")
 def register():
+    """Här returneras register.html"""
     return render_template("register.html")
 
 @app.route("/register_user/",methods = ['POST', 'GET'])
 def register_user():
+    """Här tas användaruppgifter emot från ett formulär, sedan läses alla befintliga användare in. Om inget av dom krocka med befintliga användaruppgifter
+    läggs användarens uppgifter in i databasen."""
     email = getattr(request.form, "Email")
     username = getattr(request.form, "Användarnamn")
     password = getattr(request.form, "Lösenord")
@@ -314,4 +340,4 @@ def register_user():
 
 
 if __name__ == "__main__":      
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    app.run(host="127.0.0.1", port=8080, debug=True) #Här körs programmet
