@@ -25,9 +25,10 @@ body{
   }
   /* On mouse-over, add a deeper shadow */
   .card:hover {
-    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
-    background-color: #f1e8e0;
+    box-shadow: 0 40px 80px 0 rgba(0,0,0,0.2);
+    background-color: #5B9279;
     border-bottom: none;
+    color: #f1e8e0;
 
   }
   .card:hover > img {
@@ -46,8 +47,12 @@ body{
 
   }
 
+
+
+
 .logga_in_box{
   margin-right: 5px;
+  margin-top: 18px;
 
 }
 
@@ -80,12 +85,13 @@ body{
 nav{
     background-color: #eaddd0;
     padding: 10px;
-    position: fixed;
     z-index: 2;
-    width: 98%;
+    position: fixed;
     border-bottom: #f1e8e0;
     border-bottom-style: solid;
     border-bottom-width: thin;
+    width: 99%;
+    
     }
 
 .img{
@@ -209,6 +215,7 @@ nav{
     margin-top: 5%;
     column-count: 4;
     column-gap: 20px;
+
 }
 
 
