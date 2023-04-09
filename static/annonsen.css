@@ -2,6 +2,10 @@ body{
     margin: 0%;
 }
 
+p{
+  margin: 0%;
+}
+
 .new-old-box{
   padding: 10px;
   display: flex;
@@ -258,6 +262,91 @@ nav{
     margin: 0%;
 
 
+}
+
+
+/* lolll vet inte om detta är bra*/
+/*#ff3c41*/
+/*#444857*/
+.test{
+  display: flex;
+  gap: 70%;
+}
+:root {
+	--u: 1.5vmin;
+	--clr: #e7ba89;
+	--bg: #f1e8e0;
+}
+
+.button {
+	position: relative;
+    width: calc(var(--u) * 10);
+    height: calc(var(--u) * 10);
+}
+
+input { display: none; }	
+
+label {
+    background: var(--bg);
+    width: 60%;
+    height: 50%;
+    position: absolute;
+    border-radius: calc(var(--u) * 1.5);
+	cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+label span {
+	position: absolute;
+	width: 60%;
+	height: 50%;
+	animation: dislike 0.5s ease 0s;
+}
+
+label span:before {
+    content: "";
+    position: absolute;
+    border-radius: 0.25vmin;
+    border: 1.69vmin solid #fff0;
+    border-top: 2vmin solid var(--clr);
+    margin-top: 1.81vmin;
+    margin-left: 0.62vmin;
+}
+
+label span:after {
+    content: "";
+    position: absolute;
+    background: var(--clr);
+    width: 1.9vmin;
+    height: 1.9vmin;
+    border-radius: 100%;
+    margin-left: 0.51vmin;
+    margin-top: 0.35vmin;
+    box-shadow: 1.64vmin 0 0 0 var(--clr);
+}
+
+input:checked + label span {
+	--clr: #5b9279; 
+	animation: like 0.5s ease 0s;
+}
+
+
+@keyframes like {
+	75% { transform: scale(1.25); }
+}
+@keyframes dislike {
+	75% { transform: scale(0.75); }
+}
+
+.button:hover label span:before, .button:hover label span:after {
+    --clr: #406253;
+}
+
+.button:hover input:checked + label span:before, .button:hover input:checked + label span:after {
+    --clr: #5b9279; 
 }
 
 
