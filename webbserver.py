@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, session, g, redirect 
 import psycopg2
 from datetime import timedelta
+import time
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
@@ -104,7 +105,6 @@ def insert_image_path(image_paths, ad_id):
     så läggs det in i databasen tillsammans med annons id:et"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    ad_id = new_ad_id()
     for path in image_paths:
         cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
     conn.commit()
@@ -117,7 +117,12 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
+    if type == "sälj":
+        cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
+    elif type == "byt":
+        cursor.execute(f""" INSERT into ads(ad_id, username, title,, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', '{description}', '{type}', 'active'); """)
+    elif type == "efterfråga":
+        cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
     conn.commit()
     conn.close()
     if image_paths == "":
@@ -190,26 +195,25 @@ def save():
     """I denna funktionen tas titel, beskrivning, typ, pris, användarnamn, bildsökvägar emot från ett formulär.
         om någon av dessa är tomma får användaren göra om annonsen den vill skapa. om ingen av dessa är tomma läggs dessa in i databasen."""
     if request.method == 'POST':
-        title = getattr(request.form, "Title")
-        description = getattr(request.form, "Description")
-        price = getattr(request.form, "Price")
-        type = getattr(request.form, "Type")
-        username = getattr(request.form, "Username")
-        images = request.files.getlist('images')
+        title = request.form.get("Title")
+        description = request.form.get("Description")
+        price = request.form.get("Price")
+        type = request.form.get("Type")
+        username = request.form.get("Username")
+        images = request.files.getlist("images")
+        print(images)
         if title == "":
             return render_template("ad_creation.html", description = description, price = price, type = type, username = username)
         elif description == "":
             return render_template("ad_creation.html", title = title, price = price, type = type, username = username)
-        elif price == "":
-            return render_template("ad_creation.html", title = title, description = description, type = type, username = username)
         elif type == "":
             return render_template("ad_creation.html", description = description, price = price, username = username)
         else:
             image_paths = []
             for image in images:
-                if image.filename.endswith('.jpg', '.png'):
+                if image.filename.endswith(('.jpg', '.png')):
                     # Save the file to a directory
-                    image.save('Stickling.gg\Static' + image.filename)
+                    image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                     # Append the file path to the list of image paths
                     image_paths.append(f'/static/{image.filename}')
                 insert_ad(title, description, price, type, username, image_paths)
@@ -248,7 +252,8 @@ def new_1():
     if 'user' not in session:
         return redirect("/")
     else:
-        return render_template("ad_sälj.html")
+        user = session['user']
+        return render_template("ad_sälj.html", user = user)
     
 @app.route("/new/2/")
 def new_2():
@@ -256,7 +261,8 @@ def new_2():
     if 'user' not in session:
         return redirect("/")
     else:
-        return render_template("ad_byt.html")
+        user = session['user']
+        return render_template("ad_byt.html", user = user)
     
 @app.route("/new/3/")
 def new_3():
@@ -264,7 +270,8 @@ def new_3():
     if 'user' not in session:
         return redirect("/")
     else:
-        return render_template("ad_efterfråga.html")
+        user = session['user']
+        return render_template("ad_efterfråga.html", user = user)
 
 @app.route("/logout/")
 def logout():

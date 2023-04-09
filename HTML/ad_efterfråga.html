@@ -37,19 +37,21 @@
                 <h1>Annons detaljer</h1>
             </div>
             <div class="ad_creation_box">
-                <form class="ad_information">
+                <form class="ad_information" action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data">
                     <div class="topform">
-                        <input type="text" name="title" id="title" placeholder="Title...">
+                        <input type="text" name="Title" id="title" required placeholder="Title...">
                         <button class="create"type="create">Upload</button>
                     </div>
-                    <textarea  name="description" id="description" placeholder="Information..."> </textarea>
+                    <textarea  name="description" id="Description" required placeholder="Information..."> </textarea>
                     <div class="bottomform">
                         <div class="Bbox">
                             <h3>Annons Bilder</h3>
                             <p>Lägg till max 5 bilder på din stickling</p>
-                            <input type="file" name="files[]" multiple max="5" accept="accept="image/*">
+                            <input type="file" name="images" multiple max="5" required accept="image/*">
                         </div>
                     </div>
+                    <input type="hidden" id="custId" name="Type" value="efterfråga">
+                    <input type="hidden" id="custId" name="Username" value="{{ user }}">
                 </form>
             </div>
         </main>
