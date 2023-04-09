@@ -4,7 +4,7 @@ body {
 }
 
 .main {
-    background-color: #E3D1C1;
+    background-color: #f1e8e0;
     width: 400px;
     height: 400px;
     margin: 7em auto;
@@ -100,7 +100,7 @@ a {
 
 @media (max-width: 600px) {
     .main {
-        background-color: #FFFFFF;
+        background-color: #f1e8e0;
         width: 400px;
         height: 400px;
         margin: 7em auto;
