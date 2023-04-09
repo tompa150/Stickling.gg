@@ -156,28 +156,35 @@ nav{
    }
 
 
-.ad_link {
-    text-decoration: none;
-    font-size: 50px;
-    color: #f1e8e0;
-}
 
 
    .card1{ background-color: #5B9279;
     padding: 20px;
-    width: 200px;
-    height: 200px;
+    width: 25%;
+    height: 60%;
     border-radius: 10%;
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    font-size: 50px;
+    color: #f1e8e0;
+    text-align: center;
    
    
    
    }
    .card2{ background-color: #0c5735;
     padding: 20px;
-    width: 200px;
-    height: 200px;
+    width: 25%;
+    height: 60%;
     border-radius: 10%;
-
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    font-size: 50px;
+    color: #f1e8e0;
+    text-align: center;
+   
    
    
    
@@ -186,13 +193,15 @@ nav{
    }
    .card3{ background-color: #5B9279;
     padding: 20px;
-    width: 200px;
-    height: 200px;
+    width: 25%;
+    height: 50%;
     border-radius: 10%;
-   
-   
-   
-   
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    font-size: 50px;
+    color: #f1e8e0;
+    text-align: center;
    
    
    }
@@ -208,7 +217,7 @@ nav{
         position: fixed;
         bottom: 0%;
         z-index: 2;
-        width: 98%;
+        width: 100%;
 }
 
    
