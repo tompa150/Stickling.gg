@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, url_for, session, g, redirect 
 import psycopg2
+from datetime import timedelta
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
+app.permanent_session_lifetime = timedelta(days=1)
 
 def new_ad_id():
     largest_id = 1
@@ -300,7 +302,7 @@ def register():
     """Här returneras register.html"""
     return render_template("register.html")
 
-@app.route("/register_user/",methods = ['POST', 'GET'])
+@app.route("/register/new/", methods = ['POST', 'GET'])
 def register_user():
     """Här tas användaruppgifter emot från ett formulär, sedan läses alla befintliga användare in. Om inget av dom krocka med befintliga användaruppgifter
     läggs användarens uppgifter in i databasen."""
@@ -336,6 +338,11 @@ def register_user():
                 return render_template("login.html")
             except (Exception) as error:
                pass
+
+
+@app.route('/register/lost_password/', methods = ['POST', 'GET'])
+def LostPassword():
+
 
 
 
