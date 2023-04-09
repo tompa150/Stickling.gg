@@ -339,9 +339,10 @@ def register_user():
             except (Exception) as error:
                pass
 
-
-@app.route('/register/lost_password/', methods = ['POST', 'GET'])
-def LostPassword():
+'''
+@app.route('/register/forgot_password/', methods = ['POST', 'GET'])
+def ForgPassword():
+'''
 
 
 
