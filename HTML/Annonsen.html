@@ -47,8 +47,13 @@
                     </div>
                 {% endfor %}
             </div>
-            <div id="pris">
-                <h4>Pris: 80 SEK</h5>
+            <div class="test">
+                <div id="pris">
+                    <h4>Pris: 80 SEK</h5>
+                </div>
+                <div class="button">
+                    <input type="checkbox" id="liked"><label for="liked"><span></span></label>
+                </div>
             </div>
             <div class="secondary">
                 <article>
@@ -60,15 +65,15 @@
                 </article>
                 <aside id="aside">
                     <form>
-                        <label for="Meddelande">Meddelande:</label>
+                        <p for="Meddelande">Meddelande:</p>
                         <textarea placeholder="...."></textarea>
-                        <label for="email">Email:</label>
+                        <p for="email">Email:</p>
                         <input type="text" required name="email" id="mail" placeholder="...">
                         <input type="submit" value="skicka">
                     </form>
                 </aside>
             </div>
-        </main>
+        </main> 
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
             <a class="linkfoot" href="idk">·Terms</a>
