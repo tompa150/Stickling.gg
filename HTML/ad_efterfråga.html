@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='ad_efterfråga.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='ad_sälj.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -28,17 +28,28 @@
                 </div>
             </div>
         </nav>
-        <main> 
+        <main>     
             <div>
                 <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}"></a>
             </div>
+
+            <div>
+                <h1>Annons detaljer</h1>
+            </div>
             <div class="ad_creation_box">
                 <form class="ad_information">
-                    <input type="file" name="files[]" multiple max="5" accept="accept="image/*">
-                    <input type="text" name="title" id="title" >
-                    <input type="number" name="price" id="price">
-                    <input type="text" name="description" id="description">
-                    <button type="create">Upload</button>
+                    <div class="topform">
+                        <input type="text" name="title" id="title" placeholder="Title...">
+                        <button class="create"type="create">Upload</button>
+                    </div>
+                    <textarea  name="description" id="description" placeholder="Information..."> </textarea>
+                    <div class="bottomform">
+                        <div class="Bbox">
+                            <h3>Annons Bilder</h3>
+                            <p>Lägg till max 5 bilder på din stickling</p>
+                            <input type="file" name="files[]" multiple max="5" accept="accept="image/*">
+                        </div>
+                    </div>
                 </form>
             </div>
         </main>

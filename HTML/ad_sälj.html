@@ -28,17 +28,35 @@
                 </div>
             </div>
         </nav>
-        <main> 
+        <main>     
             <div>
                 <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}"></a>
             </div>
+
+            <div>
+                <h1>Annons detaljer</h1>
+            </div>
             <div class="ad_creation_box">
                 <form class="ad_information">
-                    <input type="file" name="files[]" multiple max="5" accept="accept="image/*">
-                    <input type="text" name="title" id="title" >
-                    <input type="number" name="price" id="price">
-                    <input type="text" name="description" id="description">
-                    <button type="create">Upload</button>
+                    <div class="topform">
+                        <input type="text" name="title" id="title" placeholder="Title...">
+                        <button class="create"type="create">Upload</button>
+                    </div>
+                    <textarea  name="description" id="description" placeholder="Information..."> </textarea>
+                    <div class="bottomform">
+                        <div class="Bbox">
+                            <h3>Annons Bilder</h3>
+                            <p>Lägg till max 5 bilder på din stickling</p>
+                            <input type="file" name="files[]" multiple max="5" accept="accept="image/*">
+                        </div>
+                        <div class="Bbox">
+                            <p>Här sätter du ditt pris för din stickling</p>
+                            <input type="number" name="price" id="price" placeholder="Pris...">
+                        </div>
+
+
+
+                    </div>
                 </form>
             </div>
         </main>
