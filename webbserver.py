@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, session, g, redirect 
 import psycopg2
 from datetime import timedelta
-import time
+import os
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
@@ -212,10 +212,14 @@ def save():
             image_paths = []
             for image in images:
                 if image.filename.endswith(('.jpg', '.png')):
-                    # Save the file to a directory
-                    image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
-                    # Append the file path to the list of image paths
-                    image_paths.append(f'/static/{image.filename}')
+                    if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
+                        image.filename = f'{title}_{username}_{image.filename}'
+                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                        image_paths.append(f'/static/{image.filename}')
+                    else:    
+                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                        image_paths.append(f'/static/{image.filename}')
+
                 insert_ad(title, description, price, type, username, image_paths)
             return redirect("/")
 
