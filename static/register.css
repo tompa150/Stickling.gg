@@ -5,6 +5,10 @@ body {
 }
 
 .RegisterMain {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     background-color: #f1e8e0;
     width: 400px;
     height: 500px;
