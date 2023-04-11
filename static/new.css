@@ -84,7 +84,9 @@ body{
 }
 
 nav{
-    background-color: #eaddd0;
+    font-family: 'Fasthand';
+    font-style: normal;
+    background-color: #ac9a89;
     padding: 10px;
     z-index: 2;
     position: fixed;
