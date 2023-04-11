@@ -27,7 +27,7 @@ def read_user_info():
     """Här läses alla användaruppgifter in från databasen"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute("SELECT username, password, email number FROM users;")
+    cursor.execute("SELECT username, password, email, number FROM users;")
     products = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -317,38 +317,33 @@ def register():
 def register_user():
     """Här tas användaruppgifter emot från ett formulär, sedan läses alla befintliga användare in. Om inget av dom krocka med befintliga användaruppgifter
     läggs användarens uppgifter in i databasen."""
-    email = getattr(request.form, "Email")
-    username = getattr(request.form, "Användarnamn")
-    password = getattr(request.form, "Lösenord")
-    conf_password = getattr(request.form, "Bekräfta lösenord")
-    number = getattr(request.form, "Telefonnummer")
+    email = request.form.get("Email")
+    username = request.form.get("Användarnamn")
+    password = request.form.get("Lösenord")
+    number = request.form.get("Telefonnummer")
     user_info = read_user_info()
     for row in user_info:
         if email == row[0]:
-            invalid_email = "Email already exists"
+            invalid_email = "Email already exists, please enter valid email!"
             return render_template("register.html", invalid_email = invalid_email)
         elif username == row[1]:
-            invalid_username = "Username already exists"
+            invalid_username = "Username already exists, please enter valid username!"
             return render_template("register.html", invalid_username=invalid_username)
         elif password == row[2]:
-            invalid_password = "Password alredy exists"
+            invalid_password = "Password alredy exists, please enter valid password!"
             return render_template("register.html", invalid_password = invalid_password)
-        elif password != conf_password:
-            non_similar_pass = "Your password is not the same, please re-enter your password."
-            return render_template("register.html", non_similar_pass = non_similar_pass)
         elif number == row[3]:
             number_exists = "That number already exists, please enter your own number!"
             return render_template("register.html", number_exists = number_exists)
         elif email !=row[0] and username != row[1] and password != row[2] and number != row[3]:
-            try:
-                conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
-                cursor = conn.cursor()
-                cursor.execute(f""" INSERT INTO users(username, password, email, number) VALUES ('{username}', '{password}', '{email}', {number}); """)
-                conn.commit()
-                conn.close()
-                return render_template("login.html")
-            except (Exception) as error:
-               pass
+            conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
+            cursor = conn.cursor()
+            cursor.execute(f""" INSERT INTO users (username, password, email, number) VALUES ('{username}', '{password}', '{email}', {number}) """)
+            print(number)
+            conn.commit()
+            conn.close()
+            return render_template("login.html")
+
 
 '''
 @app.route('/register/forgot_password/', methods = ['POST', 'GET'])
