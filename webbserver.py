@@ -355,7 +355,9 @@ def register_user():
 def ForgPassword():
 '''
 
-
+"""@app.route("/about/")
+    def about():_
+    return render_template """
 
 
 if __name__ == "__main__":      
