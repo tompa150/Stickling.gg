@@ -10,27 +10,14 @@
 
 <body>
   <div class="RegisterMain">
-    <p class="RegisterSign" align="center">Registrera ny användare</p>
-    <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
-      {% if invalid_email != "": %}
-        <h3>{{invalid_email}}</h3>
-      {% endif %}
-      <input class="RegisterUn " id="Email" name ="Email" type="text" align="center" placeholder="Email">
-      {% if invalid_username != "": %}
-        <h3>{{invalid_username}}</h3>
-      {% endif %}
-      <input class="RegisterUn " id="Användarnamn" name ="Användarnamn" type="text" align="center" placeholder="Användarnamn">
-      {% if invalid_password != "": %}
-        <h3>{{invalid_password}}</h3>
-      {% endif %}
-      <input class="RegisterPass" id="Lösenord" type="password" name ="Lösenord" align="center" placeholder="Lösenord">
-      <input class="RegisterPass" id="BekräftaLösenord" name ="Bekräfta_lösenord" type="password" align="center" placeholder="Bekräfta lösenord">
-      {% if number_exists != "": %}
-        <h3>{{number_exists}}</h3>
-      {% endif %}
-      <input class="RegisterUn" id="Telefonnummer" name ="Telefonnummer" type="text" align="center" placeholder="Mobilnummer: +46....">
-      <input type="submit"  class="submit" align="center">
-      <a class="RegisterSubmit" align="center">Skapa konto</a>
+    <p class="RegisterSign" >Registrera ny användare</p>
+    <form action="http://127.0.0.1:8080/register_user/" method="POST" class="form1">
+      <input class="RegisterUn " id="Email" type="text" placeholder="Email">
+      <input class="RegisterUn " id="Användarnamn" type="text"  placeholder="Användarnamn">
+      <input class="RegisterPass" id="Lösenord" type="password"  placeholder="Lösenord">
+      <input class="RegisterPass" id="BekräftaLösenord" type="password" placeholder="Bekräfta lösenord">
+      <input class="RegisterUn" id="Telefonnummer" type="text"  placeholder="Mobilnummer: +46....">
+      <a class="RegisterSubmit" >Skapa konto</a>
 
                 
     </div>
