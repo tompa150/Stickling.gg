@@ -109,9 +109,10 @@ nav{
         margin: 4px 0;
       }
 
-#logo { font-family: 'Fasthand', cursive;
-
-}
+      .FontNav{
+        font-family: 'Fasthand';
+      
+      }
 
 /* Links inside the navbar */
 .navbar a{
@@ -151,7 +152,6 @@ nav{
     color: #f1e8e0;
     padding: 14px 16px;
     background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
     margin: 0; /* Important for vertical align on mobile phones */
     cursor: pointer;
   }

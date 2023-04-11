@@ -2,6 +2,11 @@ body{
     margin: 0%;
 }
 
+.FontNav{
+  font-family: 'Fasthand';
+
+}
+
 p{
   margin: 0%;
 }
@@ -65,10 +70,6 @@ nav{
         background-color: black;
         margin: 4px 0;
       }
-
-#logo { font-family: 'Fasthand', cursive;
-
-}
 
 
 
@@ -183,7 +184,6 @@ nav{
     color: #f1e8e0;
     padding: 14px 16px;
     background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
     margin: 0; /* Important for vertical align on mobile phones */
     cursor: pointer;
   }

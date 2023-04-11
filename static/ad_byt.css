@@ -7,6 +7,11 @@ width: 40px;
 height: auto;
 }
 
+.FontNav{
+  font-family: 'Fasthand';
+
+}
+
 
 
 .ad_creation_box{ 
@@ -140,9 +145,7 @@ height: auto;
       margin: 4px 0;
     }
 
-#logo { font-family: 'Fasthand', cursive;
 
-}
 
 /* Links inside the navbar */
 .navbar a{
@@ -182,7 +185,6 @@ height: auto;
   color: #f1e8e0;
   padding: 14px 16px;
   background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
   cursor: pointer;
 }

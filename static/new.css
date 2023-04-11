@@ -2,6 +2,10 @@ body{
     margin: 0%;
 
 }
+.FontNav{
+  font-family: 'Fasthand';
+
+}
 
 
 .card {
@@ -84,7 +88,6 @@ body{
 }
 
 nav{
-    font-family: 'Fasthand';
     font-style: normal;
     background-color: #ac9a89;
     padding: 10px;
@@ -115,9 +118,7 @@ nav{
         margin: 4px 0;
       }
 
-#logo { font-family: 'Fasthand', cursive;
 
-}
 
 /* Links inside the navbar */
 .navbar a{
@@ -158,7 +159,6 @@ nav{
     color: #f1e8e0;
     padding: 14px 14px;
     background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
     margin: 0; /* Important for vertical align on mobile phones */
     cursor: pointer;
   }
