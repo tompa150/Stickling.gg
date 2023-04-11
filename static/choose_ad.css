@@ -21,6 +21,8 @@ body{
 
 
 nav{
+    font-family: 'Fasthand';
+    font-style: normal;
     background-color: #eaddd0;
     padding: 10px;
     position: fixed;
@@ -32,9 +34,14 @@ nav{
     }
 
 .img{
-        width: 50px;
-        height: auto;
+  width: 50px;
+  height: auto;
       }
+
+.small_logo {
+  font-family: 'Fasthand';
+  font-style: normal;
+}
 
 .bar_icons{
   width: 20px;

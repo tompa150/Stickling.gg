@@ -89,7 +89,7 @@ body{
 
 nav{
     font-style: normal;
-    background-color: #ac9a89;
+    background-color: #eaddd0;
     padding: 10px;
     z-index: 2;
     position: fixed;
@@ -108,6 +108,11 @@ nav{
 .bar_icons{
   width: 20px;
   height: auto;
+}
+
+.small_logo {
+  font-family: 'Fasthand';
+  font-style: normal;
 }
 
 
@@ -210,12 +215,13 @@ nav{
     main{
     background-color: #eaddd0;
     padding: 10%;
+    padding-top: 15%;
    }
 
 
         
 #main{
-    margin-top: 5%;
+    margin-top: 15%;
     column-count: 4;
     column-gap: 20px;
 
