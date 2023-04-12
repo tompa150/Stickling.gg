@@ -11,11 +11,6 @@ p{
   margin: 0%;
 }
 
-.new-old-box{
-  padding: 10px;
-  display: flex;
-  
-}
 
         
 
@@ -131,16 +126,21 @@ nav{
   
   .annons_bilder{
     padding: 10px;
-    display: flex;  
+    column-count: 2;
+    margin: 0%;
   }
 
 
   
   
   .image_main_annons{
-    margin-top: 10%;
+    break-inside: avoid;
+    display: grid;
+    grid-template-rows: 60px 60px;
+    margin-top: 5px;
+    width: 150px;
     height: auto;
-    width: 100%;
+    overflow: hidden;
   }
 
   
