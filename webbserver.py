@@ -100,17 +100,6 @@ def image_ad_read_index():
     conn.close()
     return results
 
-def insert_image_path(image_paths, ad_id):
-    """Här tar funktionen emot en lista av sökvägar till bilder och ett annons id, för varje sträng i listan
-    så läggs det in i databasen tillsammans med annons id:et"""
-    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
-    cursor = conn.cursor()
-    for path in image_paths:
-        cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
-    conn.commit()
-    conn.close()
-    return
-
 def insert_ad(title, description, price, type, username, image_paths):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
     skickas användaren tillbaka till hemsidan"""
@@ -119,17 +108,19 @@ def insert_ad(title, description, price, type, username, image_paths):
     ad_id = new_ad_id()
     if type == "sälj":
         cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
+        for path in image_paths:
+            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
     elif type == "byt":
         cursor.execute(f""" INSERT into ads(ad_id, username, title,, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', '{description}', '{type}', 'active'); """)
+        for path in image_paths:
+            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
     elif type == "efterfråga":
         cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
+        for path in image_paths:
+            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
     conn.commit()
     conn.close()
-    if image_paths == "":
-        return
-    else:
-        insert_image_path(image_paths, ad_id)
-        return redirect('/')
+    return redirect('/')
 
 @app.route("/profile/")
 def profile():
@@ -214,16 +205,16 @@ def save():
         else:
             image_paths = []
             for image in images:
-                if image.filename.endswith(('.jpg', '.png')):
+                if image.filename.endswith(('.jpg', '.png', '.jpeg')):
+                    image.filename = f'{title}_{username}_{image.filename}'
                     if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
-                        image.filename = f'{title}_{username}_{image.filename}'
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                         image_paths.append(f'/static/{image.filename}')
                     else:    
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                         image_paths.append(f'/static/{image.filename}')
-
-                insert_ad(title, description, price, type, username, image_paths)
+            print(image_paths)
+            insert_ad(title, description, price, type, username, image_paths)
             return redirect("/")
 
     return render_template("ad_creation.html")
