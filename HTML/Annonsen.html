@@ -39,17 +39,11 @@
                     <div>
                         <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
                     </div>
-                    <div>
-                        <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
-                    </div>
-                    <div>
-                        <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
-                    </div>
                 {% endfor %}
             </div>
             <div class="test">
                 <div id="pris">
-                    <h4>Pris: 80 SEK</h5>
+                    <h4>Pris: {{ad[3]}} SEK</h5>
                 </div>
                 <div class="button">
                     <input type="checkbox" id="liked"><label for="liked"><span></span></label>
@@ -57,11 +51,14 @@
             </div>
             <div class="secondary">
                 <article>
-                <p id="Description">Lorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum doloLorem ipsum dolor sit amet consec
-                tetur adipisicing elit. Error maxime
-                voluptas consequatur corporis. Fugiat eaque re
-                pudiandae repellendus eveniet consequatur ad lauda
-                ntium magni neque nam. Ex in dolores hic maxime ipsam!</p>
+                    <h2 id="title">{{ad[2]}}</h2>
+                    <p id="Description">Beskrivning: {{ad[4]}}</p>
+                    {% if username == ad[1]: %}
+                        <form action="http://127.0.0.1:8080/remove/" method="POST">
+                            <input type="hidden" id="custId" name="ad_id" value="{{ ad[0] }}">
+                            <button type="submit" value="Ta bort annons">
+                        </form>
+                    {% endif %}
                 </article>
                 <aside id="aside">
                     <form>
@@ -71,6 +68,7 @@
                         <input type="text" required name="email" id="mail" placeholder="...">
                         <input type="submit" value="skicka">
                     </form>
+
                 </aside>
             </div>
         </main> 

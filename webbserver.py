@@ -159,8 +159,11 @@ def ad(id):
     user_info = read_user_info()
     for user in user_info:
         if session['user'] == user[0]:
+            username = session['user']
+            print(username)
             ads = ad_read()
             for ad in ads:
+                print(ad[1])
                 if int(id) == ad[0]:
                     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
                     cursor = conn.cursor()
@@ -169,9 +172,9 @@ def ad(id):
                     image_paths = [image[0] for image in images]
                     cursor.close()
                     conn.close()
-                    return render_template("annonsen.html", ad = ad, image_paths = image_paths)
+                    return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username)
             else:
-                pass
+                return redirect('/')
         else:
             return redirect('/')
         
@@ -224,7 +227,23 @@ def save():
             return redirect("/")
 
     return render_template("ad_creation.html")
-        
+
+
+@app.route("/remove/", methods = ['POST', 'GET'])
+def remove():
+    if request.method == 'POST':
+        AdToDelete = request.form.get("ad_id")
+
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        cursor = conn.cursor()
+        cursor.execute(f""" UPDATE ads SET status = 'inactive' WHERE ad_id = {AdToDelete}; """)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/')
+    else:
+        pass
+   
 @app.route("/")
 def index():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
