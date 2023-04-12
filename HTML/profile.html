@@ -38,7 +38,7 @@
             </div>
 
             <article class="new-old-box">
-                    <div id="active_ads" class="box">
+                    <div class="box">
                             <h3 class="A-title">Active ads</h3>
                             {% for active in active_ads %}
                             <div class="card">
@@ -52,12 +52,12 @@
                             </div>
                             {% endfor %}
                     </div>
-                    <div id="old_ads" class="box">
+                    <div class="box2">
                             <h3 class="A-title">Old ads</h3>
                             {% for ad in inactive_ads %}
                             <div class="card">
-                                <div id="images">
-                                    <img id="bild" src="{{ ad[3]}}" alt="bild på stickling">
+                                <div>
+                                    <img class="annons" id="bild" src="{{ ad[3]}}" alt="bild på stickling">
                                 </div>
                                 <div class="container">
                                     <h4><b>{{ ad[1] }}</b></h4> 
