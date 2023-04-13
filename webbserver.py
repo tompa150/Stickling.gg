@@ -219,6 +219,13 @@ def save():
 
     return render_template("ad_creation.html")
 
+@app.route("/edit/<id>")
+def edit_article(id):
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        return redirect("edit.html")
+
 
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
