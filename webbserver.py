@@ -62,6 +62,15 @@ def image_ad_read_active(user):
     conn.close()
     return results
 
+def id_ad(id):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, ads.price, ads.type FROM ads WHERE ads.ad_id = {id} AND ads.status = 'active' """)
+    results = cursor.fetchall()
+    conn.close()
+    return results
+    
+
 def image_ad_read_inactive(user):
     """Här läses alla annonser in från databasen, tillsammans med 1 bild per annons, där status = inactive"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -100,6 +109,14 @@ def image_ad_read_index():
     conn.close()
     return results
 
+def ReadAdImages(id):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT image_path from image_pointer WHERE image_pointer.ad_id = {id}; """)
+    results = cursor.fetchall()
+    conn.close()
+    return results
+
 def insert_ad(title, description, price, type, username, image_paths):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
     skickas användaren tillbaka till hemsidan"""
@@ -118,6 +135,32 @@ def insert_ad(title, description, price, type, username, image_paths):
         cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
         for path in image_paths:
             cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
+    conn.commit()
+    conn.close()
+    return redirect('/')
+
+def delete_images(Images):
+    if Images != "":
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        cursor = conn.cursor()
+        for path in Images:
+            cursor.execute(f""" DELETE from image_pointer WHERE image_pointer.image_path = '{path}'; """ )
+        conn.commit()
+        conn.close()
+        return
+    else:
+        return
+
+def update_ad(title, ad_id, description, price, image_paths):
+    """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
+    skickas användaren tillbaka till hemsidan"""
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    ad_id = new_ad_id()
+    cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}); """)
+    if image_paths != "":
+        for path in image_paths:
+            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
     conn.commit()
     conn.close()
     return redirect('/')
@@ -221,12 +264,35 @@ def save():
 
 @app.route("/edit/<id>")
 def edit_article(id):
+    TheAd = id_ad(id)
+    Images = ReadAdImages(id)
     if 'user' not in session:
         return redirect('/')
     else:
-        return redirect("edit.html")
-
-
+        if TheAd[4] == "sälj":
+            return redirect("edit_sälj.html", TheAd = TheAd, Images = Images)
+        elif TheAd[4] == "byt":
+            return redirect("edit_byt.html", TheAd = TheAd, Images = Images)
+        elif TheAd[4] == "efterfråga":
+            return redirect("edit_efterfråga.html", TheAd = TheAd, Images = Images)
+ 
+@app.route("/update/")
+def update_ad():
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            ad_id = request.form.get("Ad_id")
+            title = request.form.get("Title")
+            description = request.form.get("Description")
+            price = request.form.get("Price")
+            type = request.form.get("Type")
+            username = request.form.get("Username")
+            image_paths = request.files.getlist("images")
+            Images = request.files.getlist("Deleted_images")
+            update_ad(title, ad_id, description, price, image_paths)
+            delete_images(Images)
+            
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
     if request.method == 'POST':

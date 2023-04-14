@@ -1,0 +1,11 @@
+<form method="post" action="{{ url_for('/remove/') }}">
+    {% for image_path in image_paths %}
+      <label>
+        <img class="annons" src="{{ image_path }}" data-col="0" alt="Avatar">
+        <input type="checkbox" name="image_paths[]" value="{{ image_path }}">
+        {{ image_path }}
+      </label>
+    {% endfor %}
+    <input type="submit" value="Remove Images">
+  </form>
+  
