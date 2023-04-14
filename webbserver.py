@@ -65,10 +65,11 @@ def image_ad_read_active(user):
 def id_ad(id):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, ads.price, ads.type FROM ads WHERE ads.ad_id = {id} AND ads.status = 'active' """)
-    results = cursor.fetchall()
+    cursor.execute(f""" SELECT * FROM ads WHERE ads.ad_id = {id}; """)
+    products = cursor.fetchall()
+    cursor.close()
     conn.close()
-    return results
+    return products
     
 
 def image_ad_read_inactive(user):
@@ -262,19 +263,20 @@ def save():
 
     return render_template("ad_creation.html")
 
-@app.route("/edit/<id>")
+@app.route("/edit/<id>/")
 def edit_article(id):
     TheAd = id_ad(id)
+    print(TheAd[4])
     Images = ReadAdImages(id)
     if 'user' not in session:
         return redirect('/')
     else:
-        if TheAd[4] == "sälj":
-            return redirect("edit_sälj.html", TheAd = TheAd, Images = Images)
+        if TheAd[4] == 'sälj':
+            return render_template("edit_sälj.html", TheAd = TheAd, Images = Images)
         elif TheAd[4] == "byt":
-            return redirect("edit_byt.html", TheAd = TheAd, Images = Images)
+            return render_template("edit_byt.html", TheAd = TheAd, Images = Images)
         elif TheAd[4] == "efterfråga":
-            return redirect("edit_efterfråga.html", TheAd = TheAd, Images = Images)
+            return render_template("edit_efterfråga.html", TheAd = TheAd, Images = Images)
  
 @app.route("/update/")
 def update_ad():
