@@ -2,6 +2,22 @@ body{
     margin: 0%;
 }
 
+.small_logo {
+  font-family: 'Fasthand';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 35px;
+  color: #f1e8e0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.small_logo > img{
+  width: 55px;
+  height: 55px;
+
+}
 
 .redigera_profile 
 {
@@ -97,15 +113,15 @@ body{
     padding: 2px 16px;
   }
 
-nav{
-    background-color: #eaddd0;
+  nav{
+    background-color: #5B9279;
     padding: 10px;
-    position: fixed;
     z-index: 2;
-    width: 98%;
+    position: fixed;
     border-bottom: #f1e8e0;
     border-bottom-style: solid;
     border-bottom-width: thin;
+    width: 100%;
     }
 
 .img{
@@ -130,17 +146,7 @@ nav{
         font-family: 'Fasthand';
       
       }
-/* Links inside the navbar */
-.navbar a{
-    font-weight: bold;
-    font-size: 35px;
-    text-align: center;
-    color: #5B9279;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    cursor: pointer;
-  }
+
   
 
 /* The dropdown container */
@@ -159,8 +165,38 @@ nav{
     float: right;
     display: flex;
     text-align: center;
+    margin-top: 2%;
+    margin-right: 18px;
     
   }
+
+  .creation_box{
+    margin-right: 5px;
+    display: flex;
+  
+  }
+
+  .creation_button:link, .creation_button:visited {
+    display: flex;
+    background-color: #f1e8e0;
+    color: black;
+    padding: 5px 5px;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 10px;
+    
+  }
+
+  .creation_button:link > img {
+    width: 40px;
+    height: 40px;
+  }
+
+.creation_button:link > p{
+  margin: 0;
+  margin-top: 10px;
+}
+
   /* Dropdown button */
   .dropdown .dropbtn {
     border: none;

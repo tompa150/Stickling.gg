@@ -10,11 +10,14 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='annonsen.css') }}">
     </head>
     <body>
-    
             <nav>
                 <div class="navbar">
-                    <a class="FontNav" href="http://127.0.0.1:8080/"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
+                    <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                     <div class="RBOX">
+                        <div class="creation_box">
+                            <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                                <p>Create ad</p><img src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
+                        </div>
                         <div class="dropdown">
                             <button class="dropbtn">
                                 <div class="bars"></div>
@@ -30,9 +33,6 @@
                     </div>
                 </div>
             </nav>
-        <header>
-
-        </header>
         <main>
             <div class="annons_bilder">
                 {% for image in image_paths %}

@@ -10,16 +10,17 @@
     </head>
     <body> 
         <nav>
-            <div class="navbar">
-                <a href="http://127.0.0.1:8080/" class="small_logo"> <img class="img" alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}"> Stickling</a>
+            <div class="navbar"> 
+                    <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                 <div class="RBOX">
                     {% if 'user' not in session %}
                         <div class="logga_in_box">
                             <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
                         </div>
                     {% else %}
-                        <div>
-                            <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="creationB" src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
+                        <div class="creation_box">
+                            <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                                <p>Create ad</p><img src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
                         </div >
                     {% endif %}
                     <div class="dropdown">
