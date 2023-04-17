@@ -1,26 +1,10 @@
-body{
-    margin: 0%;
-}
-
-.small_logo {
-  font-family: 'Fasthand';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 35px;
-  color: #f1e8e0;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-
-.small_logo > img{
-  width: 55px;
-  height: 55px;
-
-}
-
-
-nav{
+/* Same CSS for all HTML */
+body {
+  margin: 0%;
+  }
+  
+  /* CSS styling for navigation bar */
+  nav {
   background-color: #5B9279;
   padding: 10px;
   z-index: 2;
@@ -30,345 +14,347 @@ nav{
   border-bottom-width: thin;
   width: 100%;
   }
-
-.bar_icons{
+  
+  /* CSS styling for small logo */
+  .small_logo {
+  font-family: 'Fasthand';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 35px;
+  color: #f1e8e0;
+  text-decoration: none;
+  cursor: pointer;
+  }
+  
+  /* CSS styling for logo image */
+  .small_logo > img {
+  width: 55px;
+  height: 55px;
+  }
+  
+  /* CSS styling for right box */
+  .RBOX {
+  float: right;
+  display: flex;
+  text-align: center;
+  margin-top: 2%;
+  margin-right: 18px;
+  }
+  
+  /* CSS styling for bar icons */
+  .bar_icons {
   width: 20px;
   height: auto;
-}
-
-
-.bars{
-        width: 25px;
-        height: 2px;
-        background-color: black;
-        margin: 4px 0;
-      }
-
-
-
-
-#pris{
-    font-size: 120%;
   }
   
-  #Description{
-    padding: 10% 0 10% 0 ;
-    font-size: 100%;
-  
+  /* CSS styling for bars */
+  .bars {
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin: 4px 0;
   }
   
-  h1{
-  font-size: 200%;
-  
+  /* CSS styling for dropdown container */
+  .dropdown {
+  font-weight: bold;
+  background-color: #f1e8e0;
+  border-radius: 5px;
+  float: right;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 5px;
   }
   
-  #Title_annons{
-   width: 100%;
-   height: auto;  
-  
+  /* CSS styling for dropdown button */
+  .dropdown .dropbtn {
+  border: none;
+  outline: none;
+  color: #f1e8e0;
+  padding: 14px 16px;
+  background-color: inherit;
+  margin: 0;
+  cursor: pointer;
   }
   
-  .secondary{
-    padding: 20px;
-    display: flex;
-    justify-content: space-evenly;
-    
+  /* CSS styling for navbar links on hover */
+  .dropdown:hover .dropbtn {
+  border-radius: 5px;
+  background-color: #eaddd0;
+  cursor: pointer;
   }
   
-  
-  aside{
-    background-color: #f1e8e0;
-    border-radius: 10px; /* 5px rounded corners */
-    padding: 25px 25px;
-    margin-top: 10%;
-    margin-left: 5%;
-    height: 150px;
-    }
-  
-    input[type=text] {
-      background-color: #f1e8e0;
-      border: none;
-      border-bottom: 2px solid #000000;
-    }
-  
-    textarea {
-      width: 100%;
-      height: 80px;
-      padding: 12px 20px;
-      box-sizing: border-box;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      background-color: #f8f8f8;
-      resize: none;
-    }
-  
-  .annons_bilder{
-    padding: 10px;
-    column-count: 2;
-    margin: 0%;
+  /* CSS styling for dropdown content */
+  .dropdown-content {
+  border-radius: 5px;
+  right: 2%;
+  display: none;
+  position: absolute;
+  background-color: #f1e8e0;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: pointer;
   }
-
-
   
+  /* CSS styling for links inside the dropdown */
+  .dropdown-content a {
+  float: none;
+  color: rgb(0, 0, 0);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  font-size: 20px;
+  }
   
-  .image_main_annons{
-    break-inside: avoid;
-    display: grid;
-    grid-template-rows: 60px 60px;
-    margin-top: 5px;
-    width: 150px;
-    height: auto;
-    overflow: hidden;
+  /* CSS styling for dropdown links on hover */
+  .dropdown-content a:hover {
+  background-color: #eaddd0;
+  cursor: pointer;
   }
-
-
-  .RBOX{
-    float: right;
-    display: flex;
-    text-align: center;
-    margin-top: 2%;
-    margin-right: 18px;
-    
-  }
-
-  .creation_box{
-    margin-right: 5px;
-    display: flex;
   
+  /* CSS styling to show dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+  display: block;
+  cursor: pointer;
   }
-
+  
+  /* CSS styling for creation box */
+  .creation_box {
+  margin-right: 5px;
+  display: flex;
+  }
+  
+  /* CSS styling for creation button link */
   .creation_button:link, .creation_button:visited {
-    display: flex;
-    background-color: #f1e8e0;
-    color: black;
-    padding: 5px 5px;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 10px;
-    
+  display: flex;
+  background-color: #f1e8e0;
+  color: black;
+  padding: 5px 5px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 10px;
   }
-
-  .creation_button:link > img {
-    width: 40px;
-    height: 40px;
+  
+  
+/* Styling for creation button image */
+.creation_button:link > img {
+  width: 40px;
+  height: 40px;
   }
-
-.creation_button:link > p{
+  
+  /* Styling for creation button text */
+  .creation_button:link > p{
   margin: 0;
   margin-top: 10px;
-}
-
-
-
-
-
-  
-
-/* The dropdown container */
-.dropdown {
-    font-weight: bold;
-    background-color: #f1e8e0;
-    border-radius: 5px;
-    float: right;
-    overflow: hidden;
-    cursor: pointer;
-    margin-top: 18px;
-    margin-right: 5px;
-  }
-
-
-  /* Dropdown button */
-  .dropdown .dropbtn {
-    border: none;
-    outline: none;
-    color: #f1e8e0;
-    padding: 14px 16px;
-    background-color: inherit;
-    margin: 0; /* Important for vertical align on mobile phones */
-    cursor: pointer;
   }
   
-  /* Add a red background color to navbar links on hover */
-  .dropdown:hover .dropbtn {
-    border-radius: 5px;
-    background-color: #eaddd0;
-    cursor: pointer;
-  }
-  
-  /* Dropdown content (hidden by default) */
-  .dropdown-content {
-    border-radius: 5px;
-    right: 2%;
-    display: none;
-    position: absolute;
-    background-color: #f1e8e0;
-    min-width: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    cursor: pointer;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    float: none;
-    color: rgb(0, 0, 0);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  
-  /* Add a grey background color to dropdown links on hover */
-  .dropdown-content a:hover {
-    background-color: #eaddd0;
-    cursor: pointer;
-  }
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
-    cursor: pointer;
-  }
-    
-  main{
-    background-color: #f1e8e0;
-    padding: 10%;
-   }
- 
+  /* Footer styling -----------------------------------------------------------------------------------*/
   footer{
-        padding: 5px;
-        border-top: #f1e8e0;
-        border-top-style: solid;
-        background-color: #eaddd0;
-        display: flex;
-        position: fixed;
-        bottom: 0%;
-        z-index: 2;
-        width: 98%;
-}
+  padding: 5px;
+  border-top: #f1e8e0;
+  border-top-style: solid;
+  background-color: #eaddd0;
+  display: flex;
+  position: fixed;
+  bottom: 0%;
+  z-index: 2;
+  width: 98%;
+  }
+  
+  /* Information section in the footer */
+  #information{
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  }
+  
+  /* Footer links styling */
+  .linkfoot{
+  text-decoration: none;
+  color: black;
+  margin: 0%;
+  }
 
-   
-        #information{
-            display: flex;
-            justify-content: space-evenly;
-            text-align: center;
-          }
+/* Unika css för annonsen.css *-----------------------------------------------------------------------*/
 
-.linkfoot{
-    text-decoration: none;
-    color: black;
-    margin: 0%;
+/*CSS styling för main------------------------------------*/
 
+    
+main{
+  background-color: #f1e8e0;
+  padding: 10%;
+ }
 
-}
-
-
-/* lolll vet inte om detta är bra*/
-/*#ff3c41*/
-/*#444857*/
-.test{
+/* Increase the font size of the price element */
+#pris{
+  font-size: 120%;
+  }
+  
+  /* Set padding, font size, and layout for the description element */
+  #Description{
+  padding: 10% 0 10% 0 ;
+  font-size: 100%;
+  }
+  
+  /* Set the font size of h1 element */
+  h1{
+  font-size: 200%;
+  }
+  
+  /* Set the width to 100% and height to auto for the Title_annons element */
+  #Title_annons{
+  width: 100%;
+  height: auto;
+  }
+  
+  /* Set padding, layout, and content alignment for the secondary element */
+  .secondary{
+  padding: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  }
+  
+  /* Set background color, border radius, padding, margins, and height for the aside element */
+  aside{
+  background-color: #f1e8e0;
+  border-radius: 10px;
+  padding: 25px 25px;
+  margin-top: 10%;
+  margin-left: 5%;
+  height: 150px;
+  }
+  
+  /* Set the background color, border, and border-bottom properties for the text input field */
+  input[type=text] {
+  background-color: #f1e8e0;
+  border: none;
+  border-bottom: 2px solid #000000;
+  }
+  
+  /* Set the width, height, padding, box-sizing, border, border-radius, background color, and resize property for the textarea element */
+  textarea {
+  width: 100%;
+  height: 80px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+  }
+  
+  /* Set padding, column count, and margins for the annons_bilder element */
+  .annons_bilder{
+  padding: 10px;
+  column-count: 2;
+  margin: 0%;
+  }
+  
+  /* Set break-inside, grid layout, margins, width, height, and overflow properties for the image_main_annons element */
+  .image_main_annons{
+  break-inside: avoid;
+  display: grid;
+  grid-template-rows: 60px 60px;
+  margin-top: 5px;
+  width: 150px;
+  height: auto;
+  overflow: hidden;
+  }
+  
+  /* Set the layout and gap for the test element */
+  .test{
   display: flex;
   gap: 70%;
-}
-:root {
-	--u: 1.5vmin;
-	--clr: #e7ba89;
-	--bg: #f1e8e0;
-}
-
-.button {
-	position: relative;
-    width: calc(var(--u) * 10);
-    height: calc(var(--u) * 10);
-}
-
-input { display: none; }	
-
-label {
-    background: var(--bg);
-    width: 60%;
-    height: 50%;
-    position: absolute;
-    border-radius: calc(var(--u) * 1.5);
-	cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-label span {
-	position: absolute;
-	width: 60%;
-	height: 50%;
+  }
+  
+  /* Define custom variables for use in the button styling */
+  :root {
+  --u: 1.5vmin;
+  --clr: #e7ba89;
+  --bg: #f1e8e0;
+  }
+  
+  /* Set position, width, and height for the button element */
+  .button {
+  position: relative;
+  width: calc(var(--u) * 10);
+  height: calc(var(--u) * 10);
+  }
+  
+  /* Hide the input element */
+  input {
+  display: none;
+  }
+  
+  /* Set background, position, border-radius, cursor, display, and content alignment for the label element */
+  label {
+  background: var(--bg);
+  width: 60%;
+  height: 50%;
+  position: absolute;
+  border-radius: calc(var(--u) * 1.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+  
+  /* Set position, border-radius, border, margin, and shadow properties for the label span element */
+  label span {
+  position: absolute;
+  width: 60%;
+  height: 50%;  
 	animation: dislike 0.5s ease 0s;
 }
-
+/* Styles for the heart icon */
 label span:before {
-    content: "";
-    position: absolute;
-    border-radius: 0.25vmin;
-    border: 1.69vmin solid #fff0;
-    border-top: 2vmin solid var(--clr);
-    margin-top: 1.81vmin;
-    margin-left: 0.62vmin;
+  content: "";
+  position: absolute;
+  border-radius: 0.25vmin;
+  border: 1.69vmin solid #fff0;
+  border-top: 2vmin solid var(--clr);
+  margin-top: 1.81vmin;
+  margin-left: 0.62vmin;
 }
 
+/* Styles for the heart icon */
 label span:after {
-    content: "";
-    position: absolute;
-    background: var(--clr);
-    width: 1.9vmin;
-    height: 1.9vmin;
-    border-radius: 100%;
-    margin-left: 0.51vmin;
-    margin-top: 0.35vmin;
-    box-shadow: 1.64vmin 0 0 0 var(--clr);
+  content: "";
+  position: absolute;
+  background: var(--clr);
+  width: 1.9vmin;
+  height: 1.9vmin;
+  border-radius: 100%;
+  margin-left: 0.51vmin;
+  margin-top: 0.35vmin;
+  box-shadow: 1.64vmin 0 0 0 var(--clr);
 }
 
+/* Styles for the heart icon when checked */
 input:checked + label span {
-	--clr: #5b9279; 
-	animation: like 0.5s ease 0s;
+--clr: #5b9279; 
+animation: like 0.5s ease 0s;
 }
 
-
+/* Keyframes for the like animation */
 @keyframes like {
-	75% { transform: scale(1.25); }
+75% { transform: scale(1.25); }
 }
+
+/* Keyframes for the dislike animation */
 @keyframes dislike {
-	75% { transform: scale(0.75); }
+75% { transform: scale(0.75); }
 }
 
+/* Styles for the heart icon when hovering over the button */
 .button:hover label span:before, .button:hover label span:after {
-    --clr: #406253;
+  --clr: #406253;
 }
 
+/* Styles for the heart icon when hovering over the checked button */
 .button:hover input:checked + label span:before, .button:hover input:checked + label span:after {
-    --clr: #5b9279; 
+  --clr: #5b9279; 
 }
-
-
-
-
-@media screen and (max-width: 600px) {
-    .dropdown-content {
-        right: 35px;
-        
-    
-    
-    }
-  
-
-
-    }    
-
-
-  
-
-  @media screen and (min-width: 800px) {
-
-  }
-
-

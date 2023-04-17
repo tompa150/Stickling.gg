@@ -1,12 +1,23 @@
-
-
-/*Samma CSS för alla HTML-----------------------------------------------------------------------------------*/
-
-body{
-    margin: 0%;
-}
-
-.small_logo {
+/* Same CSS for all HTML -----------------------------------------------------*/
+body {
+  margin: 0%;
+  }
+  
+  /* CSS styling for navigation bar -------------------------------------------*/
+  nav {
+  background-color: #5B9279;
+  padding: 10px;
+  z-index: 2;
+  position: fixed;
+  border-bottom: #f1e8e0;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  width: 100%;
+  }
+  
+  
+  /* CSS styling for small logo */
+  .small_logo {
   font-family: 'Fasthand';
   font-style: normal;
   font-weight: bold;
@@ -14,250 +25,238 @@ body{
   color: #f1e8e0;
   text-decoration: none;
   cursor: pointer;
-}
-
-
-.small_logo > img{
+  }
+  
+  /* CSS styling for logo image */
+  .small_logo > img {
   width: 55px;
   height: 55px;
-
-}
-
-
-.card {
-  background-color: #f1e8e0;
-  transition: 0.3s;
-  border-radius: 10px; /* 5px rounded corners */
-  height: auto;
-  margin-bottom: 20%;
-  break-inside: avoid;
-  display: grid;
-  grid-template-columns: 2;
-  grid-template-rows: 1fr auto;
-  border-bottom: #2d2d2d solid;
-  border-bottom-width: thin;
-
-
   }
   
-  /* Add rounded corners to the top left and the top right corner of the image */
-  .annons {
-    border-radius: 10px;
-    width: 100%;
-    height: auto;
+  /* CSS styling for right box */
+  .RBOX {
+  float: right;
+  display: flex;
+  text-align: center;
+  margin-top: 2%;
+  margin-right: 18px;
   }
-  /* On mouse-over, add a deeper shadow */
-  .card:hover {
-    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
-    background-color: #f1e8e0;
-    border-bottom: none;
-
-  }
-  .card:hover > img {
-    border-radius: 10px 10px 0 0;
-
-    
-
-  }
-
-
-  /* Add some padding inside the card container */
-  .container {
-    padding: 2px 16px;
-  }
-
-  nav{
-    background-color: #5B9279;
-    padding: 10px;
-    z-index: 2;
-    position: fixed;
-    border-bottom: #f1e8e0;
-    border-bottom-style: solid;
-    border-bottom-width: thin;
-    width: 100%;
-    }
-
-
-.bar_icons{
+  
+  /* CSS styling for bar icons */
+  .bar_icons {
   width: 20px;
   height: auto;
-}
-
-
-.bars{
-        width: 25px;
-        height: 2px;
-        background-color: black;
-        margin: 4px 0;
-      }
+  }
   
-
-/* The dropdown container */
-.dropdown {
-    font-weight: bold;
-    background-color: #f1e8e0;
-    border-radius: 5px;
-    float: right;
-    overflow: hidden;
-    cursor: pointer;
-    margin-top: 18px;
-    margin-right: 5px;
+  /* CSS styling for bars */
+  .bars {
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin: 4px 0;
   }
-
-  .RBOX{
-    float: right;
-    display: flex;
-    text-align: center;
-    margin-top: 2%;
-    margin-right: 18px;
-    
-  }
-
-  .creation_box{
-    margin-right: 5px;
-    display: flex;
   
+  /* CSS styling for dropdown container */
+  .dropdown {
+  font-weight: bold;
+  background-color: #f1e8e0;
+  border-radius: 5px;
+  float: right;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 5px;
   }
-
+  
+  /* CSS styling for dropdown button */
+  .dropdown .dropbtn {
+  border: none;
+  outline: none;
+  color: #f1e8e0;
+  padding: 14px 16px;
+  background-color: inherit;
+  margin: 0;
+  cursor: pointer;
+  }
+  
+  /* CSS styling for navbar links on hover */
+  .dropdown:hover .dropbtn {
+  border-radius: 5px;
+  background-color: #eaddd0;
+  cursor: pointer;
+  }
+  
+  /* CSS styling for dropdown content */
+  .dropdown-content {
+  border-radius: 5px;
+  right: 2%;
+  display: none;
+  position: absolute;
+  background-color: #f1e8e0;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: pointer;
+  }
+  
+  /* CSS styling for links inside the dropdown */
+  .dropdown-content a {
+  float: none;
+  color: rgb(0, 0, 0);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  font-size: 20px;
+  }
+  
+  /* CSS styling for dropdown links on hover */
+  .dropdown-content a:hover {
+  background-color: #eaddd0;
+  cursor: pointer;
+  }
+  
+  /* CSS styling to show dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+  display: block;
+  cursor: pointer;
+  }
+  
+  /* CSS styling for creation box */
+  .creation_box {
+  margin-right: 5px;
+  display: flex;
+  }
+  
+  /* CSS styling for creation button link */
   .creation_button:link, .creation_button:visited {
-    display: flex;
-    background-color: #f1e8e0;
-    color: black;
-    padding: 5px 5px;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 10px;
-    
+  display: flex;
+  background-color: #f1e8e0;
+  color: black;
+  padding: 5px 5px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 10px;
   }
-
-  .creation_button:link > img {
-    width: 40px;
-    height: 40px;
+  
+  
+/* Styling for creation button image */
+.creation_button:link > img {
+  width: 40px;
+  height: 40px;
   }
-
-.creation_button:link > p{
+  
+  /* Styling for creation button text */
+  .creation_button:link > p{
   margin: 0;
   margin-top: 10px;
-}
-
-  /* Dropdown button */
-  .dropdown .dropbtn {
-    border: none;
-    outline: none;
-    color: #f1e8e0;
-    padding: 14px 16px;
-    background-color: inherit;
-    margin: 0; /* Important for vertical align on mobile phones */
-    cursor: pointer;
   }
   
-  /* Add a red background color to navbar links on hover */
-  .dropdown:hover .dropbtn {
-    border-radius: 5px;
-    background-color: #eaddd0;
-    cursor: pointer;
-  }
-  
-  /* Dropdown content (hidden by default) */
-  .dropdown-content {
-    border-radius: 5px;
-    right: 2%;
-    display: none;
-    position: absolute;
-    background-color: #f1e8e0;
-    min-width: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    cursor: pointer;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    float: none;
-    color: rgb(0, 0, 0);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  
-  /* Add a grey background color to dropdown links on hover */
-  .dropdown-content a:hover {
-    background-color: #eaddd0;
-    cursor: pointer;
-  }
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
-    cursor: pointer;
-  }
-    
-  main{
-    background-color: #f1e8e0;
-    padding: 10%;
-   }
-                
+  /* Footer styling -----------------------------------------------------------------------------------*/
   footer{
-        padding: 5px;
-        border-top: #f1e8e0;
-        border-top-style: solid;
-        background-color: #eaddd0;
-        display: flex;
-        position: fixed;
-        bottom: 0%;
-        z-index: 2;
-        width: 98%;
-}
-
-   
-        #information{
-            display: flex;
-            justify-content: space-evenly;
-            text-align: center;
-          }
-
-.linkfoot{
-    text-decoration: none;
-    color: black;
-    margin: 0%;
-
-
-}
-
-/* Unika css för profile.css*-----------------------------------------------------------------------*/
-
-
-.redigera_profile 
-{
-  padding-top: 20%;
-  padding-left: 10%;
-  padding-right: 10%;
-  text-align: center;
-}
-
-.new-old-box{
-  padding: 10px;
+  padding: 5px;
+  border-top: #f1e8e0;
+  border-top-style: solid;
+  background-color: #eaddd0;
   display: flex;
+  position: fixed;
+  bottom: 0%;
+  z-index: 2;
+  width: 98%;
+  }
   
-}
-.box2{
-  column-count: 2;
-  column-gap: 20px;
-  margin: 20% 20% 20% 5%;
-}
-        
-.box{
-    column-count: 2;
-    column-gap: 20px;
-    margin: 20% 20% 20% 5%;
-}
-
-.A-title{
-  margin-bottom: 10px;
-  width: 100%;
-}
+  /* Information section in the footer */
+  #information{
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  }
+  
+  /* Footer links styling */
+  .linkfoot{
+  text-decoration: none;
+  color: black;
+  margin: 0%;
+  }
 
 
+/* Unika css för profile.css (.card --> .conrtainer finns också i new.css *-----------------------------------------------------------------------*/
+
+/*CSS styling för main------------------------------------*/
+main{
+  background-color: #f1e8e0;
+  padding: 10%;
+ }
+
+/* CSS styles for the card */
+.card {
+  background-color: #f1e8e0; /* set the background color */
+  transition: 0.3s; /* add transition effect */
+  border-radius: 10px; /* set rounded corners */
+  height: auto;
+  margin-bottom: 20%; /* add margin at the bottom */
+  break-inside: avoid;
+  display: grid;
+  grid-template-columns: 2; /* set two columns */
+  grid-template-rows: 1fr auto; /* set one row and one auto */
+  border-bottom: #2d2d2d solid; /* set border */
+  border-bottom-width: thin;
+}
+  
+/* CSS styles for the image */
+.annons {
+  border-radius: 10px; /* set rounded corners */
+  width: 100%; /* set width to 100% */
+  height: auto; /* set height to auto */
+}
+
+/* CSS styles for the card on mouse hover */
+.card:hover {
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
+  background-color: #f1e8e0;
+  border-bottom: none;
+}
+
+/* CSS styles for the image on mouse hover */
+.card:hover > img {
+  border-radius: 10px 10px 0 0;
+}
+
+/* CSS styles for the container inside the card */
+.container {
+  padding: 2px 16px; /* add padding */
+}
+
+/* CSS styles for the "redigera_profile" element */
+.redigera_profile {
+  padding-top: 20%; /* add padding at the top */
+  padding-left: 10%; /* add padding at the left */
+  padding-right: 10%; /* add padding at the right */
+  text-align: center; /* center align the text */
+}
+
+/* CSS styles for the "new-old-box" element */
+.new-old-box {
+  padding: 10px; /* add padding */
+  display: flex; /* set display to flex */
+}
+
+/* CSS styles for the "box2" element */
+.box2 {
+  column-count: 2; /* set two columns */
+  column-gap: 20px; /* add gap between columns */
+  margin: 20% 20% 20% 5%; /* add margin */
+}
+
+/* CSS styles for the "box" element */
+.box {
+  column-count: 2; /* set two columns */
+  column-gap: 20px; /* add gap between columns */
+  margin: 20% 20% 20% 5%; /* add margin */
+}
+
+/* CSS styles for the "A-title" element */
+.A-title {
+  margin-bottom: 10px; /* add margin at the bottom */
+  width: 100%; /* set width to 100% */
+}

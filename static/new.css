@@ -1,124 +1,22 @@
-body{
+/* Same CSS for all HTML -----------------------------------------------------*/
+body {
   margin: 0%;
-
-}
-
-
-
-.card {
-  background-color: #f1e8e0;
-  transition: 0.3s;
-  border-radius: 10px; /* 5px rounded corners */
-  height: auto;
-  margin-bottom: 20%;
-  break-inside: avoid;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  border-bottom: #2d2d2d solid;
+  }
+  
+  /* CSS styling for navigation bar -------------------------------------------*/
+  nav {
+  background-color: #5B9279;
+  padding: 10px;
+  z-index: 2;
+  position: fixed;
+  border-bottom: #f1e8e0;
+  border-bottom-style: solid;
   border-bottom-width: thin;
-
+  width: 100%;
   }
   
-  /* Add rounded corners to the top left and the top right corner of the image */
-  .annons {
-    border-radius: 10px;
-    width: 100%;
-    height: auto;
-  }
-  /* On mouse-over, add a deeper shadow */
-  .card:hover {
-    box-shadow: 0 40px 80px 0 rgba(0,0,0,0.2);
-    background-color: #5B9279;
-    border-bottom: none;
-    color: #f1e8e0;
-
-  }
-  .card:hover > img {
-    border-radius: 10px 10px 0 0;
-
-  }
-
-  #main > a {
-    text-decoration: none;
-    color: black;
-
-
-  }
-
-.logga_in_box{
-  margin-right: 5px;
-  margin-top: 18px;
-
-}
-
-  .logga_in_button:link, .logga_in_button:visited {
-    background-color: #f1e8e0;
-    color: black;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 10px
-    
-  }
-  
-  .logga_in_button:hover, .logga_in_button:active {
-    background-color: #eaddd0;
-    color: black;
-  }
-
-  
-  /* Add some padding inside the card container */
-  .container {
-    padding: 2px 16px;
-  }
-
-  .creation_box{
-    margin-right: 5px;
-    display: flex;
-  
-  }
-
-  .creation_button:link, .creation_button:visited {
-    display: flex;
-    background-color: #f1e8e0;
-    color: black;
-    padding: 5px 5px;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 10px;
-    
-  }
-
-  .creation_button:link > img {
-    width: 40px;
-    height: 40px;
-  }
-
-.creation_button:link > p{
-  margin: 0;
-  margin-top: 10px;
-}
-
-
-
-nav{
-    background-color: #5B9279;
-    padding: 10px;
-    z-index: 2;
-    position: fixed;
-    border-bottom: #f1e8e0;
-    border-bottom-style: solid;
-    border-bottom-width: thin;
-    width: 100%;
-    }
-
-
-.bar_icons{
-  width: 20px;
-  height: auto;
-}
-
-.small_logo {
+  /* CSS styling for small logo */
+  .small_logo {
   font-family: 'Fasthand';
   font-style: normal;
   font-weight: bold;
@@ -126,117 +24,135 @@ nav{
   color: #f1e8e0;
   text-decoration: none;
   cursor: pointer;
-}
-
-
-.small_logo > img{
+  }
+  
+  /* CSS styling for logo image */
+  .small_logo > img {
   width: 55px;
   height: 55px;
-
-}
-
-
-
-.bars{
-        width: 25px;
-        height: 2px;
-        background-color: black;
-        margin: 4px 0;
-      }
-
-/* The dropdown container */
-.dropdown {
-    font-weight: bold;
-    background-color: #f1e8e0;
-    border-radius: 5px;
-    float: right;
-    overflow: hidden;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
-  .RBOX{
-    float: right;
-    display: flex;
-    text-align: center;
-    margin-top: 2%;
-    margin-right: 18px;
-    
   }
   
-  /* Dropdown button */
+  /* CSS styling for right box */
+  .RBOX {
+  float: right;
+  display: flex;
+  text-align: center;
+  margin-top: 2%;
+  margin-right: 18px;
+  }
+  
+  /* CSS styling for bar icons */
+  .bar_icons {
+  width: 20px;
+  height: auto;
+  }
+  
+  /* CSS styling for bars */
+  .bars {
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin: 4px 0;
+  }
+  
+  /* CSS styling for dropdown container */
+  .dropdown {
+  font-weight: bold;
+  background-color: #f1e8e0;
+  border-radius: 5px;
+  float: right;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 5px;
+  }
+  
+  /* CSS styling for dropdown button */
   .dropdown .dropbtn {
-    border: none;
-    outline: none;
-    color: #f1e8e0;
-    padding: 14px 14px;
-    background-color: inherit;
-    margin: 0; /* Important for vertical align on mobile phones */
-    cursor: pointer;
+  border: none;
+  outline: none;
+  color: #f1e8e0;
+  padding: 14px 16px;
+  background-color: inherit;
+  margin: 0;
+  cursor: pointer;
   }
   
-  /* Add a red background color to links on hover */
+  /* CSS styling for navbar links on hover */
   .dropdown:hover .dropbtn {
-    border-radius: 5px;
-    background-color: #eaddd0;
-    cursor: pointer;
+  border-radius: 5px;
+  background-color: #eaddd0;
+  cursor: pointer;
   }
   
-  /* Dropdown content (hidden by default) */
+  /* CSS styling for dropdown content */
   .dropdown-content {
-    border-radius: 5px;
-    right: 2%;
-    display: none;
-    position: absolute;
-    background-color: #f1e8e0;
-    min-width: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    cursor: pointer;
+  border-radius: 5px;
+  right: 2%;
+  display: none;
+  position: absolute;
+  background-color: #f1e8e0;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: pointer;
   }
   
-  /* Links inside the dropdown */
+  /* CSS styling for links inside the dropdown */
   .dropdown-content a {
-    float: none;
-    color: rgb(0, 0, 0);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    cursor: pointer;
-    font-size: 20px;
+  float: none;
+  color: rgb(0, 0, 0);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  font-size: 20px;
   }
   
-  /* Add a grey background color to dropdown links on hover */
+  /* CSS styling for dropdown links on hover */
   .dropdown-content a:hover {
-    background-color: #eaddd0;
-    cursor: pointer;
+  background-color: #eaddd0;
+  cursor: pointer;
   }
   
-  /* Show the dropdown menu on hover */
+  /* CSS styling to show dropdown menu on hover */
   .dropdown:hover .dropdown-content {
-    display: block;
-    cursor: pointer;
+  display: block;
+  cursor: pointer;
   }
-    
-main{
-    background-color: #f1e8e0;
-    padding: 10%;
-    padding-top: 5%;
-   }
-
-
-        
-#main{
-  margin-top: 15%;
-  column-count: 4;
-  column-gap: 20px;
-
-}
-
-
-                
-footer{
+  
+  /* CSS styling for creation box */
+  .creation_box {
+  margin-right: 5px;
+  display: flex;
+  }
+  
+  /* CSS styling for creation button link */
+  .creation_button:link, .creation_button:visited {
+  display: flex;
+  background-color: #f1e8e0;
+  color: black;
+  padding: 5px 5px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 10px;
+  }
+  
+  
+/* Styling for creation button image */
+.creation_button:link > img {
+  width: 40px;
+  height: 40px;
+  }
+  
+  /* Styling for creation button text */
+  .creation_button:link > p{
+  margin: 0;
+  margin-top: 10px;
+  }
+  
+  /* Footer styling -----------------------------------------------------------------------------------*/
+  footer{
   padding: 5px;
   border-top: #f1e8e0;
   border-top-style: solid;
@@ -246,56 +162,133 @@ footer{
   bottom: 0%;
   z-index: 2;
   width: 98%;
-}
-
-   
-#information{
+  }
+  
+  /* Information section in the footer */
+  #information{
   display: flex;
   justify-content: space-evenly;
   text-align: center;
   }
-
-.linkfoot{
+  
+  /* Footer links styling */
+  .linkfoot{
   text-decoration: none;
   color: black;
   margin: 0%;
+  }
 
+/* Unika css för new.css (.card --> .conrtainer finns också i profile.css *-----------------------------------------------------------------------*/
 
+/*CSS styling för main------------------------------------*/
+
+main{
+  background-color: #f1e8e0;
+  padding: 10%;
+  padding-top: 5%;
+ }
+/* Styles for the main container */
+#main{
+  margin-top: 15%;
+  column-count: 4;
+  column-gap: 20px;
+  }
+  
+  /* Styles for the links inside the main container */
+  #main > a {
+  text-decoration: none;
+  color: black;
+  }
+  
+/* CSS styles for the card */
+.card {
+  background-color: #f1e8e0; /* set the background color */
+  transition: 0.3s; /* add transition effect */
+  border-radius: 10px; /* set rounded corners */
+  height: auto;
+  margin-bottom: 20%; /* add margin at the bottom */
+  break-inside: avoid;
+  display: grid;
+  grid-template-columns: 2; /* set two columns */
+  grid-template-rows: 1fr auto; /* set one row and one auto */
+  border-bottom: #2d2d2d solid; /* set border */
+  border-bottom-width: thin;
+}
+  
+/* CSS styles for the image */
+.annons {
+  border-radius: 10px; /* set rounded corners */
+  width: 100%; /* set width to 100% */
+  height: auto; /* set height to auto */
 }
 
+/* CSS styles for the card on mouse hover */
+.card:hover {
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
+  background-color: #f1e8e0;
+  border-bottom: none;
+}
 
+/* CSS styles for the image on mouse hover */
+.card:hover > img {
+  border-radius: 10px 10px 0 0;
+}
 
-
-@media screen and (max-width: 600px) {
-    .dropdown-content {
-        right: 35px;
-        
-    
-    
-    }
-    .card {
-
-        width: 100%;
-
-    }
-
-
-    #main{
-      justify-content: space-evenly;
-      column-count: 2;
-      column-gap: 20px;
-    
-    }    
-
-    #main{
-        margin-bottom: 10%;
-        margin-right: 0%;
-
-    }
+/* CSS styles for the container inside the card */
+.container {
+  padding: 2px 16px; /* add padding */
+}
+  
+  /* Styles for the login box */
+  .logga_in_box{
+  margin-right: 5px;
+  margin-top: 18px;
+  }
+  
+  /* Styles for the login button link */
+  .logga_in_button:link, .logga_in_button:visited {
+  background-color: #f1e8e0;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 10px;
+  }
+  
+  /* Styles for the login button on hover and active */
+  .logga_in_button:hover, .logga_in_button:active {
+  background-color: #eaddd0;
+  color: black;
+  }
+  
+  /* CSS styling for smaller screens */
+  @media screen and (max-width: 600px) {
+  /* Styles for the dropdown content */
+  .dropdown-content {
+  right: 35px;
   }
 
+  
+  /* Styles for the card container */
+  .card {
+  width: 100%;
+  }
+  
+  /* Styles for the main container */
+  #main{
+  justify-content: space-evenly;
+  column-count: 2;
+  column-gap: 20px;
+  }
+  
+  /* Styles for the main container */
+  #main{
+  margin-bottom: 10%;
+  margin-right: 0%;
+  }
+}
+  
   @media screen and (min-width: 800px) {
-
-
+  /* Styles for larger screens */
+  
   }
-

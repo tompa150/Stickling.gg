@@ -1,117 +1,10 @@
-body{
+/* Same CSS for all HTML ------------------------------------------------*/
+body {
   margin: 0%;
-}
-
-.back_button{
-width: 40px;
-height: auto;
-}
-
-
-
-.ad_creation_box{ 
-margin: 5%;
+  }
   
-}
-
-#title{
-width: 60%;
-height: 50px;
-padding: 12px 20px;
-margin: 8px 0;
-display: inline-block;
-border: 1px solid #ccc;
-border-radius: 4px;
-box-sizing: border-box;
-text-align: start;
-font-size: x-large;
-
-}
-
-.topform{
-display: flex;
-gap: 70px;
-}
-
-.bottomform{
-margin-top: 5%;
-display: flex;
-gap: 300px;
-
-}
-
-.Bbox{
-display: block;
-}
-
-#description{
-width: 60%;
-height: 200px;
-padding: 12px 20px;
-margin: 8px 0;
-display: inline-block;
-border: 1px solid #ccc;
-border-radius: 4px;
-box-sizing: border-box;
-margin-right: 100px;
-font-size: large;
-
-}
-
-p{
-color: rgb(121, 121, 121);
-margin-top: 0;
-}
-
-h3{
-font-weight: normal;
-margin-top: 0;
-}
-
-
-.create {
-width: 30%;
-background-color: #5B9279;
-color: white;
-padding: 14px 20px;
-margin: 8px 0;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-float: right;
-}
-
-.create:hover {
-background-color: #629d83;
-}
-
-.ad_information{
-  flex-wrap: wrap;    
-  padding: 5%;
-  justify-content:center;
-  background-color: #f1e8e0;
-
-}
-
-
-.logga_in_button:link, .logga_in_button:visited {
-  background-color: #f1e8e0;
-  color: black;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-size: 20px;
-  border-radius: 10px
-  
-}
-
-.logga_in_button:hover, .logga_in_button:active {
-  background-color: #eaddd0;
-  color: black;
-}
-
-
-
-nav{
+  /* CSS styling for navigation bar--------------------------------------- */
+  nav {
   background-color: #5B9279;
   padding: 10px;
   z-index: 2;
@@ -121,82 +14,78 @@ nav{
   border-bottom-width: thin;
   width: 100%;
   }
-
-
-
-.small_logo {
-font-family: 'Fasthand';
-font-style: normal;
-font-weight: bold;
-font-size: 35px;
-color: #f1e8e0;
-text-decoration: none;
-cursor: pointer;
-}
-
-
-.small_logo > img{
-width: 55px;
-height: 55px;
-
-}
-
-
-
-
-.bar_icons{
-width: 20px;
-height: auto;
-}
-
-
-.bars{
-      width: 25px;
-      height: 2px;
-      background-color: black;
-      margin: 4px 0;
-    }
-
-
-/* The dropdown container */
-.dropdown {
+  
+  /* CSS styling for small logo */
+  .small_logo {
+  font-family: 'Fasthand';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 35px;
+  color: #f1e8e0;
+  text-decoration: none;
+  cursor: pointer;
+  }
+  
+  /* CSS styling for logo image */
+  .small_logo > img {
+  width: 55px;
+  height: 55px;
+  }
+  
+  /* CSS styling for right box */
+  .RBOX {
+  float: right;
+  display: flex;
+  text-align: center;
+  margin-top: 2%;
+  margin-right: 18px;
+  }
+  
+  /* CSS styling for bar icons */
+  .bar_icons {
+  width: 20px;
+  height: auto;
+  }
+  
+  /* CSS styling for bars */
+  .bars {
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin: 4px 0;
+  }
+  
+  /* CSS styling for dropdown container */
+  .dropdown {
   font-weight: bold;
   background-color: #f1e8e0;
   border-radius: 5px;
   float: right;
   overflow: hidden;
   cursor: pointer;
-  margin-top: 18px;
   margin-right: 5px;
-}
-
-.RBOX{
-  float: right;
-  display: flex;
-  text-align: center;
-  margin-right: 18px;
+  }
   
-}
-/* Dropdown button */
-.dropdown .dropbtn {
+  /* CSS styling for dropdown button */
+  .dropdown .dropbtn {
   border: none;
   outline: none;
   color: #f1e8e0;
   padding: 14px 16px;
   background-color: inherit;
-  margin: 0; /* Important for vertical align on mobile phones */
+  margin: 0;
   cursor: pointer;
-}
-
-/* Add a red background color to navbar links on hover */
-.dropdown:hover .dropbtn {
+  }
+  
+  /* CSS styling for navbar links on hover */
+  .dropdown:hover .dropbtn {
   border-radius: 5px;
   background-color: #eaddd0;
   cursor: pointer;
-}
-
-/* Dropdown content (hidden by default) */
-.dropdown-content {
+  }
+  
+  /* CSS styling for dropdown content */
+  .dropdown-content {
   border-radius: 5px;
   right: 2%;
   display: none;
@@ -206,10 +95,10 @@ height: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   cursor: pointer;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
+  }
+  
+  /* CSS styling for links inside the dropdown */
+  .dropdown-content a {
   float: none;
   color: rgb(0, 0, 0);
   padding: 12px 16px;
@@ -217,68 +106,144 @@ height: auto;
   display: block;
   text-align: left;
   cursor: pointer;
-}
-
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content a:hover {
+  font-size: 20px;
+  }
+  
+  /* CSS styling for dropdown links on hover */
+  .dropdown-content a:hover {
   background-color: #eaddd0;
   cursor: pointer;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+  }
+  
+  /* CSS styling to show dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
   display: block;
   cursor: pointer;
-}
+  }
   
-  main{
-  background-color: #f1e8e0;
-  padding: 10%;
+  /* Footer styling -----------------------------------------------------------------------------------*/
+  footer{
+  padding: 5px;
+  border-top: #f1e8e0;
+  border-top-style: solid;
+  background-color: #eaddd0;
+  display: flex;
+  position: fixed;
+  bottom: 0%;
+  z-index: 2;
+  width: 98%;
+  }
   
- }
-
-
-              
-footer{
-      padding: 5px;
-      border-top: #f1e8e0;
-      border-top-style: solid;
-      background-color: #eaddd0;
-      display: flex;
-      position: fixed;
-      bottom: 0%;
-      z-index: 2;
-      width: 100%;
-}
-
- 
-      #information{
-          display: flex;
-          justify-content: space-evenly;
-          text-align: center;
-        }
-
-.linkfoot{
+  /* Information section in the footer */
+  #information{
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  }
+  
+  /* Footer links styling */
+  .linkfoot{
   text-decoration: none;
   color: black;
   margin: 0%;
-
-
-}
-
-
-
-
-@media screen and (max-width: 600px) {
-  .dropdown-content {
-      right: 35px;
-      
-  
-  
   }
 
-@media screen and (min-width: 800px) {
+/* Unika css för ad_byt.css (.back_button --> .ad_information finns också i ad_sälj.css & ad_efterfråga.css *-----------------------------------------------------------------------*/
 
+/*CSS styling för main------------------------------------*/
+
+main{
+  background-color: #f1e8e0;
+  padding: 10%;
+  
+}
+/* Styles for the back button */
+.back_button {
+  width: 40px;
+  height: auto;
 }
 
+/* Styles for the ad creation box */
+.ad_creation_box {
+  margin: 5%;
+}
+
+/* Styles for the input field for ad title */
+#title {
+  width: 60%;
+  height: 50px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: start;
+  font-size: x-large;
+}
+
+/* Styles for the top form */
+.topform {
+  display: flex;
+  gap: 70px;
+}
+
+/* Styles for the bottom form */
+.bottomform {
+  margin-top: 5%;
+  display: flex;
+  gap: 40%;
+}
+
+/* Styles for the input field for ad description */
+#description {
+  width: 60%;
+  height: 200px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: large;
+}
+
+/* Styles for the paragraph element */
+p {
+  color: rgb(121, 121, 121);
+  margin-top: 0;
+}
+
+/* Styles for the heading element */
+h3 {
+  font-weight: normal;
+  margin-top: 0;
+}
+
+/* Styles for the create button */
+.create {
+  width: 30%;
+  background-color: #5B9279;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+.create:hover {
+  background-color: #629d83;
+}
+
+/* Styles for the ad information box */
+.ad_information {
+  flex-wrap: wrap;
+  padding: 5%;
+  justify-content: center;
+  background-color: #e8dbcf;
+  box-shadow: 0 40px 80px 0 rgba(0,0,0,0.2);
+  border-radius: 10px;
+  
 }
