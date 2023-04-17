@@ -6,7 +6,7 @@ body{
 
 
 .card {
-  background-color: #eaddd0;
+  background-color: #f1e8e0;
   transition: 0.3s;
   border-radius: 10px; /* 5px rounded corners */
   height: auto;
@@ -220,7 +220,7 @@ nav{
   }
     
 main{
-    background-color: #eaddd0;
+    background-color: #f1e8e0;
     padding: 10%;
     padding-top: 5%;
    }
