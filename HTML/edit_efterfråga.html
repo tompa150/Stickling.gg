@@ -37,12 +37,12 @@
                 <h1>Annons detaljer</h1>
             </div>
             <div class="ad_creation_box">
-                <form class="ad_information" action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data">
+                <form class="ad_information" action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data">
                     <div class="topform">
-                        <input type="text" name="Title" id="title" required value="{{ TheAd[1] }}" placeholder="Title...">
+                        <input type="text" name="Title" id="title" required value="{{ TheAd[2] }}" placeholder="Title...">
                         <button class="create"type="create">Upload</button>
                     </div>
-                    <textarea name="description" id="Description" required placeholder="Information..."> {{ TheAd[2] }}</textarea>
+                    <textarea name="description" id="Description" required placeholder="Information..."> {{ TheAd[4] }}</textarea>
                     <div class="bottomform">
                         <div class="Bbox">
                             <h3>Annons Bilder</h3>
@@ -53,11 +53,10 @@
                     <input type="hidden" id="custId" name="Type" value="efterfråga">
                     <input type="hidden" id="custId" name="Username" value="{{ user }}">
                     <H3>Väld bilder att ta bort:</H3>
-                        {% for image_path in image_paths %}
+                        {% for image in Images %}
                             <label>
-                                <img class="annons" src="{{ image_path }}" data-col="0" alt="Avatar">
-                                <input type="checkbox" name="Deleted_images" value="{{ image_path }}">
-                                {{ image_path }}
+                                <img class="annons" src="{{ image }}" data-col="0" alt="Avatar">
+                                <input type="checkbox" name="Deleted_images">
                             </label>
                         {% endfor %}
                 </form>

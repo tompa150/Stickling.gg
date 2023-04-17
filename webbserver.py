@@ -9,9 +9,10 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 def new_ad_id():
     largest_id = 1
-    ads = ad_read()
+    ads = ad_read_for_new_id()
     for ad in ads:
         if ad[0] >= largest_id:
+            print(ad[0])
             largest_id = ad[0] + 1
     return largest_id
 
@@ -43,6 +44,16 @@ def ad_read():
     conn.close()
     return products
 
+def ad_read_for_new_id():
+    """Här läses alla annonser från databasen där statusen = active """
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(""" SELECT * FROM ads; """)
+    products = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return products
+
 def image_ad_read_active(user):
     """Här läses alla annonser från databasen in, tillsammans med alla dess bilders sökvägar, där statusen = active """
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -66,10 +77,12 @@ def id_ad(id):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT * FROM ads WHERE ads.ad_id = {id}; """)
-    products = cursor.fetchall()
+    ads = cursor.fetchall()
+    ad = ads[0]
     cursor.close()
     conn.close()
-    return products
+    print(ad)
+    return ad
     
 
 def image_ad_read_inactive(user):
@@ -116,7 +129,9 @@ def ReadAdImages(id):
     cursor.execute(f""" SELECT image_path from image_pointer WHERE image_pointer.ad_id = {id}; """)
     results = cursor.fetchall()
     conn.close()
-    return results
+    print(results)
+    images = results[0]
+    return images
 
 def insert_ad(title, description, price, type, username, image_paths):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
@@ -158,10 +173,11 @@ def update_ad(title, ad_id, description, price, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}); """)
+    cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
     if image_paths != "":
         for path in image_paths:
-            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
+            path2 = (f'{path}1')
+            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path2}', {ad_id}); """ )
     conn.commit()
     conn.close()
     return redirect('/')
@@ -181,37 +197,36 @@ def profile():
             inactive_ads = image_ad_read_inactive(user)
             print(active_ads)
             return render_template("profile.html", active_ads = active_ads, inactive_ads = inactive_ads)
-        else:
-            return redirect(url_for('/login/'))
+
+    return redirect(url_for('login'))
 
 @app.route("/ad/<id>/")
 def ad(id):
+    print(session['user'])
     """Här tar funktionen emot ett id från URI och letar sedan i databasen efter en annons med ett matchande id, finns det
     så returneras annonsen.html tillsammans med titeln, priset och beskrivningen och bilderna för annonsen."""
     if 'user' not in session:
         return redirect('/')
-    
-    user_info = read_user_info()
-    for user in user_info:
-        if session['user'] == user[0]:
-            username = session['user']
-            print(username)
-            ads = ad_read()
-            for ad in ads:
-                print(ad[1])
-                if int(id) == ad[0]:
-                    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
-                    cursor = conn.cursor()
-                    cursor.execute(f""" SELECT image_path FROM image_pointer WHERE ad_id = {id} """)
-                    images = cursor.fetchall()
-                    image_paths = [image[0] for image in images]
-                    cursor.close()
-                    conn.close()
-                    return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username)
-            else:
-                return redirect('/')
-        else:
-            return redirect('/')
+    else:
+        user_info = read_user_info()
+        for user in user_info:
+            if session['user'] == user[0]:
+                username = session['user']
+                print(username)
+                ads = ad_read()
+                for ad in ads:
+                    print(ad[1])
+                    if int(id) == ad[0]:
+                        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+                        cursor = conn.cursor()
+                        cursor.execute(f""" SELECT image_path FROM image_pointer WHERE ad_id = {id} """)
+                        images = cursor.fetchall()
+                        image_paths = [image[0] for image in images]
+                        cursor.close()
+                        conn.close()
+                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username)
+                else:
+                    return redirect('/')
         
 '''
 @app.route("/new/")
@@ -265,21 +280,20 @@ def save():
 
 @app.route("/edit/<id>/")
 def edit_article(id):
-    TheAd = id_ad(id)
-    print(TheAd[4])
-    Images = ReadAdImages(id)
     if 'user' not in session:
         return redirect('/')
     else:
-        if TheAd[4] == 'sälj':
+        TheAd = id_ad(id)
+        Images = ReadAdImages(id)
+        if TheAd[5] == 'sälj':
             return render_template("edit_sälj.html", TheAd = TheAd, Images = Images)
-        elif TheAd[4] == "byt":
+        elif TheAd[5] == "byt":
             return render_template("edit_byt.html", TheAd = TheAd, Images = Images)
-        elif TheAd[4] == "efterfråga":
+        elif TheAd[5] == "efterfråga":
             return render_template("edit_efterfråga.html", TheAd = TheAd, Images = Images)
  
-@app.route("/update/")
-def update_ad():
+@app.route("/update/", methods = ['POST', 'GET'])
+def update():
     if 'user' not in session:
         return redirect('/')
     else:

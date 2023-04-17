@@ -37,17 +37,17 @@
                 <h1>Annons detaljer</h1>
             </div>
             <div class="ad_creation_box">
-                <form action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data" class="ad_information">
+                <form action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data" class="ad_information">
                     <div class="topform">
-                        <input type="text" required name="Title" id="title" value="TheAd[1]" placeholder="Title...">
+                        <input type="text" required name="Title" id="title" value="{{TheAd[2]}}" placeholder="Title...">
                         <button class="create" type="submit">Upload</button>
                     </div>
-                    <textarea name="Description" required id="description" placeholder="Information..."> {{TheAd[2]}} </textarea>
+                    <textarea name="Description" required id="description" placeholder="Information...">{{TheAd[4]}}</textarea>
                     <div class="bottomform">
                         <div class="Bbox">
                             <h3>Annons Bilder</h3>
                             <p>Lägg till max 5 bilder på din stickling</p>
-                            <input type="file" name="images" multiple max="5" required accept="image/*">
+                            <input type="file" name="images" multiple max="5" accept="image/*">
                         </div>
                         <div class="Bbox">
                             <p>Här sätter du ditt pris för din stickling</p>
@@ -56,11 +56,10 @@
                         <input type="hidden" id="custId" name="Type" value="sälj">
                         <input type="hidden" id="custId" name="Username" value="{{ user }}">
                         <H3>Väld bilder att ta bort:</H3>
-                        {% for image_path in image_paths %}
+                        {% for image in Images %}
                             <label>
-                                <img class="annons" src="{{ image_path }}" data-col="0" alt="Avatar">
-                                <input type="checkbox" name="Deleted_images" value="{{ image_path }}">
-                                {{ image_path }}
+                                <img class="annons" src="{{ image }}" data-col="0" alt="Avatar">
+                                <input type="checkbox" name="Deleted_images">
                             </label>
                         {% endfor %}
                     </div>
