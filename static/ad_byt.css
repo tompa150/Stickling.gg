@@ -1,19 +1,19 @@
-/* Same CSS for all HTML ------------------------------------------------*/
+/* Same CSS for all HTML -----------------------------------------------------*/
 body {
   margin: 0%;
+  background-color: #4d7965;
   }
   
   /* CSS styling for navigation bar--------------------------------------- */
   nav {
-  background-color: #5B9279;
-  padding: 10px;
-  z-index: 2;
-  position: fixed;
-  border-bottom: #f1e8e0;
-  border-bottom-style: solid;
-  border-bottom-width: thin;
-  width: 100%;
-  }
+    background-color: #5B9279;
+    z-index: 2;
+    position: fixed;
+    border-bottom: white;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    width: 100%;
+    }
   
   /* CSS styling for small logo */
   .small_logo {
@@ -34,12 +34,12 @@ body {
   
   /* CSS styling for right box */
   .RBOX {
-  float: right;
-  display: flex;
-  text-align: center;
-  margin-top: 2%;
-  margin-right: 18px;
-  }
+    float: right;
+    display: flex;
+    text-align: center;
+    margin-top: 1%;
+    margin-right: 18px;
+    }
   
   /* CSS styling for bar icons */
   .bar_icons {
@@ -131,7 +131,7 @@ body {
   position: fixed;
   bottom: 0%;
   z-index: 2;
-  width: 98%;
+  width: 100%;
   }
   
   /* Information section in the footer */
