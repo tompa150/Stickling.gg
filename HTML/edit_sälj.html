@@ -54,6 +54,7 @@
                             <input type="number" name="Price" required id="price" value="{{TheAd[3]}}" placeholder="Pris...">
                         </div>
                         <input type="hidden" id="custId" name="Type" value="sälj">
+                        <input type="hidden" id="custId" name="Ad_id" value="{{id}}">
                         <input type="hidden" id="custId" name="Username" value="{{ user }}">
                         <H3>Väld bilder att ta bort:</H3>
                         {% for image in Images %}

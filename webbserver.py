@@ -177,12 +177,11 @@ def update_ad(title, ad_id, description, price, image_paths):
     skickas användaren tillbaka till hemsidan"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    ad_id = new_ad_id()
+    print(image_paths)
     cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
     if image_paths != "":
         for path in image_paths:
-            path2 = (f'{path}1')
-            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path2}', {ad_id}); """ )
+            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
     conn.commit()
     conn.close()
     return redirect('/')
@@ -287,10 +286,11 @@ def edit_article(id):
     if 'user' not in session:
         return redirect('/')
     else:
+        print(id)
         TheAd = id_ad(id)
         Images = ReadAdImages(id)
         if TheAd[5] == 'sälj':
-            return render_template("edit_sälj.html", TheAd = TheAd, Images = Images)
+            return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
         elif TheAd[5] == "byt":
             return render_template("edit_byt.html", TheAd = TheAd, Images = Images)
         elif TheAd[5] == "efterfråga":
@@ -303,15 +303,27 @@ def update():
     else:
         if request.method == 'POST':
             ad_id = request.form.get("Ad_id")
+            print(ad_id)
             title = request.form.get("Title")
             description = request.form.get("Description")
             price = request.form.get("Price")
             type = request.form.get("Type")
             username = request.form.get("Username")
-            image_paths = request.files.getlist("images")
+            images = request.files.getlist("images")
             Images = request.files.getlist("Deleted_images")
+            image_paths = []
+            for image in images:
+                if image.filename.endswith(('.jpg', '.png', '.jpeg')):
+                    image.filename = f'{title}_{username}_{image.filename}'
+                    if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
+                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                        image_paths.append(f'/static/{image.filename}')
+                    else:    
+                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                        image_paths.append(f'/static/{image.filename}')
             update_ad(title, ad_id, description, price, image_paths)
             delete_images(Images)
+            return redirect("new.html")
             
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
