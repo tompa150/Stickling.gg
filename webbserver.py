@@ -139,16 +139,17 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
+    print(type)
     if type == "sälj":
         cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
         for path in image_paths:
             cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
     elif type == "byt":
-        cursor.execute(f""" INSERT into ads(ad_id, username, title,, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', '{description}', '{type}', 'active'); """)
+        cursor.execute(f""" INSERT into ads(ad_id, username, title, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', '{description}', '{type}', 'active'); """)
         for path in image_paths:
             cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
     elif type == "efterfråga":
-        cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
+        cursor.execute(f""" INSERT into ads(ad_id, username, title, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', '{description}', '{type}', 'active'); """)
         for path in image_paths:
             cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}) """ )
     conn.commit()
@@ -254,7 +255,6 @@ def save():
         type = request.form.get("Type")
         username = request.form.get("Username")
         images = request.files.getlist("images")
-        print(images)
         if title == "":
             return render_template("ad_creation.html", description = description, price = price, type = type, username = username)
         elif description == "":

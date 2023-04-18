@@ -42,9 +42,11 @@
                 {% endfor %}
             </div>
             <div class="test">
-                <div id="pris">
-                    <h4>Pris: {{ad[3]}} SEK</h5>
-                </div>
+                {% if ad[3] != None: %}
+                    <div id="pris">
+                        <h4>Pris: {{ad[3]}} SEK</h5>
+                    </div>
+                {% endif %}
                 <div class="button">
                     <input type="checkbox" id="liked"><label for="liked"><span></span></label>
                 </div>
