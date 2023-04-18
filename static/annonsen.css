@@ -190,27 +190,30 @@ main{
  }
 
   .annons_bilder{
-    grid-template-rows: 1fr auto; /* set one row and one auto */
-    break-inside: avoid;
-    margin-top: 10%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
     column-count: 2;
     margin-left: 10%;
-    margin-right: 10%;
     float: left;
     }
     
     .image_main_annons{
-      break-inside: avoid;
+      break-inside: avoid-column;
       border-radius: 5%;
-      padding: 15px;
+      padding: 5px;
       transition: transform .2s;
       width: 200px;
-      height: auto;
+      height: 200px;
       margin: 0 auto;
     }
     
     
     .image_main_annons:hover {
+      height: auto;
+      transition: transform .0s;
+      padding-top: 300px;
       -ms-transform: scale(1.5); /* IE 9 */
       -webkit-transform: scale(1.5); /* Safari 3-8 */
       transform: scale(1.5); 
@@ -251,8 +254,6 @@ main{
   background-color: #f1e8e0;
   border-radius: 10px;
   padding: 10px;
-  margin-top: 10%;
-  margin-left: 5%;
   height: auto;
   }
 

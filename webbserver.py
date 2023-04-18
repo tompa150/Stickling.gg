@@ -289,11 +289,11 @@ def edit_article(id):
         print(id)
         TheAd = id_ad(id)
         Images = ReadAdImages(id)
-        if TheAd[5] == 'sälj':
+        if TheAd[4] == 'sälj':
             return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
-        elif TheAd[5] == "byt":
+        elif TheAd[4] == "byt":
             return render_template("edit_byt.html", TheAd = TheAd, Images = Images)
-        elif TheAd[5] == "efterfråga":
+        elif TheAd[4] == "efterfråga":
             return render_template("edit_efterfråga.html", TheAd = TheAd, Images = Images)
  
 @app.route("/update/", methods = ['POST', 'GET'])
@@ -372,7 +372,7 @@ def new_1():
         return redirect("/")
     else:
         user = session['user']
-        return render_template("ad_sälj.html", user = user)
+        return render_template("Create_Sell.html", user = user)
     
 @app.route("/new/2/")
 def new_2():
