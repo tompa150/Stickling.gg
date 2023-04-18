@@ -5,7 +5,11 @@ import os
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
-app.permanent_session_lifetime = timedelta(days=1)
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(days=1)
 
 def new_ad_id():
     largest_id = 1
