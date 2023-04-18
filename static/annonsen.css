@@ -14,7 +14,7 @@ body {
     border-bottom-width: thin;
     width: 100%;
     }
-  
+   
   /* CSS styling for small logo */
   .small_logo {
   font-family: 'Fasthand';
@@ -185,8 +185,37 @@ body {
     
 main{
   background-color: #f1e8e0;
-  padding: 10%;
+  display: flex;
+  padding: 10% 5% 10% 5%;
  }
+
+  .annons_bilder{
+    grid-template-rows: 1fr auto; /* set one row and one auto */
+    break-inside: avoid;
+    margin-top: 10%;
+    column-count: 2;
+    margin-left: 10%;
+    margin-right: 10%;
+    float: left;
+    }
+    
+    .image_main_annons{
+      break-inside: avoid;
+      border-radius: 5%;
+      padding: 15px;
+      transition: transform .2s;
+      width: 200px;
+      height: auto;
+      margin: 0 auto;
+    }
+    
+    
+    .image_main_annons:hover {
+      -ms-transform: scale(1.5); /* IE 9 */
+      -webkit-transform: scale(1.5); /* Safari 3-8 */
+      transform: scale(1.5); 
+    }
+  
 
 /* Increase the font size of the price element */
 #pris{
@@ -213,26 +242,31 @@ main{
   /* Set padding, layout, and content alignment for the secondary element */
   .secondary{
   padding: 20px;
-  display: flex;
   justify-content: space-evenly;
+  background-color: #f1dfcd;
   }
   
   /* Set background color, border radius, padding, margins, and height for the aside element */
   aside{
   background-color: #f1e8e0;
   border-radius: 10px;
-  padding: 25px 25px;
+  padding: 10px;
   margin-top: 10%;
   margin-left: 5%;
-  height: 150px;
+  height: auto;
+  }
+
+  aside > p{
+    margin-bottom: 0%;
   }
   
   /* Set the background color, border, and border-bottom properties for the text input field */
   input[type=text] {
-  background-color: #f1e8e0;
-  border: none;
-  border-bottom: 2px solid #000000;
-  }
+    background-color: #f1e8e0;
+    border: none;
+    border-bottom: 2px solid #000000;
+      }
+
   
   /* Set the width, height, padding, box-sizing, border, border-radius, background color, and resize property for the textarea element */
   textarea {
@@ -246,35 +280,13 @@ main{
   resize: none;
   }
   
-  /* Set padding, column count, and margins for the annons_bilder element */
-  .annons_bilder{
-  padding: 10px;
-  column-count: 2;
-  margin: 0%;
-  }
-  
-  /* Set break-inside, grid layout, margins, width, height, and overflow properties for the image_main_annons element */
-  .image_main_annons{
-  break-inside: avoid;
-  display: grid;
-  grid-template-rows: 60px 60px;
-  margin-top: 5px;
-  width: 150px;
-  height: auto;
-  overflow: hidden;
-  }
-  
-  /* Set the layout and gap for the test element */
-  .test{
-  display: flex;
-  gap: 70%;
-  }
+
   
   /* Define custom variables for use in the button styling */
   :root {
   --u: 1.5vmin;
   --clr: #e7ba89;
-  --bg: #f1e8e0;
+  --bg: #f1dfcd;
   }
   
   /* Set position, width, and height for the button element */
@@ -284,10 +296,11 @@ main{
   height: calc(var(--u) * 10);
   }
   
-  /* Hide the input element */
-  input {
-  display: none;
-  }
+  /*hides the input button*/
+.button > input {
+  display:none;
+
+}
   
   /* Set background, position, border-radius, cursor, display, and content alignment for the label element */
   label {
@@ -357,4 +370,10 @@ animation: like 0.5s ease 0s;
 /* Styles for the heart icon when hovering over the checked button */
 .button:hover input:checked + label span:before, .button:hover input:checked + label span:after {
   --clr: #5b9279; 
+}
+
+
+.remove_annons{
+  margin-bottom: 0%;
+
 }
