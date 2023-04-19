@@ -41,8 +41,28 @@
                     </div>
                 {% endfor %}
             </div>
+        <div class="secondary">
+            <article>
+                <h2 id="title">{{ad[2]}}</h2>
+                <p id="Description"> <b>Beskrivning:</b> <br> {{ad[4]}}</p>
+                {% if username == ad[1]: %}
+                <div>
+                    <a href="http://127.0.0.1:8080/edit/{{ad[0]}}/">Redigera Annons</a>
+                </div>
+                    <div>
+                        <form action="http://127.0.0.1:8080/remove/" method="POST">
+                            <p class="remove_annons">Ta bort annons:</p>
+                            <input type="hidden" id="custId" name="ad_id" value="{{ ad[0] }}">
+                            <button type="submit" value="Ta bort annons">
+                        </form>
+                    </div>
+                {% endif %}
+            </article>
             <div class="test">
                 {% if ad[3] != None: %}
+                <!--kan lägga till en if här som byter 
+                    ut priset till logan för vilken typen 
+                    av annons det här-->
                     <div id="pris">
                         <h4>Pris: {{ad[3]}} SEK</h5>
                     </div>
@@ -51,18 +71,6 @@
                     <input type="checkbox" id="liked"><label for="liked"><span></span></label>
                 </div>
             </div>
-            <div class="secondary">
-                <article>
-                    <h2 id="title">{{ad[2]}}</h2>
-                    <p id="Description">Beskrivning: {{ad[4]}}</p>
-                    {% if username == ad[1]: %}
-                        <form action="http://127.0.0.1:8080/remove/" method="POST">
-                            <input type="hidden" id="custId" name="ad_id" value="{{ ad[0] }}">
-                            <button type="submit" value="Ta bort annons">
-                        </form>
-                        <a href="http://127.0.0.1:8080/edit/{{ad[0]}}/">Redigera Annons</a>
-                    {% endif %}
-                </article>
                 <aside id="aside">
                     <form>
                         <p for="Meddelande">Meddelande:</p>
@@ -71,9 +79,8 @@
                         <input type="text" required name="email" id="mail" placeholder="...">
                         <input type="submit" value="skicka">
                     </form>
-
                 </aside>
-            </div>
+        </div>
         </main> 
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
