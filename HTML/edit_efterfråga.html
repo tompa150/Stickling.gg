@@ -56,7 +56,7 @@
                         {% for image in Images %}
                             <label>
                                 <img class="annons" src="{{ image }}" data-col="0" alt="Avatar">
-                                <input type="checkbox" name="Deleted_images">
+                                <input type="checkbox" name="Deleted_images[]" value="{{ image }}">
                             </label>
                         {% endfor %}
                 </form>

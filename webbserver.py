@@ -16,7 +16,6 @@ def new_ad_id():
     ads = ad_read_for_new_id()
     for ad in ads:
         if ad[0] >= largest_id:
-            print(ad[0])
             largest_id = ad[0] + 1
     return largest_id
 
@@ -85,7 +84,6 @@ def id_ad(id):
     ad = ads[0]
     cursor.close()
     conn.close()
-    print(ad)
     return ad
     
 
@@ -133,8 +131,7 @@ def ReadAdImages(id):
     cursor.execute(f""" SELECT image_path from image_pointer WHERE image_pointer.ad_id = {id}; """)
     results = cursor.fetchall()
     conn.close()
-    print(results)
-    images = results[0]
+    images = [row[0] for row in results]
     return images
 
 def insert_ad(title, description, price, type, username, image_paths):
@@ -143,7 +140,6 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     ad_id = new_ad_id()
-    print(type)
     if type == "sälj":
         cursor.execute(f""" INSERT into ads(ad_id, username, title, price, description, ad_type, status) VALUES ({ad_id}, '{username}', '{title}', {price}, '{description}', '{type}', 'active'); """)
         for path in image_paths:
@@ -160,12 +156,13 @@ def insert_ad(title, description, price, type, username, image_paths):
     conn.close()
     return redirect('/')
 
-def delete_images(Images):
-    if Images != "":
+def delete_images(Removed_images):
+    if Removed_images != "":
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
         cursor = conn.cursor()
-        for path in Images:
+        for path in Removed_images:
             cursor.execute(f""" DELETE from image_pointer WHERE image_pointer.image_path = '{path}'; """ )
+            os.remove(f'C:/Users/Tom/Documents/GitHub/Stickling.gg{path}')
         conn.commit()
         conn.close()
         return
@@ -177,7 +174,6 @@ def update_ad(title, ad_id, description, price, image_paths):
     skickas användaren tillbaka till hemsidan"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    print(image_paths)
     cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
     if image_paths != "":
         for path in image_paths:
@@ -199,14 +195,12 @@ def profile():
         if user == one_user[0]:
             active_ads = image_ad_read_active(user)
             inactive_ads = image_ad_read_inactive(user)
-            print(active_ads)
             return render_template("profile.html", active_ads = active_ads, inactive_ads = inactive_ads)
 
     return redirect(url_for('login'))
 
 @app.route("/ad/<id>/")
 def ad(id):
-    print(session['user'])
     """Här tar funktionen emot ett id från URI och letar sedan i databasen efter en annons med ett matchande id, finns det
     så returneras annonsen.html tillsammans med titeln, priset och beskrivningen och bilderna för annonsen."""
     if 'user' not in session:
@@ -216,10 +210,8 @@ def ad(id):
         for user in user_info:
             if session['user'] == user[0]:
                 username = session['user']
-                print(username)
                 ads = ad_read()
                 for ad in ads:
-                    print(ad[1])
                     if int(id) == ad[0]:
                         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
                         cursor = conn.cursor()
@@ -275,7 +267,6 @@ def save():
                     else:    
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                         image_paths.append(f'/static/{image.filename}')
-            print(image_paths)
             insert_ad(title, description, price, type, username, image_paths)
             return redirect("/")
 
@@ -286,9 +277,9 @@ def edit_article(id):
     if 'user' not in session:
         return redirect('/')
     else:
-        print(id)
         TheAd = id_ad(id)
         Images = ReadAdImages(id)
+        print(Images)
         if TheAd[5] == 'sälj':
             return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
         elif TheAd[5] == "byt":
@@ -303,14 +294,13 @@ def update():
     else:
         if request.method == 'POST':
             ad_id = request.form.get("Ad_id")
-            print(ad_id)
             title = request.form.get("Title")
             description = request.form.get("Description")
             price = request.form.get("Price")
-            type = request.form.get("Type")
             username = request.form.get("Username")
             images = request.files.getlist("images")
-            Images = request.files.getlist("Deleted_images")
+            Removed_images = request.form.getlist('Deleted_images[]')
+            print(Removed_images)
             image_paths = []
             for image in images:
                 if image.filename.endswith(('.jpg', '.png', '.jpeg')):
@@ -322,8 +312,8 @@ def update():
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                         image_paths.append(f'/static/{image.filename}')
             update_ad(title, ad_id, description, price, image_paths)
-            delete_images(Images)
-            return redirect("new.html")
+            delete_images(Removed_images)
+            return redirect("/")
             
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
