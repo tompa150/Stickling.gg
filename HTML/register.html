@@ -11,13 +11,13 @@
 <body>
   <div class="RegisterMain">
     <p class="RegisterSign" >Registrera ny användare</p>
-    <form action="http://127.0.0.1:8080/register_user/" method="POST" class="form1">
-      <input class="RegisterUn " id="Email" type="text" placeholder="Email">
+    <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
+      <input class="RegisterUn " id="Email" type="text" name="Email" placeholder="Email">
       <input class="RegisterUn " id="Användarnamn" type="text"  placeholder="Användarnamn">
       <input class="RegisterPass" id="Lösenord" type="password"  placeholder="Lösenord">
       <input class="RegisterPass" id="BekräftaLösenord" type="password" placeholder="Bekräfta lösenord">
       <input class="RegisterUn" id="Telefonnummer" type="text"  placeholder="Mobilnummer: +46....">
-      <a class="RegisterSubmit" >Skapa konto</a>
+      <button type="submit" class="RegisterSubmit" >Skapa konto</button>
 
                 
     </div>

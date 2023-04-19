@@ -422,11 +422,11 @@ def register():
 def register_user():
     """Här tas användaruppgifter emot från ett formulär, sedan läses alla befintliga användare in. Om inget av dom krocka med befintliga användaruppgifter
     läggs användarens uppgifter in i databasen."""
-    email = getattr(request.form, "Email")
-    username = getattr(request.form, "Användarnamn")
-    password = getattr(request.form, "Lösenord")
-    conf_password = getattr(request.form, "Bekräfta lösenord")
-    number = getattr(request.form, "Telefonnummer")
+    email = request.form.get("Email")
+    username = request.form.get("Användarnamn")
+    password = request.form.get("Lösenord")
+    conf_password = request.form.get("Bekräfta lösenord")
+    number = request.form.get("Telefonnummer")
     user_info = read_user_info()
     for row in user_info:
         if email == row[0]:
