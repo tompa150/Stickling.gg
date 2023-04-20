@@ -31,7 +31,7 @@ def read_user_info():
     """Här läses alla användaruppgifter in från databasen"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute("SELECT username, password, email number FROM users;")
+    cursor.execute("SELECT username, password, email, number FROM users;")
     products = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -425,10 +425,10 @@ def register_user():
     email = request.form.get("Email")
     username = request.form.get("Användarnamn")
     password = request.form.get("Lösenord")
-    conf_password = request.form.get("Bekräfta lösenord")
+    conf_password = request.form.get("Bekräfta_lösenord")
     number = request.form.get("Telefonnummer")
     user_info = read_user_info()
-    for row in user_info:
+    for row in user_info:   
         if email == row[0]:
             invalid_email = "Email already exists"
             return render_template("register.html", invalid_email = invalid_email)
@@ -444,17 +444,14 @@ def register_user():
         elif number == row[3]:
             number_exists = "That number already exists, please enter your own number!"
             return render_template("register.html", number_exists = number_exists)
-        elif email !=row[0] and username != row[1] and password != row[2] and number != row[3]:
-            try:
-                conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
-                cursor = conn.cursor()
-                cursor.execute(f""" INSERT INTO users(username, password, email, number) VALUES ('{username}', '{password}', '{email}', {number}); """)
-                conn.commit()
-                conn.close()
-                return render_template("login.html")
-            except (Exception) as error:
-               pass
-
+    else:
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
+        cursor = conn.cursor()
+        cursor.execute(f""" INSERT INTO users(username, password, email, number) VALUES ('{username}', '{password}', '{email}', {number}); """)
+        conn.commit()
+        conn.close()
+        return render_template("login.html")
+            
 '''
 @app.route('/register/forgot_password/', methods = ['POST', 'GET'])
 def ForgPassword():

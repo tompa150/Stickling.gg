@@ -12,14 +12,27 @@
   <div class="RegisterMain">
     <p class="RegisterSign" >Registrera ny användare</p>
     <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
+      {% if invalid_email != "": %}
+        <p>{{invalid_email}}</p>
+      {% endif %}
       <input class="RegisterUn " id="Email" type="text" name="Email" placeholder="Email">
-      <input class="RegisterUn " id="Användarnamn" type="text"  placeholder="Användarnamn">
-      <input class="RegisterPass" id="Lösenord" type="password"  placeholder="Lösenord">
-      <input class="RegisterPass" id="BekräftaLösenord" type="password" placeholder="Bekräfta lösenord">
-      <input class="RegisterUn" id="Telefonnummer" type="text"  placeholder="Mobilnummer: +46....">
+      {% if invalid_username != "": %}
+        <p>{{invalid_username}}</p>
+      {% endif %}
+      <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text"  placeholder="Användarnamn">
+      {% if invalid_password != "": %}
+        <p>{{invalid_password}}</p>
+      {% endif %}
+      <input class="RegisterPass" id="Lösenord" type="password" name="Lösenord" placeholder="Lösenord">
+      {% if non_similar_pass != "": %}
+        <p>{{non_similar_pass}}</p>
+      {% endif %}
+      <input class="RegisterPass" id="BekräftaLösenord" type="password" name="Bekräfta_lösenord" placeholder="Bekräfta lösenord">
+      {% if number_exists != "": %}
+        <p>{{number_exists}}</p>
+      {% endif %}
+      <input class="RegisterUn" id="Telefonnummer" type="text" name="Telefonnummer" placeholder="Mobilnummer: +46....">
       <button type="submit" class="RegisterSubmit" >Skapa konto</button>
-
-                
     </div>
      
 </body>
