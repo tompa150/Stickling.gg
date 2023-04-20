@@ -14,3 +14,6 @@ När det står att programmet kör, så gå till http://127.0.0.1:8080/ för att
 
 Steg 3: 
 När ni är färdiga med testet så kan man klicka på "soptunnan" till höger i termninalen.
+
+Vi har ingen logoutfunktion än. För att logga ut skriv 127.0.0.1:8080/logout/
+
