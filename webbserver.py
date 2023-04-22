@@ -282,10 +282,12 @@ def edit_article(id):
         print(Images)
         if TheAd[5] == 'sälj':
             return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
-        elif TheAd[4] == "byt":
+        elif TheAd[5] == "byt":
             return render_template("edit_byt.html", TheAd = TheAd, Images = Images)
-        elif TheAd[4] == "efterfråga":
+        elif TheAd[5] == "efterfråga":
             return render_template("edit_efterfråga.html", TheAd = TheAd, Images = Images)
+        else:
+            return redirect(f'/ad/{id}/')
  
 @app.route("/update/", methods = ['POST', 'GET'])
 def update():
