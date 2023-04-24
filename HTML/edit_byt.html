@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='ad_sälj.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='ad_byt.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
     <body>
         <nav>
             <div class="navbar">
-                <a class="FontNav" href="http://127.0.0.1:8080/"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
+                <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                 <div class="RBOX">
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -29,20 +29,17 @@
             </div>
         </nav>
         <main>     
-            <div>
+            <div class="toptopform">
                 <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}"></a>
-            </div>
-
-            <div>
                 <h1>Annons detaljer</h1>
             </div>
             <div class="ad_creation_box">
-                <form class="ad_information"action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data">
+                <form class="ad_information"action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data">
                     <div class="topform">
-                        <input type="text" name="Title" id="title" value="{{TheAd[2]}}" placeholder="Title...">
-                        <button class="create"type="submit">Upload</button>
+                        <input type="text" name="Title" id="title" placeholder="Title...">
+                        <button class="create"type="submit">Uppdate ad</button>
                     </div>
-                    <textarea name="Description" id="Description" placeholder="Information...">{{TheAd[4]}}</textarea>
+                    <textarea  name="Description" id="Description" placeholder="Information..."> </textarea>
                     <div class="bottomform">
                         <div class="Bbox">
                             <h3>Annons Bilder</h3>
@@ -52,13 +49,19 @@
                     </div>
                     <input type="hidden" id="custId" name="Type" value="byt">
                     <input type="hidden" id="custId" name="Username" value="{{ user }}">
-                    <H3>Väld bilder att ta bort:</H3>
+                    <div class="edit_img">
+                        <H3>Välj bilder att ta bort:</H3>
                         {% for image in Images %}
                             <label>
                                 <img class="annons" src="{{ image }}" data-col="0" alt="Avatar">
-                                <input type="checkbox" name="Deleted_images[]" value="{{ image }}">
+                                <div class="container" >
+                                    <input type="checkbox" name="Deleted_images[]" value="{{ image }}">
+                                <span class="checkmark"></span>
+                                </div>
+                                
                             </label>
                         {% endfor %}
+                    </div>
                 </form>
             </div>
         </main>
