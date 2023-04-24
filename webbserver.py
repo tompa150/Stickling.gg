@@ -182,6 +182,20 @@ def update_ad(title, ad_id, description, price, image_paths):
     conn.close()
     return redirect('/')
 
+def liking_ad(ad_id, username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" INSERT into liked_ads(user_liking_ad, liked_ad) VALUES ('{username}', {ad_id}); """)
+    conn.commit()
+    conn.close()
+
+def disliking_ad(ad_id, username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" DELETE from liked_ads WHERE user_liking_ad = '{username}' AND liked_ad = {ad_id}; """)
+    conn.commit()
+    conn.close()
+
 @app.route("/profile/")
 def profile():
     """Här för denna URI så returneras profile.html tillsammans med alla aktiva och inaktiva annonser som en 
