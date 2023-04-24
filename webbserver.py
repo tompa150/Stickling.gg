@@ -169,15 +169,21 @@ def delete_images(Removed_images):
     else:
         return
 
-def update_ad(title, ad_id, description, price, image_paths):
+def update_ad(title, ad_id, description, price, image_paths, type):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
     skickas användaren tillbaka till hemsidan"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
+    print(description)
+    if type == "sälj":
+        cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
+    else:
+        cursor.execute(f""" UPDATE ads SET title = '{title}', description = '{description}' WHERE ad_id = {ad_id}; """)
+
     if image_paths != "":
-        for path in image_paths:
-            cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
+            for path in image_paths:
+                cursor.execute(f""" INSERT INTO image_pointer(image_path, ad_id) VALUES ('{path}', {ad_id}); """ )
+
     conn.commit()
     conn.close()
     return redirect('/')
@@ -297,9 +303,9 @@ def edit_article(id):
         if TheAd[5] == 'sälj':
             return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
         elif TheAd[5] == "byt":
-            return render_template("edit_byt.html", TheAd = TheAd, Images = Images)
+            return render_template("edit_byt.html", TheAd = TheAd, Images = Images, id = id)
         elif TheAd[5] == "efterfråga":
-            return render_template("edit_efterfråga.html", TheAd = TheAd, Images = Images)
+            return render_template("edit_efterfråga.html", TheAd = TheAd, Images = Images, id = id)
         else:
             return redirect(f'/ad/{id}/')
  
@@ -315,19 +321,22 @@ def update():
             price = request.form.get("Price")
             username = request.form.get("Username")
             images = request.files.getlist("images")
+            type = request.form.get("Type")
             Removed_images = request.form.getlist('Deleted_images[]')
             print(Removed_images)
             image_paths = []
             for image in images:
                 if image.filename.endswith(('.jpg', '.png', '.jpeg')):
-                    image.filename = f'{title}_{username}_{image.filename}'
+                    image.filename = image.filename.replace('"', '')
+                    print(image.filename)
+                    image.filename = f'{ad_id}_{username}_{image.filename}'
                     if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                         image_paths.append(f'/static/{image.filename}')
                     else:    
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
                         image_paths.append(f'/static/{image.filename}')
-            update_ad(title, ad_id, description, price, image_paths)
+            update_ad(title, ad_id, description, price, image_paths, type)
             delete_images(Removed_images)
             return redirect("/")
             

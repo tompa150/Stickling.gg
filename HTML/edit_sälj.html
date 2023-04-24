@@ -34,7 +34,7 @@
                 <h1>Annons detaljer</h1>
             </div>
             <div class="ad_creation_box">
-                <form action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data" class="ad_information">
+                <form action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data" class="ad_information">
                     <div class="topform">
                         <input type="text" required name="Title" id="title" value="{{TheAd[2]}}" placeholder="Title...">
                         <button class="create" type="submit">Uppdate ad</button>
@@ -44,12 +44,13 @@
                         <div>
                             <h3>Annons Bilder</h3>
                             <p>Lägg till max 4 bilder på din stickling</p>
-                            <input type="file" name="images" multiple max="5" required accept="image/*">
+                            <input type="file" name="images" multiple max="5" accept="image/*">
                         </div>
                         <div class="Bbox">
                             <p>Här sätter du ditt pris för din stickling</p>
                             <input type="number" name="Price" required id="price" placeholder="Pris...">
                         </div>
+                        <input type="hidden" id="custId" name="Ad_id" value="{{id}}">
                         <input type="hidden" id="custId" name="Type" value="sälj">
                         <input type="hidden" id="custId" name="Username" value="{{ user }}">
                     </div>

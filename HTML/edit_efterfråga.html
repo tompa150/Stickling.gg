@@ -34,12 +34,12 @@
                 <h1>Annons detaljer</h1>
             </div>
             <div class="ad_creation_box">
-                <form class="ad_information"action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data">
+                <form class="ad_information"action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data">
                     <div class="topform">
                         <input type="text" name="Title" id="title" required value="{{ TheAd[2] }}" placeholder="Title...">
                         <button class="create"type="submit">Uppdate ad</button>
                     </div>
-                    <textarea name="description" id="Description" required placeholder="Information...">{{ TheAd[4] }}</textarea>
+                    <textarea name="Description" id="Description" required placeholder="Information...">{{ TheAd[4] }}</textarea>
                     <div class="bottomform">
                         <div class="Bbox">
                             <h3>Annons Bilder</h3>
@@ -47,6 +47,7 @@
                             <input type="file" name="images" multiple max="5" accept="image/*">
                         </div>
                     </div>
+                    <input type="hidden" id="custId" name="Ad_id" value="{{id}}">
                     <input type="hidden" id="custId" name="Type" value="byt">
                     <input type="hidden" id="custId" name="Username" value="{{ user }}">
                     <div class="edit_img">
