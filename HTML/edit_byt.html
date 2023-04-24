@@ -36,10 +36,10 @@
             <div class="ad_creation_box">
                 <form class="ad_information"action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data">
                     <div class="topform">
-                        <input type="text" name="Title" id="title" placeholder="Title...">
+                        <input type="text" name="Title" id="title" value="{{TheAd[2]}}" placeholder="Title...">
                         <button class="create"type="submit">Uppdate ad</button>
                     </div>
-                    <textarea  name="Description" id="Description" placeholder="Information..."> </textarea>
+                    <textarea name="Description" id="Description" placeholder="Information...">{{TheAd[4]}}</textarea>
                     <div class="bottomform">
                         <div class="Bbox">
                             <h3>Annons Bilder</h3>
@@ -56,7 +56,7 @@
                                 <img class="annons" src="{{ image }}" data-col="0" alt="Avatar">
                                 <div class="container" >
                                     <input type="checkbox" name="Deleted_images[]" value="{{ image }}">
-                                <span class="checkmark"></span>
+                                    <span class="checkmark"></span>
                                 </div>
                                 
                             </label>

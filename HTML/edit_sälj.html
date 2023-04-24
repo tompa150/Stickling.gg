@@ -36,10 +36,10 @@
             <div class="ad_creation_box">
                 <form action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data" class="ad_information">
                     <div class="topform">
-                        <input type="text" required name="Title" id="title" placeholder="Title...">
+                        <input type="text" required name="Title" id="title" value="{{TheAd[2]}}" placeholder="Title...">
                         <button class="create" type="submit">Uppdate ad</button>
                     </div>
-                    <textarea  name="Description" required id="description" placeholder="Information..."> </textarea>
+                    <textarea name="Description" required id="description" placeholder="Information...">{{TheAd[4]}}</textarea>
                     <div class="bottomform">
                         <div>
                             <h3>Annons Bilder</h3>
