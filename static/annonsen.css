@@ -378,3 +378,16 @@ animation: like 0.5s ease 0s;
   margin-bottom: 0%;
 
 }
+
+
+#like {
+  cursor: pointer;
+}
+
+#like[data-liked='true']{
+  opacity: 1;
+}
+
+#like[data-liked='false']{
+  opacity: 0.5;
+}

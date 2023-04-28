@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, session, g, redirect
 import psycopg2
 from datetime import timedelta
 import os
+import json
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
@@ -188,19 +189,47 @@ def update_ad(title, ad_id, description, price, image_paths, type):
     conn.close()
     return redirect('/')
 
-def liking_ad(ad_id, username):
-    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
-    cursor = conn.cursor()
-    cursor.execute(f""" INSERT into liked_ads(user_liking_ad, liked_ad) VALUES ('{username}', {ad_id}); """)
-    conn.commit()
-    conn.close()
+@app.route("/like_ad/<id>/", methods = ['POST'])
+def liking_ad(id):
+    username = session['user']
 
-def disliking_ad(ad_id, username):
-    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
-    cursor = conn.cursor()
-    cursor.execute(f""" DELETE from liked_ads WHERE user_liking_ad = '{username}' AND liked_ad = {ad_id}; """)
-    conn.commit()
-    conn.close()
+    try:
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        cursor = conn.cursor()
+        cursor.execute(f""" INSERT into liked_ads(user_liking_ad, liked_ad) VALUES ('{username}', {id}); """)
+        conn.commit()
+        conn.close()
+    except:
+        return json.dumps({
+            "success": False,
+            "message": "Kunde inte spara gillningen (är den redan gillad?)"
+        })    
+
+    return json.dumps({
+        "success": True,
+        "message": "Gillningen är sparad i databasen"
+    })
+
+@app.route("/unlike_ad/<id>/", methods = ['POST'])
+def unliking_ad(id):
+    username = session['user']
+
+    try:
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        cursor = conn.cursor()
+        cursor.execute(f""" DELETE from liked_ads WHERE user_liking_ad = '{username}' AND liked_ad = {id}; """)
+        conn.commit()
+        conn.close()
+    except:
+        return json.dumps({
+            "success": False,
+            "message": "Kunde inte spara borttagningen av gillning"
+        })    
+
+    return json.dumps({
+        "success": True,
+        "message": "Gillningen är raderad i databasen"
+    })  
 
 @app.route("/profile/")
 def profile():

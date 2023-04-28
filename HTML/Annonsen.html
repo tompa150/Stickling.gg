@@ -67,6 +67,8 @@
                         <h4>Pris: {{ad[3]}} SEK</h5>
                     </div>
                 {% endif %}
+                    <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
+
                 <div class="button">
                     <input type="checkbox" id="liked"><label for="liked"><span></span></label>
                 </div>
@@ -87,5 +89,8 @@
             <a class="linkfoot" href="idk">·Terms</a>
             <a class="linkfoot" href="idk">·Privacy</a>
         </footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
+        <script src="/static/like.js"></script>
     </body>
     </html>
