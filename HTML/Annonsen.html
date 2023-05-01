@@ -39,13 +39,14 @@
                     <div>
                         <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
                     </div>
-                {% endfor %}
+                {% endfor %} 
             </div>
         <div class="secondary">
             <article>
                 <h2 id="title">{{ad[2]}}</h2>
                 <p id="Description"> <b>Beskrivning:</b> <br> {{ad[4]}}</p>
                 {% if username == ad[1]: %}
+                <div class="line"></div>
                 <div>
                     <a href="http://127.0.0.1:8080/edit/{{ad[0]}}/">Redigera Annons</a>
                 </div>
@@ -58,6 +59,7 @@
                     </div>
                 {% endif %}
             </article>
+            <div class="line"></div>
             <div class="test">
                 {% if ad[3] != None: %}
                 <!--kan lägga till en if här som byter 
@@ -66,13 +68,11 @@
                     <div id="pris">
                         <h4>Pris: {{ad[3]}} SEK</h5>
                     </div>
+                    <div class="line"></div>
                 {% endif %}
                     <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
-
-                <div class="button">
-                    <input type="checkbox" id="liked"><label for="liked"><span></span></label>
-                </div>
             </div>
+            <div class="line"></div>
                 <aside id="aside">
                     <form>
                         <p for="Meddelande">Meddelande:</p>

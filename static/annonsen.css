@@ -1,7 +1,7 @@
 /* Same CSS for all HTML -----------------------------------------------------*/
 body {
   margin: 0%;
-  background-color: #4d7965;
+  background-color: #f1e8e0;
   }
   
   /* CSS styling for navigation bar--------------------------------------- */
@@ -190,38 +190,25 @@ main{
  }
 
   .annons_bilder{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 80%;
-    column-count: 2;
-    margin-left: 10%;
-    float: left;
+    margin-right: 50%;
+    margin-left: 20px;
+    margin-top: 40px ;
     }
     
     .image_main_annons{
       break-inside: avoid-column;
       border-radius: 5%;
       padding: 5px;
-      transition: transform .2s;
-      width: 200px;
-      height: 200px;
+      width: 450px;
+      height: auto;
       margin: 0 auto;
     }
     
     
-    .image_main_annons:hover {
-      height: auto;
-      transition: transform .0s;
-      padding-top: 300px;
-      -ms-transform: scale(1.5); /* IE 9 */
-      -webkit-transform: scale(1.5); /* Safari 3-8 */
-      transform: scale(1.5); 
-    }
-  
+
 
 /* Increase the font size of the price element */
-#pris{
+  #pris{
   font-size: 120%;
   }
   
@@ -229,6 +216,7 @@ main{
   #Description{
   padding: 10% 0 10% 0 ;
   font-size: 100%;
+
   }
   
   /* Set the font size of h1 element */
@@ -244,17 +232,17 @@ main{
   
   /* Set padding, layout, and content alignment for the secondary element */
   .secondary{
+  margin-left: 50%;
+  margin-right: 0%;
   padding: 20px;
-  justify-content: space-evenly;
-  background-color: #f1dfcd;
+  position: fixed;
+  margin-bottom: 20px;
   }
   
   /* Set background color, border radius, padding, margins, and height for the aside element */
   aside{
-  background-color: #f1e8e0;
-  border-radius: 10px;
-  padding: 10px;
   height: auto;
+  margin-bottom: 20px;
   }
 
   aside > p{
@@ -283,105 +271,17 @@ main{
   
 
   
-  /* Define custom variables for use in the button styling */
-  :root {
-  --u: 1.5vmin;
-  --clr: #e7ba89;
-  --bg: #f1dfcd;
-  }
-  
-  /* Set position, width, and height for the button element */
-  .button {
-  position: relative;
-  width: calc(var(--u) * 10);
-  height: calc(var(--u) * 10);
-  }
-  
-  /*hides the input button*/
-.button > input {
-  display:none;
-
-}
-  
-  /* Set background, position, border-radius, cursor, display, and content alignment for the label element */
-  label {
-  background: var(--bg);
-  width: 60%;
-  height: 50%;
-  position: absolute;
-  border-radius: calc(var(--u) * 1.5);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  }
-  
-  /* Set position, border-radius, border, margin, and shadow properties for the label span element */
-  label span {
-  position: absolute;
-  width: 60%;
-  height: 50%;  
-	animation: dislike 0.5s ease 0s;
-}
-/* Styles for the heart icon */
-label span:before {
-  content: "";
-  position: absolute;
-  border-radius: 0.25vmin;
-  border: 1.69vmin solid #fff0;
-  border-top: 2vmin solid var(--clr);
-  margin-top: 1.81vmin;
-  margin-left: 0.62vmin;
-}
-
-/* Styles for the heart icon */
-label span:after {
-  content: "";
-  position: absolute;
-  background: var(--clr);
-  width: 1.9vmin;
-  height: 1.9vmin;
-  border-radius: 100%;
-  margin-left: 0.51vmin;
-  margin-top: 0.35vmin;
-  box-shadow: 1.64vmin 0 0 0 var(--clr);
-}
-
-/* Styles for the heart icon when checked */
-input:checked + label span {
---clr: #5b9279; 
-animation: like 0.5s ease 0s;
-}
-
-/* Keyframes for the like animation */
-@keyframes like {
-75% { transform: scale(1.25); }
-}
-
-/* Keyframes for the dislike animation */
-@keyframes dislike {
-75% { transform: scale(0.75); }
-}
-
-/* Styles for the heart icon when hovering over the button */
-.button:hover label span:before, .button:hover label span:after {
-  --clr: #406253;
-}
-
-/* Styles for the heart icon when hovering over the checked button */
-.button:hover input:checked + label span:before, .button:hover input:checked + label span:after {
-  --clr: #5b9279; 
-}
-
-
 .remove_annons{
   margin-bottom: 0%;
 
 }
 
 
+
 #like {
   cursor: pointer;
+  padding:15px ;
+  width: 30px;
 }
 
 #like[data-liked='true']{
@@ -390,4 +290,10 @@ animation: like 0.5s ease 0s;
 
 #like[data-liked='false']{
   opacity: 0.5;
+}
+
+
+.line{
+  border-bottom:grey 1px solid;
+  width: 100%;
 }
