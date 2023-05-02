@@ -187,7 +187,7 @@ main{
   background-color: #f1e8e0;
   padding: 10%;
  }
-
+  
 /* CSS styles for the card */
 .card {
   background-color: #f1e8e0; /* set the background color */
@@ -197,15 +197,14 @@ main{
   margin-bottom: 20%; /* add margin at the bottom */
   break-inside: avoid;
   display: grid;
-  grid-template-columns: 2; /* set two columns */
   grid-template-rows: 1fr auto; /* set one row and one auto */
-  border-bottom: #2d2d2d solid; /* set border */
   border-bottom-width: thin;
+  box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
 }
   
 /* CSS styles for the image */
 .annons {
-  border-radius: 10px; /* set rounded corners */
+  border-radius: 10px 10px 0 0; /* set rounded corners */
   width: 100%; /* set width to 100% */
   height: auto; /* set height to auto */
 }
@@ -215,11 +214,6 @@ main{
   box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
   background-color: #f0dfd1;
   border-bottom: none;
-}
-
-/* CSS styles for the image on mouse hover */
-.card:hover > img {
-  border-radius: 10px 10px 0 0;
 }
 
 /* CSS styles for the container inside the card */

@@ -187,6 +187,10 @@ main{
   background-color: #f1e8e0;
   display: flex;
   padding: 10% 5% 10% 5%;
+  background-image:url('background.png');
+    background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: cover;
  }
 
   .annons_bilder{
