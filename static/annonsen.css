@@ -215,7 +215,6 @@ main{
   /* Set padding, font size, and layout for the description element */
   #Description{
   padding: 10% 0 10% 0 ;
-  font-size: 100%;
 
   }
   
@@ -226,7 +225,6 @@ main{
   
   /* Set the width to 100% and height to auto for the Title_annons element */
   #Title_annons{
-  width: 100%;
   height: auto;
   }
   
@@ -237,11 +235,12 @@ main{
   padding: 20px;
   position: fixed;
   margin-bottom: 20px;
+  text-decoration: none;
+  width: 450px;
   }
   
   /* Set background color, border radius, padding, margins, and height for the aside element */
   aside{
-  height: auto;
   margin-bottom: 20px;
   }
 
@@ -259,24 +258,16 @@ main{
   
   /* Set the width, height, padding, box-sizing, border, border-radius, background color, and resize property for the textarea element */
   textarea {
-  width: 100%;
   height: 80px;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
+  width: 100%;
   resize: none;
   }
   
-
-  
-.remove_annons{
-  margin-bottom: 0%;
-
-}
-
-
 
 #like {
   cursor: pointer;
@@ -296,4 +287,18 @@ main{
 .line{
   border-bottom:grey 1px solid;
   width: 100%;
+}
+
+#addition_1{
+  padding-top: 10px;
+  color: #000000;
+}
+
+.addition_2{
+  padding-bottom: 10px; ;
+
+}
+
+.remove_annons{
+  margin-bottom: 0%;
 }
