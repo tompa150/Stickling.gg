@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Inlämings1</title>
-        <link href="{{ url_for('static', filename='new.css') }}" rel="stylesheet">
+        <title>Stickling.gg</title>
+        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -11,33 +11,65 @@
     <body> 
         <nav>
             <div class="navbar">
-                <a href="http://127.0.0.1:8080/"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
-                <div class="dropdown">
-                    <button class="dropbtn">
-                         <div class="bars"></div>
-                         <div class="bars"></div>
-                         <div class="bars"></div>
-                    </button>
-
-                    <div>
-                        <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
+                <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
+                <div class="RBOX">
+                    <div class="creation_box">
+                        <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                            <p>Create ad</p><img src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
                     </div>
-                    <div class="dropdown-content">   
-                        <a href="#"><img class="bar_icons" src=""> Profil</a>
-                        <a href="#"><img class="bar_icons" src=""> Sparade</a>
-                        <a href="#"><img class="bar_icons" src=""> Chats</a>
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                        </button>
+                        <div class="dropdown-content">   
+                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
+                            <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
+                            <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Chats</a>
+                        </div>
                     </div>
+                </div>
             </div>
         </nav>
         <main> 
-            <article id="main">
-                <div id="active_ads">
+            <div>
+                <article>
+                    <p class="redigera_profile"> 
+                        TEXT HERE
+                    </p>
+                </article>
+            </div>
 
-                </div>
-                <div id="old_ads">
-                    
-                </div>
-
+            <article class="new-old-box">
+                    <div class="box">
+                            <h3 class="A-title">Active ads</h3>
+                            {% for active in active_ads %}
+                            <div class="card">
+                                <div>
+                                    <img class="annons" id="bild" src="{{ active[3] }}" alt="bild på stickling">
+                                </div>
+                                <div class="container">
+                                    <h4><b>{{ active[1] }}</b></h4> 
+                                    <p>{{ active[2] }}</p> 
+                                </div>
+                            </div>
+                            {% endfor %}
+                    </div>
+                    <div class="box2">
+                            <h3 class="A-title">Old ads</h3>
+                            {% for ad in inactive_ads %}
+                            <div class="card">
+                                <div>
+                                    <img class="annons" id="bild" src="{{ ad[3]}}" alt="bild på stickling">
+                                </div>
+                                <div class="container">
+                                    <h4><b>{{ ad[1] }}</b></h4> 
+                                    <p>{{ ad[2] }}</p> 
+                                </div>
+                            </div>
+                            {% endfor %}
+                    </div>
             </article>
         </main>
         <footer id="information">

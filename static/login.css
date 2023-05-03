@@ -4,7 +4,7 @@ body {
 }
 
 .main {
-    background-color: #E3D1C1;
+    background-color: #f1e8e0;
     width: 400px;
     height: 400px;
     margin: 7em auto;
@@ -89,7 +89,7 @@ font-family: 'Ubuntu', sans-serif;
 .forgot {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
     color: #5B9279;
-    padding-top: 15px;
+    padding-top: 5px;
 }
 
 a {
@@ -100,7 +100,7 @@ a {
 
 @media (max-width: 600px) {
     .main {
-        background-color: #FFFFFF;
+        background-color: #f1e8e0;
         width: 400px;
         height: 400px;
         margin: 7em auto;

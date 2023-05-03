@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Stickling.gg</title>
+        <link href="{{ url_for('static', filename='ad_byt.css') }}" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <nav>
+            <div class="navbar">
+                <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
+                <div class="RBOX">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                        </button>
+                        <div class="dropdown-content">   
+                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
+                            <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
+                            <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Chats</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main>     
+            <div class="toptopform">
+                <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}"></a>
+                <h1>Annons detaljer</h1>
+            </div>
+            <div class="ad_creation_box">
+                <form class="ad_information"action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data">
+                    <div class="topform">
+                        <input type="text" name="Title" id="title" required value="{{ TheAd[2] }}" placeholder="Title...">
+                        <button class="create"type="submit">Uppdate ad</button>
+                    </div>
+                    <textarea name="Description" id="Description" required placeholder="Information...">{{ TheAd[4] }}</textarea>
+                    <div class="bottomform">
+                        <div class="Bbox">
+                            <h3>Annons Bilder</h3>
+                            <p>Lägg till max 4 bilder på din stickling</p>
+                            <input type="file" name="images" multiple max="5" accept="image/*">
+                        </div>
+                    </div>
+                    <input type="hidden" id="custId" name="Ad_id" value="{{id}}">
+                    <input type="hidden" id="custId" name="Type" value="byt">
+                    <input type="hidden" id="custId" name="Username" value="{{ user }}">
+                    <div class="edit_img">
+                        <H3>Välj bilder att ta bort:</H3>
+                        {% for image in Images %}
+                            <label>
+                                <img class="annons" src="{{ image }}" data-col="0" alt="Avatar">
+                                <div class="container" >
+                                    <input type="checkbox" name="Deleted_images[]" value="{{ image }}">
+                                    <span class="checkmark"></span>
+                                </div>
+                                
+                            </label>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer id="information">
+            <p class="linkfoot">  © 2023 Stickling, Inc.</p>
+            <a class="linkfoot" href="idk">·Terms</a>
+            <a class="linkfoot" href="idk">·Privacy</a>
+        </footer>
+    </body>
+</html>

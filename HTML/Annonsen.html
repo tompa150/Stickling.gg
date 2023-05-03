@@ -10,51 +10,87 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='annonsen.css') }}">
     </head>
     <body>
-        <nav>
-            <div class="navbar">
-                <a id="logo" href="homepage.html"> <img class="img" src="{{ url_for('static', filename='pngwing.com-6.png') }}"> Stickling</a>
-                <div class="dropdown">
-                  <button class="dropbtn">
-                    <div class="bars"></div>
-                    <div class="bars"></div>
-                    <div class="bars"></div>
-                    
-                    <i class="fa fa-caret-down"></i>
-                  </button>
-                  <div class="dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
-                  </div>
-                </div> 
-              </div>
-        </nav>
-        <header>
-
-        </header>
-        <main>
-            {% for image in image_paths %}
-                <div id="images">
-                    <img id="bild" src="{{ image }}" alt="bild på stickling">
+            <nav>
+                <div class="navbar">
+                    <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
+                    <div class="RBOX">
+                        <div class="creation_box">
+                            <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                                <p>Create ad</p><img src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <div class="bars"></div>
+                                <div class="bars"></div>
+                                <div class="bars"></div>
+                            </button>
+                            <div class="dropdown-content">   
+                                <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
+                                <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
+                                <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Chats</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                {% endfor %}
-            <div id="Title">
-                <h2>Stickling 1</h2>
+            </nav>
+        <main>
+            <div class="annons_bilder">
+                {% for image in image_paths %}
+                    <div>
+                        <img class="image_main_annons" src="{{ image }}" alt="bild på stickling">
+                    </div>
+                {% endfor %} 
             </div>
-            <div id="pris">
-                <h4>Pris: 80 SEK</h5>
+        <div class="secondary">
+            <article>
+                <h2 id="title">{{ad[2]}}</h2>
+                <p id="Description"> <b>Beskrivning:</b> <br> {{ad[4]}}</p>
+                {% if username == ad[1]: %}
+                <div class="line"></div>
+                <div id="addition_1">
+                    <a href="http://127.0.0.1:8080/edit/{{ad[0]}}/">Redigera Annons</a>
+                </div>
+                    <div  class="addition_2" >
+                        <form action="http://127.0.0.1:8080/remove/" method="POST">
+                            <p class="remove_annons">Ta bort annons:</p>
+                            <input type="hidden" id="custId" name="ad_id" value="{{ ad[0] }}">
+                            <button type="submit" value="Ta bort annons">
+                        </form>
+                    </div>
+                {% endif %}
+            </article>
+            <div class="line"></div>
+            <div>
+                {% if ad[3] != None: %}
+                <!--kan lägga till en if här som byter 
+                    ut priset till logan för vilken typen 
+                    av annons det här-->
+                    <div id="pris">
+                        <h4>Pris: {{ad[3]}} SEK</h5>
+                    </div>
+                    <div class="line"></div>
+                {% endif %}
+                    <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
             </div>
-            <div id="Description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error maxime voluptas consequatur corporis. Fugiat eaque repudiandae repellendus eveniet consequatur ad laudantium magni neque nam. Ex in dolores hic maxime ipsam!</p>
-            </div>
-
-        </main>
-
-
-        <footer>
-
+            <div class="line"></div>
+                <aside id="aside">
+                    <form>
+                        <p for="Meddelande">Meddelande:</p>
+                        <textarea placeholder="...."></textarea>
+                        <p for="email">Email:</p>
+                        <input type="text" required name="email" id="mail" placeholder="...">
+                        <input type="submit" value="skicka">
+                    </form>
+                </aside>
+        </div>
+        </main> 
+        <footer id="information">
+            <p class="linkfoot">  © 2023 Stickling, Inc.</p>
+            <a class="linkfoot" href="idk">·Terms</a>
+            <a class="linkfoot" href="idk">·Privacy</a>
         </footer>
 
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
+        <script src="/static/like.js"></script>
     </body>
-</html>
+    </html>

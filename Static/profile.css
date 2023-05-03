@@ -1,7 +1,7 @@
 /* Same CSS for all HTML -----------------------------------------------------*/
 body {
   margin: 0%;
-  background-color: #f1e8e0;
+  background-color: #4d7965;
   }
   
   /* CSS styling for navigation bar--------------------------------------- */
@@ -14,7 +14,8 @@ body {
     border-bottom-width: thin;
     width: 100%;
     }
-   
+  
+  
   /* CSS styling for small logo */
   .small_logo {
   font-family: 'Fasthand';
@@ -178,131 +179,78 @@ body {
   margin: 0%;
   }
 
-/* Unika css för annonsen.css *-----------------------------------------------------------------------*/
+
+/* Unika css för profile.css (.card --> .conrtainer finns också i new.css *-----------------------------------------------------------------------*/
 
 /*CSS styling för main------------------------------------*/
-
-    
 main{
   background-color: #f1e8e0;
-  display: flex;
-  padding: 10% 5% 10% 5%;
-  background-image:url('background.png');
-    background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-size: cover;
+  padding: 10%;
  }
-
-  .annons_bilder{
-    margin-right: 50%;
-    margin-left: 20px;
-    margin-top: 40px ;
-    }
-    
-    .image_main_annons{
-      break-inside: avoid-column;
-      border-radius: 5%;
-      padding: 5px;
-      width: 450px;
-      height: auto;
-      margin: 0 auto;
-    }
-    
-    
-
-
-/* Increase the font size of the price element */
-  #pris{
-  font-size: 120%;
-  }
   
-  /* Set padding, font size, and layout for the description element */
-  #Description{
-  padding: 10% 0 10% 0 ;
-
-  }
-  
-  /* Set the font size of h1 element */
-  h1{
-  font-size: 200%;
-  }
-  
-  /* Set the width to 100% and height to auto for the Title_annons element */
-  #Title_annons{
+/* CSS styles for the card */
+.card {
+  background-color: #f1e8e0; /* set the background color */
+  transition: 0.3s; /* add transition effect */
+  border-radius: 10px; /* set rounded corners */
   height: auto;
-  }
+  margin-bottom: 20%; /* add margin at the bottom */
+  break-inside: avoid;
+  display: grid;
+  grid-template-rows: 1fr auto; /* set one row and one auto */
+  border-bottom-width: thin;
+  box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
+}
   
-  /* Set padding, layout, and content alignment for the secondary element */
-  .secondary{
-  margin-left: 50%;
-  margin-right: 0%;
-  padding: 20px;
-  position: fixed;
-  margin-bottom: 20px;
-  text-decoration: none;
-  width: 450px;
-  }
-  
-  /* Set background color, border radius, padding, margins, and height for the aside element */
-  aside{
-  margin-bottom: 20px;
-  }
-
-  aside > p{
-    margin-bottom: 0%;
-  }
-  
-  /* Set the background color, border, and border-bottom properties for the text input field */
-  input[type=text] {
-    background-color: #f1e8e0;
-    border: none;
-    border-bottom: 2px solid #000000;
-      }
-
-  
-  /* Set the width, height, padding, box-sizing, border, border-radius, background color, and resize property for the textarea element */
-  textarea {
-  height: 80px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  width: 100%;
-  resize: none;
-  }
-  
-
-#like {
-  cursor: pointer;
-  padding:15px ;
-  width: 30px;
+/* CSS styles for the image */
+.annons {
+  border-radius: 10px 10px 0 0; /* set rounded corners */
+  width: 100%; /* set width to 100% */
+  height: auto; /* set height to auto */
 }
 
-#like[data-liked='true']{
-  opacity: 1;
+/* CSS styles for the card on mouse hover */
+.card:hover {
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
+  background-color: #f0dfd1;
+  border-bottom: none;
 }
 
-#like[data-liked='false']{
-  opacity: 0.5;
+/* CSS styles for the container inside the card */
+.container {
+  padding: 2px 16px; /* add padding */
 }
 
-
-.line{
-  border-bottom:grey 1px solid;
-  width: 100%;
+/* CSS styles for the "redigera_profile" element */
+.redigera_profile {
+  padding-top: 20%; /* add padding at the top */
+  padding-left: 10%; /* add padding at the left */
+  padding-right: 10%; /* add padding at the right */
+  text-align: center; /* center align the text */
 }
 
-#addition_1{
-  padding-top: 10px;
-  color: #000000;
+/* CSS styles for the "new-old-box" element */
+.new-old-box {
+  padding: 10px; /* add padding */
+  display: flex; /* set display to flex */
 }
 
-.addition_2{
-  padding-bottom: 10px; ;
-
+/* CSS styles for the "box2" element */
+.box2 {
+  column-count: 2; /* set two columns */
+  column-gap: 20px; /* add gap between columns */
+  margin: 20% 20% 20% 5%; /* add margin */
 }
 
-.remove_annons{
-  margin-bottom: 0%;
+/* CSS styles for the "box" element */
+.box {
+  column-count: 2; /* set two columns */
+  column-gap: 20px; /* add gap between columns */
+  margin: 20% 20% 20% 5%; /* add margin */
+}
+
+/* CSS styles for the "A-title" element */
+.A-title {
+  margin-bottom: 10px; /* add margin at the bottom */
+  width: 100%; /* set width to 100% */
 }

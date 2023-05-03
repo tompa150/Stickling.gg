@@ -1,7 +1,11 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stickling.gg</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
@@ -14,9 +18,10 @@
     <form class="form1" action="http://127.0.0.1:8080/validation/" method="POST">
       <input class="un " name = 'Username' type="text" align="center" placeholder="Användarnamn">
       <input class="pass" type='Password' name = "Password" align="center" placeholder="Lösenord">
-      <input type="submit"  class="submit" align="center">
+      <input type="submit"  class="submit" align="center" value="Logga in">
+      <p class="forgot" align="center"><a href="http://127.0.0.1:8080/register/">Registrera dig här!</p> 
       <p class="forgot" align="center"><a href="#">Glömt lösenord?</p> 
-    </div>
+  </div>
      
 </body>
 

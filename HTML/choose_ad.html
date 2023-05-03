@@ -3,26 +3,16 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='new.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='choose_ad.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
     </head>
-    <body> 
+    <body>
         <nav>
-            <div class="navbar"> 
-                    <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
+            <div class="navbar">
+                <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                 <div class="RBOX">
-                    {% if 'user' not in session %}
-                        <div class="logga_in_box">
-                            <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
-                        </div>
-                    {% else %}
-                        <div class="creation_box">
-                            <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
-                                <p>Create ad</p><img src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
-                        </div >
-                    {% endif %}
                     <div class="dropdown">
                         <button class="dropbtn">
                             <div class="bars"></div>
@@ -33,7 +23,6 @@
                             <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
                             <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
                             <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Chats</a>
-                            
                         </div>
                     </div>
                 </div>
@@ -41,23 +30,20 @@
         </nav>
         <main> 
             <article id="main">
-                {% for ad in ads %}
-                <a href="http://127.0.0.1:8080/ad/{{ad[0]}}/">
-                    <div class="card">
-                        <img class="annons" src="{{ ad[3] }}" data-col="0" alt="Avatar">
-                        <div class="container">
-                            <h4><b>{{ ad[1] }}</b></h4> 
-                            <p>{{ ad[2] }}</p> 
-                        </div>
+                <div id="Title_annons">
+                    <h1>Välj Vilken kategori</h1>
+                </div>
+                    <div class="kategori_box">
+                        <a  href="http://127.0.0.1:8080/new/1/" class="card1" ><p> Sälj</p></a>
+                        <a  href="http://127.0.0.1:8080/new/2/" class="card2" ><p> Byt</p></a>
+                        <a  href="http://127.0.0.1:8080/new/3/" class="card3" ><p> Efterfråga</p></a>
                     </div>
-                </a>
-                {% endfor %}
             </article>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
-            <a class="linkfoot" href="idk">·Om oss</a>
-            <a class="linkfoot" href="idk">·Kontakta oss</a>
+            <a class="linkfoot" href="idk">·Terms</a>
+            <a class="linkfoot" href="idk">·Privacy</a>
         </footer>
     </body>
 </html>
