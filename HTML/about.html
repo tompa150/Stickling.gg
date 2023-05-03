@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Stickling.gg</title>
+        <link href="{{ url_for('static', filename='new.css') }}" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
+    </head>
+    <body> 
+        <nav>
+            <div class="navbar">
+                <a href="http://127.0.0.1:8080/" class="small_logo"> <img class="img" alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}"> Stickling</a>
+                <div class="RBOX">
+                    {% if 'user' not in session %}
+                        <div class="logga_in_box">
+                            <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
+                        </div>
+                    {% else %}
+                        <div>
+                            <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="creationB" src="{{ url_for('static', filename='pngegg-11.png') }}"></a>
+                        </div >
+                    {% endif %}
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                        </button>
+                        <div class="dropdown-content">   
+                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
+                            <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
+                            <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Chats</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main>
+        </main>
+        <footer id="information">
+            <p class="linkfoot">  © 2023 Stickling, Inc.</p>
+            <a class="linkfoot" href="idk">Om oss</a>
+            <a class="linkfoot" href="idk">Kontakta oss</a>
+        </footer>
+    </body>
+</html>
