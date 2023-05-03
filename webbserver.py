@@ -196,9 +196,14 @@ def check_liked_ads(id, username):
         cursor = conn.cursor()
         cursor.execute(f""" SELECT user_liking_ad, liked_ad from liked_ads WHERE user_liking_ad = '{username}' and liked_ad = {id}; """)
         results = cursor.fetchall()
+        result = results[0]
         conn.close()
-        ad_is_liked = True
-        return ad_is_liked
+        if str(result[0]) == str(username) and int(result[1]) == int(id):
+            ad_is_liked = True
+            return ad_is_liked
+        else:
+            ad_is_liked = False
+            return ad_is_liked
     except:
         ad_is_liked = False
         return ad_is_liked
