@@ -33,6 +33,9 @@
                             <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
                             <a href="http://127.0.0.1:8080/liked_annons/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
                             <a href="http://127.0.0.1:8080/chats/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Chats</a>
+                            {% if 'user' in session: %}
+                                <a href="http://127.0.0.1:8080/logout/"><img class="bar_icons" src="{{ url_for('static', filename='logout.png') }}"> Logga ut</a>
+                            {% endif %}
                             
                         </div>
                     </div>
