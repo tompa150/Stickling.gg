@@ -189,6 +189,26 @@ def update_ad(title, ad_id, description, price, image_paths, type):
     conn.close()
     return redirect('/')
 
+def check_liked_ads(id, username):
+    try:
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        cursor = conn.cursor()
+        cursor.execute(f""" SELECT user_liking_ad, liked_ad from liked_ads WHERE user_liking_ad = '{username}' and liked_ad = {id}; """)
+        results = cursor.fetchall()
+        conn.close()
+        result = results[0]
+        print('try')
+        print(result[0])
+        print(result[1])
+        print(username)
+        print(id)
+        ad_is_liked = True
+        print('excepts')
+        return ad_is_liked
+    except:
+        ad_is_liked = False
+        return ad_is_liked
+
 @app.route("/like_ad/<id>/", methods = ['POST'])
 def liking_ad(id):
     username = session['user']
@@ -260,6 +280,8 @@ def ad(id):
             if session['user'] == user[0]:
                 username = session['user']
                 ads = ad_read()
+                ad_is_liked = check_liked_ads(id, username)
+                print(ad_is_liked)
                 for ad in ads:
                     if int(id) == ad[0]:
                         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -269,7 +291,7 @@ def ad(id):
                         image_paths = [image[0] for image in images]
                         cursor.close()
                         conn.close()
-                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username)
+                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked)
                 else:
                     return redirect('/')
         

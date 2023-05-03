@@ -70,7 +70,13 @@
                     </div>
                     <div class="line"></div>
                 {% endif %}
-                    <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
+                {% if username != ad[1]: %}
+                    {%if ad_is_liked == True: %}
+                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
+                    {% else: %}
+                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="false" id="like">
+                    {% endif %}
+                {% endif %}
             </div>
             <div class="line"></div>
                 <aside id="aside">
