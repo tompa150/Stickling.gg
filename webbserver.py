@@ -112,7 +112,7 @@ def image_ad_read_index():
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
-    cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' ; """)
+    cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' ; """)
     results = cursor.fetchall()
     ads = {}
     for row in results:
@@ -120,6 +120,7 @@ def image_ad_read_index():
         ad_title = row[1]
         ad_description = row[2]
         image_path = row[3]
+        ad_username = row[4]
         if ad_id not in ads:
             ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_path': []}
         ads[ad_id]['image_path'].append(image_path)
@@ -195,16 +196,27 @@ def check_liked_ads(id, username):
         cursor = conn.cursor()
         cursor.execute(f""" SELECT user_liking_ad, liked_ad from liked_ads WHERE user_liking_ad = '{username}' and liked_ad = {id}; """)
         results = cursor.fetchall()
-        conn.close()
         result = results[0]
-        print('try')
-        print(result[0])
-        print(result[1])
-        print(username)
-        print(id)
-        ad_is_liked = True
-        print('excepts')
+        conn.close()
+        if str(result[0]) == str(username) and int(result[1]) == int(id):
+            ad_is_liked = True
+            return ad_is_liked
+        else:
+            ad_is_liked = False
+            return ad_is_liked
+    except:
+        ad_is_liked = False
         return ad_is_liked
+    
+def check_liked_ads_main():
+    try:
+        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        cursor = conn.cursor()
+        cursor.execute(f""" SELECT user_liking_ad, liked_ad from liked_ads; """)
+        results = cursor.fetchall()
+        conn.close()
+        ad_is_liked = True
+        return results
     except:
         ad_is_liked = False
         return ad_is_liked
@@ -416,7 +428,9 @@ def index():
         user_info = read_user_info()
         for user in user_info:
             if session['user'] == user[0]:
-                return render_template("new.html", ads = ads, session = session)
+                liked_ads = check_liked_ads_main()
+                print(liked_ads)
+                return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads)
 
 @app.route("/login/")
 def login():
