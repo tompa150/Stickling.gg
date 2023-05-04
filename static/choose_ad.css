@@ -28,9 +28,10 @@ body {
   
   /* CSS styling for logo image */
   .small_logo > img {
-  width: 55px;
-  height: 55px;
-  }
+    width: 55px;
+    height: 55px;
+    margin-left: 4px;
+    }
   
   /* CSS styling for right box */
   .RBOX {
@@ -47,80 +48,80 @@ body {
   height: auto;
   }
   
+
   /* CSS styling for bars */
   .bars {
-  width: 25px;
-  height: 2px;
-  background-color: black;
-  margin: 4px 0;
-  }
-  
-  /* CSS styling for dropdown container */
-  .dropdown {
-  font-weight: bold;
-  background-color: #f1e8e0;
-  border-radius: 5px;
-  float: right;
-  overflow: hidden;
-  cursor: pointer;
-  margin-right: 5px;
-  }
-  
-  /* CSS styling for dropdown button */
-  .dropdown .dropbtn {
-  border: none;
-  outline: none;
-  color: #f1e8e0;
-  padding: 14px 16px;
-  background-color: inherit;
-  margin: 0;
-  cursor: pointer;
-  }
-  
-  /* CSS styling for navbar links on hover */
-  .dropdown:hover .dropbtn {
-  border-radius: 5px;
-  background-color: #eaddd0;
-  cursor: pointer;
-  }
-  
-  /* CSS styling for dropdown content */
-  .dropdown-content {
-  border-radius: 5px;
-  right: 2%;
-  display: none;
-  position: absolute;
-  background-color: #f1e8e0;
-  min-width: 300px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  cursor: pointer;
-  }
-  
-  /* CSS styling for links inside the dropdown */
-  .dropdown-content a {
-  float: none;
-  color: rgb(0, 0, 0);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-  cursor: pointer;
-  font-size: 20px;
-  }
-  
-  /* CSS styling for dropdown links on hover */
-  .dropdown-content a:hover {
-  background-color: #eaddd0;
-  cursor: pointer;
-  }
-  
-  /* CSS styling to show dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-  display: block;
-  cursor: pointer;
-  }
-  
+    width: 25px;
+    height: 3px;
+    background-color: #f1e8e0;
+    margin: 4px 0;
+    }
+    
+    /* CSS styling for dropdown container */
+    .dropdown {
+    font-weight: bold;
+    border-radius: 5px;
+    float: right;
+    overflow: hidden;
+    cursor: pointer;
+    margin-right: 5px;
+    }
+    
+    /* CSS styling for dropdown button */
+    .dropdown .dropbtn {
+    border: none;
+    outline: none;
+    color: #f1e8e0;
+    padding: 14px 16px;
+    background-color: inherit;
+    margin: 0;
+    cursor: pointer;
+    }
+    
+    /* CSS styling for navbar links on hover */
+    .dropdown:hover .dropbtn {
+    border-radius: 5px;
+    background-color: #62937c;
+    cursor: pointer;
+    box-shadow: 0px 16px 16px 0px rgb(0,0,0,0.2);
+    }
+    
+    /* CSS styling for dropdown content */
+    .dropdown-content {
+    border-radius: 5px;
+    right: 2%;
+    display: none;
+    position: absolute;
+    background-color: #f1e8e0;
+    min-width: 300px;
+    z-index: 1;
+    cursor: pointer;
+    }
+    
+    /* CSS styling for links inside the dropdown */
+    .dropdown-content a {
+    float: none;
+    color: rgb(0, 0, 0);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+    font-size: 20px;
+    }
+    
+    /* CSS styling for dropdown links on hover */
+    .dropdown-content a:hover {
+    background-color: #eaddd0;
+    cursor: pointer;
+    }
+    
+    /* CSS styling to show dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+    display: block;
+    cursor: pointer;
+    }
+    
   /* Footer styling -----------------------------------------------------------------------------------*/
   footer{
   padding: 5px;

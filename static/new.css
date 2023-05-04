@@ -30,6 +30,7 @@ body {
   .small_logo > img {
   width: 55px;
   height: 55px;
+  margin-left: 4px;
   }
   
   /* CSS styling for right box */
@@ -50,15 +51,14 @@ body {
   /* CSS styling for bars */
   .bars {
   width: 25px;
-  height: 2px;
-  background-color: black;
+  height: 3px;
+  background-color: #f1e8e0;
   margin: 4px 0;
   }
   
   /* CSS styling for dropdown container */
   .dropdown {
   font-weight: bold;
-  background-color: #f1e8e0;
   border-radius: 5px;
   float: right;
   overflow: hidden;
@@ -80,8 +80,9 @@ body {
   /* CSS styling for navbar links on hover */
   .dropdown:hover .dropbtn {
   border-radius: 5px;
-  background-color: #eaddd0;
+  background-color: #62937c;
   cursor: pointer;
+  box-shadow: 0px 16px 16px 0px rgb(0,0,0,0.2);
   }
   
   /* CSS styling for dropdown content */
@@ -92,7 +93,6 @@ body {
   position: absolute;
   background-color: #f1e8e0;
   min-width: 300px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   cursor: pointer;
   }
@@ -132,8 +132,7 @@ body {
   /* CSS styling for creation button link */
   .creation_button:link, .creation_button:visited {
   display: flex;
-  background-color: #f1e8e0;
-  color: black;
+  color: #f1e8e0;
   padding: 5px 5px;
   text-decoration: none;
   border-radius: 10px;
@@ -151,6 +150,13 @@ body {
   .creation_button:link > p{
   margin: 0;
   margin-top: 13px;
+  }
+
+
+.creation_button:hover{
+    background-color: #62937c;
+    box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
+
   }
   
   /* Footer styling -----------------------------------------------------------------------------------*/
@@ -191,7 +197,7 @@ main{
  }
 /* Styles for the main container */
 #main{
-  margin-top: 15%;
+  margin-top: 8%;
   column-count: 4;
   column-gap: 20px;
   }
@@ -243,18 +249,19 @@ main{
   
   /* Styles for the login button link */
   .logga_in_button:link, .logga_in_button:visited {
-  background-color: #f1e8e0;
-  color: black;
+  color: #f1e8e0;
   padding: 10px 20px;
+  font-family: 'Lato', sans-serif;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 15px;
   border-radius: 10px;
   }
   
   /* Styles for the login button on hover and active */
   .logga_in_button:hover, .logga_in_button:active {
-  background-color: #eaddd0;
-  color: black;
+  background-color: #62937c;
+  box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
+
   }
   
   /* CSS styling for smaller screens */
