@@ -280,17 +280,17 @@ main{
   }
   
 
-#like {
+.like {
   cursor: pointer;
   padding:15px ;
   width: 30px;
 }
 
-#like[data-liked='true']{
+.like[data-liked='true']{
   opacity: 1;
 }
 
-#like[data-liked='false']{
+.like[data-liked='false']{
   opacity: 0.5;
 }
 

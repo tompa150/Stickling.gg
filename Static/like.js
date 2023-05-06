@@ -1,4 +1,4 @@
-$("#like").on("click", function() {
+$(".like").on("click", function() {
     const id = $(this).attr("data-id");
 
     if ($(this).attr("data-liked") === "true") {
@@ -9,7 +9,7 @@ $("#like").on("click", function() {
             dataType: "JSON"
         }).done(function(data) {
             if(data.success === true) {
-                $("#like").attr("data-liked", "false");
+                $(`#${id}`).attr("data-liked", "false");
             }
         })
     } else {
@@ -20,7 +20,7 @@ $("#like").on("click", function() {
             dataType: "JSON"
         }).done(function(data) {
             if(data.success === true) {
-                $("#like").attr("data-liked", "true");
+                $(`#${id}`).attr("data-liked", "true");
             }
         })
     }

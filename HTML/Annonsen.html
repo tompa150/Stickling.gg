@@ -77,9 +77,9 @@
                 {% endif %}
                 {% if username != ad[1]: %}
                     {%if ad_is_liked == True: %}
-                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
+                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="true" id="{{ad[0]}}">
                     {% else: %}
-                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="false" id="like">
+                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
                     {% endif %}
                 {% endif %}
             </div>

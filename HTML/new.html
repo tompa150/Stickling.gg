@@ -54,15 +54,15 @@
                 </a>
                             {% for x in liked_ads %}
                                 {% if 'user' in session %}
-                                    {% if x[0] == session['user'] and x[1] == ad[0] %}
-                                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="true" id="like">
+                                    {% if x[0] == session['user'] and x[1] == ad[0] and x[0] != ad[4] %}
+                                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="true" id="{{ad[0]}}">
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
                             {% if 'user' in session %}
                                 {% for a in unmatched_values: %}
                                     {% if ad[0] == a: %}
-                                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" data-liked="false" id="like">
+                                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}

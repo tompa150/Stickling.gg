@@ -122,7 +122,7 @@ def image_ad_read_index():
         image_path = row[3]
         ad_username = row[4]
         if ad_id not in ads:
-            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_path': []}
+            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_path': [], 'username': ad_username}
         ads[ad_id]['image_path'].append(image_path)
     conn.close()
     return results
@@ -433,14 +433,14 @@ def index():
                 print('hi')
                 unmatched_values = []
                 for ad in ads:
+                    print(ad[4])
                     matched = False
                     for x in liked_ads:
                         if x[0] == session['user'] and x[1] == ad[0]:
                             matched = True
                             break
-                    if not matched:
+                    if not matched and ad[4]!= session['user']:
                         unmatched_values.append(ad[0])
-                        print(ad[0])
                 return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
 
 @app.route("/login/")
