@@ -428,9 +428,20 @@ def index():
         user_info = read_user_info()
         for user in user_info:
             if session['user'] == user[0]:
+                no_match_list= []
                 liked_ads = check_liked_ads_main()
-                print(liked_ads)
-                return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads)
+                print('hi')
+                unmatched_values = []
+                for ad in ads:
+                    matched = False
+                    for x in liked_ads:
+                        if x[0] == session['user'] and x[1] == ad[0]:
+                            matched = True
+                            break
+                    if not matched:
+                        unmatched_values.append(ad[0])
+                        print(ad[0])
+                return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
 
 @app.route("/login/")
 def login():
