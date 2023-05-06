@@ -51,6 +51,7 @@
                         <div class="container">
                             <h4><b>{{ ad[1] }}</b></h4> 
                             <p>{{ ad[2] }}</p> 
+                </a>
                             {% for x in liked_ads %}
                                 {% if 'user' in session %}
                                     {% if x[0] == session['user'] and x[1] == ad[0] %}
@@ -67,7 +68,6 @@
                             {% endif %}
                         </div>
                     </div>
-                </a>
                 {% endfor %}
             </section>
         </main>
@@ -76,5 +76,7 @@
             <a class="linkfoot" href="idk">·Om oss</a>
             <a class="linkfoot" href="idk">·Kontakta oss</a>
         </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
+        <script src="/static/like.js"></script>
     </body>
 </html>

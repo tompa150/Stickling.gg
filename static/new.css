@@ -202,6 +202,12 @@ main{
   column-gap: 20px;
   }
   
+.container > a {
+  text-decoration: none;
+  color: black;
+
+}
+
   /* Styles for the links inside the main container */
   #main > a {
   text-decoration: none;
@@ -295,6 +301,8 @@ main{
   /* Styles for larger screens */
   
   }
+
+
 
 #like {
   cursor: pointer;
