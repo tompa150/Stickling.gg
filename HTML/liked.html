@@ -3,16 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='ad_byt.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body> 
         <nav>
             <div class="navbar">
                 <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                 <div class="RBOX">
+                    {% if 'user' in session %}
+                    <div class="creation_box">
+                        <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                            <img src="{{ url_for('static', filename='CUBE_f.png') }}"><p>Skapa Annons</p></a>
+                    </div >
+                {% endif %}
                     <div class="dropdown">
                         <button class="dropbtn">
                             <div class="bars"></div>
@@ -31,34 +37,39 @@
                 </div>
             </div>
         </nav>
-        <main>     
-            <div class="toptopform">
-                <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}"></a>
-                <h1>Annons detaljer</h1>
+        <main> 
+            <div>
+                <article>
+                    <p class="redigera_profile"> 
+                        TEXT HERE
+                    </p>
+                </article>
             </div>
-            <div class="ad_creation_box">
-                <form class="ad_information"action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data">
-                    <div class="topform">
-                        <input type="text" name="Title" id="title" placeholder="Title...">
-                        <button class="create"type="submit">Upload</button>
+
+            <article class="new-old-box">
+                    <div class="box">
+                            <h3 class="A-title">Liked ads</h3>
+                            {% for ad in LikedAds %}
+                                <div class="card">
+                                    <div>
+                                        <img class="annons" id="bild" src="{{ ad[4] }}" alt="bild på stickling">
+                                    </div>
+                                    <div class="container">
+                                        <h4><b>{{ ad[2] }}</b></h4> 
+                                        <p>{{ ad[3] }}</p> 
+                                        <img src="/static/heart.png" alt="Like button" data-id="{{ad[1]}}" class="like" data-liked="true" id="{{ad[1]}}">
+                                    </div>
+                                </div>
+                            {% endfor %}
                     </div>
-                    <textarea  name="Description" id="Description" placeholder="Information..."> </textarea>
-                    <div class="bottomform">
-                        <div class="Bbox">
-                            <h3>Annons Bilder</h3>
-                            <p>Lägg till max 4 bilder på din stickling</p>
-                            <input type="file" name="images" multiple max="5" accept="image/*">
-                        </div>
-                    </div>
-                    <input type="hidden" id="custId" name="Type" value="byt">
-                    <input type="hidden" id="custId" name="Username" value="{{ user }}">
-                </form>
-            </div>
+            </article>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
             <a class="linkfoot" href="idk">·Terms</a>
             <a class="linkfoot" href="idk">·Privacy</a>
         </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
+        <script src="/static/like.js"></script>
     </body>
 </html>

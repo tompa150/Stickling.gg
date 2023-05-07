@@ -259,3 +259,16 @@ main{
   margin-bottom: 10px; /* add margin at the bottom */
   width: 100%; /* set width to 100% */
 }
+.like {
+  cursor: pointer;
+  padding:15px ;
+  width: 30px;
+}
+
+.like[data-liked='true']{
+  opacity: 1;
+}
+
+.like[data-liked='false']{
+  opacity: 0.5;
+}

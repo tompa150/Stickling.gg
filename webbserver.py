@@ -106,6 +106,15 @@ def image_ad_read_inactive(user):
         ads[ad_id]['image_paths'].append(image_path)
     conn.close()
     return results
+
+def liked_ads(username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT ads.username, ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id JOIN liked_ads on ads.ad_id = liked_ads.liked_ad WHERE liked_ads.user_liking_ad = '{username}' AND ads.status = 'active'; """)
+    ads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return ads
     
 def image_ad_read_index():
     """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
@@ -280,6 +289,19 @@ def profile():
 
     return redirect(url_for('login'))
 
+@app.route("/profile/liked_ads/")
+def user_liked_ads():
+    ads = image_ad_read_index()
+    if 'user' not in session:
+        return redirect('/')
+
+    user_info = read_user_info()
+    username = session['user']
+    for one_user in user_info:
+        if username == one_user[0]:
+            LikedAds = liked_ads(username)
+            return render_template("liked.html", LikedAds = LikedAds)
+
 @app.route("/ad/<id>/")
 def ad(id):
     """Här tar funktionen emot ett id från URI och letar sedan i databasen efter en annons med ett matchande id, finns det
@@ -428,7 +450,6 @@ def index():
         user_info = read_user_info()
         for user in user_info:
             if session['user'] == user[0]:
-                no_match_list= []
                 liked_ads = check_liked_ads_main()
                 print('hi')
                 unmatched_values = []
