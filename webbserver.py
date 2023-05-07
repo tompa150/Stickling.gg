@@ -110,7 +110,7 @@ def image_ad_read_inactive(user):
 def liked_ads(username):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" SELECT ads.username, ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id JOIN liked_ads on ads.ad_id = liked_ads.liked_ad WHERE liked_ads.user_liking_ad = '{username}' AND ads.status = 'active'; """)
+    cursor.execute(f""" SELECT ads.username, ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id JOIN liked_ads on ads.ad_id = liked_ads.liked_ad WHERE liked_ads.user_liking_ad = '{username}' AND ads.status = 'active' ORDER BY liked_ads.timestamp_col DESC; """)
     ads = cursor.fetchall()
     cursor.close()
     conn.close()
