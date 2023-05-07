@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='spara.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -40,23 +40,21 @@
         <main> 
             <div>
                 <article>
-                    <p class="redigera_profile"> 
-                        TEXT HERE
-                    </p>
+                    <h1 class="redigera_profile"> 
+                        Sparade annonser 
+                    </h1>
                 </article>
             </div>
 
             <article class="new-old-box">
                     <div class="box">
-                            <h3 class="A-title">Liked ads</h3>
                             {% for ad in LikedAds %}
                                 <div class="card">
                                     <div>
-                                        <img class="annons" id="bild" src="{{ ad[4] }}" alt="bild på stickling">
+                                        <img class="annons" src="{{ ad[4] }}" alt="bild på stickling">
                                     </div>
                                     <div class="container">
                                         <h4><b>{{ ad[2] }}</b></h4> 
-                                        <p>{{ ad[3] }}</p> 
                                         <img src="/static/heart.png" alt="Like button" data-id="{{ad[1]}}" class="like" data-liked="true" id="{{ad[1]}}">
                                     </div>
                                 </div>

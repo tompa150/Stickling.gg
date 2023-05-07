@@ -236,29 +236,26 @@ main{
 
 /* CSS styles for the "new-old-box" element */
 .new-old-box {
-  padding: 10px; /* add padding */
-  display: flex; /* set display to flex */
+  padding-right: 40%; /* add padding */
+  column-count: 2;
+  column-gap: 40px; /* add gap between columns */
 }
 
 /* CSS styles for the "box2" element */
 .box2 {
-  column-count: 2; /* set two columns */
-  column-gap: 20px; /* add gap between columns */
-  margin: 20% 20% 20% 5%; /* add margin */
+  margin-top: 10% ; /* add margin */
 }
 
 /* CSS styles for the "box" element */
 .box {
-  column-count: 2; /* set two columns */
-  column-gap: 20px; /* add gap between columns */
-  margin: 20% 20% 20% 5%; /* add margin */
+  margin-top: 10% ; /* add margin */
 }
 
 /* CSS styles for the "A-title" element */
 .A-title {
-  margin-bottom: 10px; /* add margin at the bottom */
-  width: 100%; /* set width to 100% */
+padding: 20px;
 }
+
 .like {
   cursor: pointer;
   padding:15px ;
@@ -271,4 +268,9 @@ main{
 
 .like[data-liked='false']{
   opacity: 0.5;
+}
+
+.title_box{
+  display: flex;
+  gap: 15%;
 }

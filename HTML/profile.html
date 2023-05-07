@@ -45,10 +45,12 @@
                     </p>
                 </article>
             </div>
-
+            <div class="title_box">
+                <h3 class="A-title">Aktiva annonser</h3>
+                <h3 class="A-title">Inaktiv annonser</h3>
+            </div>
             <article class="new-old-box">
                     <div class="box">
-                            <h3 class="A-title">Active ads</h3>
                             {% for active in active_ads %}
                             <div class="card">
                                 <div>
@@ -62,7 +64,6 @@
                             {% endfor %}
                     </div>
                     <div class="box2">
-                            <h3 class="A-title">Old ads</h3>
                             {% for ad in inactive_ads %}
                             <div class="card">
                                 <div>
