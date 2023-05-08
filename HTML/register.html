@@ -19,13 +19,13 @@
       {% if invalid_email != "": %}
         <p>{{invalid_email}}</p>
       {% endif %}
-      <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text"  placeholder="Användarnamn">
-      <input class="RegisterPass" id="Lösenord" type="password" name="Lösenord" placeholder="Lösenord">
-      <input class="RegisterPass" id="BekräftaLösenord" type="password" name="Bekräfta_lösenord" placeholder="Bekräfta lösenord">
-      <input class="RegisterUn" id="Telefonnummer" type="text" name="Telefonnummer" placeholder="Mobilnummer: +46....">
+      <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required  placeholder="Användarnamn">
+      <input class="RegisterPass" id="Lösenord" type="password" required name="Lösenord" placeholder="Lösenord" 
+pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
+      <input class="RegisterPass" id="BekräftaLösenord" type="password" required name="Bekräfta_lösenord" placeholder="Bekräfta lösenord">
+      <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" required name="Telefonnummer" placeholder="Mobilnummer: +46....">
       <button type="submit" class="RegisterSubmit" >Skapa konto</button>
     </div>
-     
 </body>
 
 </html>
