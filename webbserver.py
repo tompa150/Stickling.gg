@@ -3,6 +3,7 @@ import psycopg2
 from datetime import timedelta
 import os
 import json
+import bcrypt
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
@@ -32,11 +33,22 @@ def read_user_info():
     """Här läses alla användaruppgifter in från databasen"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute("SELECT username, password, email, number FROM users;")
+    cursor.execute("SELECT username, password, email, number, salt FROM users;")
     products = cursor.fetchall()
     cursor.close()
     conn.close()
     return products
+
+def read_user_specific(user):
+    """Här läses alla användaruppgifter in från databasen"""
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT username, password, email, number, salt FROM users WHERE username = '{user}';")
+    user_list = cursor.fetchall()
+    user = user_list[0]
+    cursor.close()
+    conn.close()
+    return user
 
 def ad_read():
     """Här läses alla annonser från databasen där statusen = active """
@@ -517,21 +529,23 @@ def validation():
         session.pop('user', None)
         username = request.form.get("Username")
         password = request.form.get("Password")
-        user_info = read_user_info()
-        for row in user_info:
-            if username == row[0] and password == row[1]:
+        user_info = read_user_specific(username)
+        print(user_info)
+        if username == user_info[0]:
+            hashed_p = bcrypt.hashpw(password.encode('utf-8'), user_info[4].encode('utf-8'))
+            if hashed_p == user_info[1].encode('utf-8'):
                 session['user'] = username
                 return redirect("/")
-        else:
-            if username != row[0] and password == row[1]:
-                wrong_user = "Felaktigt användarnamn, vänligen ange ett giltigt sådant."
-                return render_template("login.html", wrong_user = wrong_user)
-            elif username == row[0] and password != row[1]:
-                wrong_pass = "Lösenordet är inkorrekt, vänligen ange ett giltigt lösenord"
-                return render_template("login.html", wrong_pass = wrong_pass)
             else:
-                wrong_user_pass = "Både användarnamn och lösenord är felaktiga, vänligen ange ett giltigt input"
-                return render_template("login.html", wrong_user_pass = wrong_user_pass)
+                if username != user_info[0] and password == row[1]:
+                    wrong_user = "Felaktigt användarnamn, vänligen ange ett giltigt sådant."
+                    return render_template("login.html", wrong_user = wrong_user)
+                elif username == row[0] and password != row[1]:
+                    wrong_pass = "Lösenordet är inkorrekt, vänligen ange ett giltigt lösenord"
+                    return render_template("login.html", wrong_pass = wrong_pass)
+                else:
+                    wrong_user_pass = "Både användarnamn och lösenord är felaktiga, vänligen ange ett giltigt input"
+                    return render_template("login.html", wrong_user_pass = wrong_user_pass)
             
     return render_template("login.html")
            
@@ -547,29 +561,21 @@ def register_user():
     email = request.form.get("Email")
     username = request.form.get("Användarnamn")
     password = request.form.get("Lösenord")
-    conf_password = request.form.get("Bekräfta_lösenord")
     number = request.form.get("Telefonnummer")
     user_info = read_user_info()
+    print(user_info)
     for row in user_info:   
-        if email == row[0]:
-            invalid_email = "Email already exists"
+        if email == row[2] or username == row[0]:
+            invalid_email = "Den angivna email/användarnamnet är redan registrerad."
             return render_template("register.html", invalid_email = invalid_email)
-        elif username == row[1]:
-            invalid_username = "Username already exists"
-            return render_template("register.html", invalid_username=invalid_username)
-        elif password == row[2]:
-            invalid_password = "Password alredy exists"
-            return render_template("register.html", invalid_password = invalid_password)
-        elif password != conf_password:
-            non_similar_pass = "Your password is not the same, please re-enter your password."
-            return render_template("register.html", non_similar_pass = non_similar_pass)
-        elif number == row[3]:
-            number_exists = "That number already exists, please enter your own number!"
-            return render_template("register.html", number_exists = number_exists)
     else:
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+        print(salt)
+        print(hashed)
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
         cursor = conn.cursor()
-        cursor.execute(f""" INSERT INTO users(username, password, email, number) VALUES ('{username}', '{password}', '{email}', {number}); """)
+        cursor.execute(f""" INSERT INTO users(username, password, email, number, salt) VALUES ('{username}', '{hashed.decode('utf-8')}', '{email}', {number}, '{salt.decode('utf-8')}'); """)
         conn.commit()
         conn.close()
         return render_template("login.html")
