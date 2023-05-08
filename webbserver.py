@@ -537,7 +537,7 @@ def validation():
                 session['user'] = username
                 return redirect("/")
             else:
-                return render_template("login.html", wrong_user_pass = wrong_user_pass)
+                return render_template("login.html")
             
     return render_template("login.html")
            
