@@ -11,19 +11,19 @@ app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
 
 
-
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'stickling.gg@gmail.com'
-app.config['MAIL_PASSWORD'] = 'gbobvlzggaskwebi'
+app.config['MAIL_PASSWORD'] = 'qebwjkotuoqdfyts'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEFAULT_SENDER'] = 'stickling.gg@gmail.com'
 mail = Mail(app)
 
 
 def new_token(email):
     deadline = datetime.now() + timedelta(hours=1)
-    token = secrets.token(20)
+    token = secrets.token_urlsafe(20)
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" INSERT into token_time(token_id, token_expiration, email) VALUES ('{token}', '{deadline}', '{email}'); """ )
@@ -57,7 +57,7 @@ def password_reset(token):
         pass
     else:
         if mail_token[2] == user[2]:
-            return render_template("reset_password.html", user)
+            return render_template("reset_password.html", user = user)
         
 
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
@@ -90,7 +90,7 @@ def update_password(email, password):
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" UPDATE table token_time set password = '{hashed.decode('utf-8')}', salt = '{salt.decode('utf-8')}' WHERE email = '{email}'; """)
+    cursor.execute(f""" UPDATE users set password = '{hashed.decode('utf-8')}', salt = '{salt.decode('utf-8')}' WHERE email = '{email}'; """)
     conn.commit()
     conn.close()
 
