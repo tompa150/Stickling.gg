@@ -59,7 +59,6 @@ def password_reset(token):
         if mail_token[2] == user[2]:
             return render_template("reset_password.html", user = user)
         
-
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
 def reset_ur():
     if request.method == 'POST':
