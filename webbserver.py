@@ -1,12 +1,99 @@
 from flask import Flask, render_template, request, url_for, session, g, redirect 
 import psycopg2
-from datetime import timedelta
+from datetime import timedelta, datetime
 import os
 import json
 import bcrypt
+from flask_mail import Mail, Message
+import secrets
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
+
+
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'stickling.gg@gmail.com'
+app.config['MAIL_PASSWORD'] = 'gbobvlzggaskwebi'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+
+def new_token(email):
+    deadline = datetime.now() + timedelta(hours=1)
+    token = secrets.token(20)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" INSERT into token_time(token_id, token_expiration, email) VALUES ('{token}', '{deadline}', '{email}'); """ )
+    conn.commit()
+    conn.close()
+    return token
+
+def send_reset(email):
+    token = new_token(email)
+    reset_url = url_for('password_reset', token=token, _external=True)
+    message = Message('Återställning av lösenord', recipients=[email])
+    message.body = f'Hej! Vänligen använd följande länk för att återställa ditt lösenord: {reset_url}'
+    mail.send(message)
+    return
+
+def retrieve_token_expiration(token):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT token_id, token_expiration, email FROM token_time WHERE token_id = '{token}'; """)
+    products = cursor.fetchall()
+    user_token = products[0]
+    cursor.close()
+    conn.close()
+    return user_token      
+
+@app.route("/password_reset/<token>/", methods=['GET', 'POST'])
+def password_reset(token):
+    mail_token = retrieve_token_expiration(token)
+    user = read_user_mail(mail_token[2])
+    if mail_token[1] == None or mail_token[1] < datetime.now():
+        pass
+    else:
+        if mail_token[2] == user[2]:
+            return render_template("reset_password.html", user)
+        
+
+@app.route("/get_reset_mail/", methods = ['POST', 'GET'])
+def reset_ur():
+    if request.method == 'POST':
+        Email = request.form.get("Email")
+        send_reset(Email)
+    return redirect("/")
+
+@app.route("/login/reset_password/", methods = ['POST', 'GET'])
+def reset_pass():
+    return render_template("forgotpage1.html")
+       
+@app.route("/validation_forgot/", methods = ['POST', 'GET'])
+def validation_pass():
+    if request.method == 'POST':
+        session.pop('user', None)
+        Email = request.form.get("Email")
+        Password = request.form.get("Password")
+        Password2 = request.form.get("Password2")
+        user_info = read_user_mail(Email)
+        print(user_info)
+        if Email == user_info[2]:
+            update_password(Email, Password)
+            return redirect("/")
+            
+
+def update_password(email, password):
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" UPDATE table token_time set password = '{hashed.decode('utf-8')}', salt = '{salt.decode('utf-8')}' WHERE email = '{email}'; """)
+    conn.commit()
+    conn.close()
+
 
 @app.before_request
 def make_session_permanent():
@@ -44,6 +131,17 @@ def read_user_specific(user):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f"SELECT username, password, email, number, salt FROM users WHERE username = '{user}';")
+    user_list = cursor.fetchall()
+    user = user_list[0]
+    cursor.close()
+    conn.close()
+    return user
+
+def read_user_mail(Email):
+    """Här läses alla användaruppgifter in från databasen"""
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT username, password, email, number, salt FROM users WHERE email = '{Email}';")
     user_list = cursor.fetchall()
     user = user_list[0]
     cursor.close()
