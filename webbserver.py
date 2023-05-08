@@ -537,15 +537,7 @@ def validation():
                 session['user'] = username
                 return redirect("/")
             else:
-                if username != user_info[0] and password == row[1]:
-                    wrong_user = "Felaktigt användarnamn, vänligen ange ett giltigt sådant."
-                    return render_template("login.html", wrong_user = wrong_user)
-                elif username == row[0] and password != row[1]:
-                    wrong_pass = "Lösenordet är inkorrekt, vänligen ange ett giltigt lösenord"
-                    return render_template("login.html", wrong_pass = wrong_pass)
-                else:
-                    wrong_user_pass = "Både användarnamn och lösenord är felaktiga, vänligen ange ett giltigt input"
-                    return render_template("login.html", wrong_user_pass = wrong_user_pass)
+                return render_template("login.html", wrong_user_pass = wrong_user_pass)
             
     return render_template("login.html")
            
