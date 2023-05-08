@@ -11,18 +11,41 @@
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <title>Sign in</title>
 </head>
-
 <body>
-  <div class="main">
-    <p class="sign" align="center">Logga in</p>
-    <form class="form1" action="http://127.0.0.1:8080/validation/" method="POST">
-      <input class="un " name = 'Username' type="text" required align="center" placeholder="Användarnamn">
-      <input class="pass" type='Password' required name = "Password" align="center" placeholder="Lösenord">
-      <input type="submit"  class="submit" align="center" value="Logga in">
-      <p class="forgot" align="center"><a href="http://127.0.0.1:8080/register/">Registrera dig här!</p> 
-      <p class="forgot" align="center"><a href="#">Glömt lösenord?</p> 
-  </div>
+  <header>
+    <div class="container">
+      <img src="{{ url_for('static', filename='seedling-4394118__480.jpg') }}" alt="main_image">
+      <div class="centered"><h1>Välkommen till Stickling.gg </h1></div>
+      <div class="mouse_scroll" id="bellow">
+        <div class="mouse">
+          <div class="wheel"></div>
+        </div>
+        <div>
+          <span class="m_scroll_arrows unu"></span>
+          <span class="m_scroll_arrows doi"></span>
+          <span class="m_scroll_arrows trei"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="main_main" >
+      <a href="#bellow"></a>
+      <img class="main_image" src="{{ url_for('static', filename='2521827.jpg') }}" alt="">
+      <div class="main">
+        <p class="sign" align="center">Logga in</p>
+        <form class="form1" action="http://127.0.0.1:8080/validation/" method="POST">
+          <input class="un " name = 'Username' type="text" required align="center" placeholder="Användarnamn">
+          <input class="pass" type='Password' required name = "Password" align="center" placeholder="Lösenord">
+          <input type="submit"  class="submit" align="center" value="Logga in">
+          <p class="forgot" align="center"><a href="http://127.0.0.1:8080/register/">Registrera dig här!</p> 
+          <p class="forgot" align="center"><a href="#">Glömt lösenord?</p> 
+      </div>
+    </div>
+
+  </main>
+
      
 </body>
 
-</html>
+</html> 
