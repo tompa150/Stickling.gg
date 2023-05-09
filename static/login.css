@@ -5,10 +5,10 @@ body {
 }
 
   .main_image{
-    margin-right: 15%;
-    margin-top: 200px;
-    margin-bottom: 200px;
-    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 160px;
+    margin-bottom: 150px;
+    margin-left: 3%;
     width: 700px;
     height: 500px;
   }
@@ -18,8 +18,8 @@ body {
   }
 
 .main {
-    margin-top: 250px;
-    margin-bottom: 250px;
+    margin-top: 160px;
+    margin-bottom: 200px;
     margin-right: 5%;
     background-color: #f1e8e0;
     width: 400px;
