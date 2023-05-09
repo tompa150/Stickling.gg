@@ -1,4 +1,7 @@
-$(".like").on("click", function() {
+$(".like").on("click", function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    
     const id = $(this).attr("data-id");
 
     if ($(this).attr("data-liked") === "true") {
