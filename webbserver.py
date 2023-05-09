@@ -62,6 +62,7 @@ def password_reset(token):
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
 def reset_ur():
     if request.method == 'POST':
+        session.pop('user', None)
         Email = request.form.get("Email")
         send_reset(Email)
     return redirect("/")
