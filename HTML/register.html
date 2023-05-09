@@ -7,25 +7,50 @@
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <title>Sign in</title>
 </head>
-
 <body>
-  <div class="RegisterMain">
-    <p class="RegisterSign" >Registrera ny användare</p>
-    <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
-      {% if invalid_email != "": %}
-        <p>{{invalid_email}}</p>
-      {% endif %}
-      <input class="RegisterUn " id="Email" type="text" name="Email" placeholder="Email">
-      {% if invalid_email != "": %}
-        <p>{{invalid_email}}</p>
-      {% endif %}
-      <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required  placeholder="Användarnamn">
-      <input class="RegisterPass" id="Lösenord" type="password" required name="Lösenord" placeholder="Lösenord" 
-pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
-      <input class="RegisterPass" id="BekräftaLösenord" type="password" required name="Bekräfta_lösenord" placeholder="Bekräfta lösenord">
-      <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" required name="Telefonnummer" placeholder="Mobilnummer: +46....">
-      <button type="submit" class="RegisterSubmit" >Skapa konto</button>
+  <header id="one">
+    <div class="container">
+      <img src="{{ url_for('static', filename='seedling-4394118__480.jpg') }}" alt="main_image">
+      <div id="one"class="centered"><h1>Välkommen till Stickling.gg </h1></div>
+      <div class="mouse_scroll">
+        <div class="mouse">
+          <div class="wheel"></div>
+        </div>
+        <div>
+          <span class="m_scroll_arrows unu"></span>
+          <span class="m_scroll_arrows doi"></span>
+          <span class="m_scroll_arrows trei"></span>
+        </div>
+      </div>
     </div>
+  </header>
+  <main>
+    <div id="two" class="main_main" >
+      <img class="main_image" src="{{ url_for('static', filename='2521827.jpg') }}" alt="">
+      <div class="RegisterMain">
+        <p class="RegisterSign" >Registrera ny användare</p>
+        <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
+          {% if invalid_email != "": %}
+            <p>{{invalid_email}}</p>
+          {% endif %}
+          <input class="RegisterUn " id="Email" type="text" name="Email" placeholder="Email">
+          {% if invalid_email != "": %}
+            <p>{{invalid_email}}</p>
+          {% endif %}
+          <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required  placeholder="Användarnamn">
+          <input class="RegisterPass" id="Lösenord" type="password" required name="Lösenord" placeholder="Lösenord" 
+          pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
+          <input class="RegisterPass" id="BekräftaLösenord" type="password" required name="Bekräfta_lösenord" placeholder="Bekräfta lösenord">
+          <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" required name="Telefonnummer" placeholder="Mobilnummer: +46....">
+          <button type="submit" class="RegisterSubmit" >Skapa konto</button>
+      </div>
+    </div>
+  </main>
+
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
+  <script src="/static/login.js"></script>
+
 </body>
 
 </html>

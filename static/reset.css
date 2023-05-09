@@ -4,23 +4,8 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
-  .main_image{
-    margin-right: 15%;
-    margin-top: 200px;
-    margin-bottom: 200px;
-    margin-left: 5%;
-    width: 700px;
-    height: 500px;
-  }
-
-  .main_main{
-    display: flex;
-  }
-
 .main {
-    margin-top: 250px;
-    margin-bottom: 250px;
-    margin-right: 5%;
+    margin: 7em auto;
     background-color: #f1e8e0;
     width: 400px;
     height: 400px;
@@ -97,7 +82,7 @@ font-family: 'Ubuntu', sans-serif;
     padding-bottom: 10px;
     padding-top: 10px;
     font-family: 'Ubuntu', sans-serif;
-    margin-left: 35%;
+    margin-left: 90px;
     font-size: 13px;
     box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
