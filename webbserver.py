@@ -80,7 +80,6 @@ def validation_pass():
         Password = request.form.get("Password")
         Password2 = request.form.get("Password2")
         user_info = read_user_mail(Email)
-        print(user_info)
         if Email == user_info[2]:
             update_password(Email, Password)
             return redirect("/")
@@ -296,7 +295,6 @@ def update_ad(title, ad_id, description, price, image_paths, type):
     skickas användaren tillbaka till hemsidan"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    print(description)
     if type == "sälj":
         cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
     else:
@@ -426,7 +424,6 @@ def ad(id):
                 username = session['user']
                 ads = ad_read()
                 ad_is_liked = check_liked_ads(id, username)
-                print(ad_is_liked)
                 for ad in ads:
                     if int(id) == ad[0]:
                         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -495,7 +492,6 @@ def edit_article(id):
     else:
         TheAd = id_ad(id)
         Images = ReadAdImages(id)
-        print(Images)
         if TheAd[5] == 'sälj':
             return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
         elif TheAd[5] == "byt":
@@ -519,12 +515,10 @@ def update():
             images = request.files.getlist("images")
             type = request.form.get("Type")
             Removed_images = request.form.getlist('Deleted_images[]')
-            print(Removed_images)
             image_paths = []
             for image in images:
                 if image.filename.endswith(('.jpg', '.png', '.jpeg')):
                     image.filename = image.filename.replace('"', '')
-                    print(image.filename)
                     image.filename = f'{ad_id}_{username}_{image.filename}'
                     if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
                         image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
@@ -562,10 +556,8 @@ def index():
         for user in user_info:
             if session['user'] == user[0]:
                 liked_ads = check_liked_ads_main()
-                print('hi')
                 unmatched_values = []
                 for ad in ads:
-                    print(ad[4])
                     matched = False
                     for x in liked_ads:
                         if x[0] == session['user'] and x[1] == ad[0]:
@@ -629,7 +621,6 @@ def validation():
         username = request.form.get("Username")
         password = request.form.get("Password")
         user_info = read_user_specific(username)
-        print(user_info)
         if username == user_info[0]:
             hashed_p = bcrypt.hashpw(password.encode('utf-8'), user_info[4].encode('utf-8'))
             if hashed_p == user_info[1].encode('utf-8'):
@@ -654,7 +645,6 @@ def register_user():
     password = request.form.get("Lösenord")
     number = request.form.get("Telefonnummer")
     user_info = read_user_info()
-    print(user_info)
     for row in user_info:   
         if email == row[2] or username == row[0]:
             invalid_email = "Den angivna email/användarnamnet är redan registrerad."
@@ -662,8 +652,6 @@ def register_user():
     else:
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-        print(salt)
-        print(hashed)
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
         cursor = conn.cursor()
         cursor.execute(f""" INSERT INTO users(username, password, email, number, salt) VALUES ('{username}', '{hashed.decode('utf-8')}', '{email}', {number}, '{salt.decode('utf-8')}'); """)
