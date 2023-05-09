@@ -6,18 +6,19 @@ import json
 import bcrypt
 from flask_mail import Mail, Message
 import secrets
+import config
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
 
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'stickling.gg@gmail.com'
-app.config['MAIL_PASSWORD'] = 'qebwjkotuoqdfyts'
+app.config['MAIL_SERVER']=config.mail_server
+app.config['MAIL_PORT'] = config.mail_port
+app.config['MAIL_USERNAME'] = config.mai_username
+app.config['MAIL_PASSWORD'] = config.mail_password
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_DEFAULT_SENDER'] = 'stickling.gg@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = config.mail_sender
 mail = Mail(app)
 
 
