@@ -520,7 +520,7 @@ def update():
                 if image.filename.endswith(('.jpg', '.png', '.jpeg')):
                     image.filename = image.filename.replace('"', '')
                     image.filename = f'{ad_id}_{username}_{image.filename}'
-                    if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
+                    if os.path.exists(os.path.join(f'{config.save_image_path}{image.filename}')):
                         image.save(f'{config.save_image_path}{image.filename}')
                         image_paths.append(f'/static/{image.filename}')
                     else:    
