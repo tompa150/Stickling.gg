@@ -247,20 +247,23 @@ body {
     margin-right: 3%;
   }
 
-  .like {
-    cursor: pointer;
-    padding:15px ;
-    width: 30px;
-  }
-  
-  .like[data-liked='true']{
-    opacity: 1;
-  }
-  
-  .like[data-liked='false']{
-    opacity: 0.5;
-  }
+.like {
+  cursor: pointer;
+  padding:1px ;
+  width: 30px;
+}
 
+.like[data-liked='true']{
+background-image: url(image-3.png);
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.like[data-liked='false']{
+background-image: url(pngegg-9.png);
+background-repeat: no-repeat;
+background-size: cover;
+}
 
 
   

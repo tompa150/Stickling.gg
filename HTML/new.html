@@ -61,7 +61,7 @@
                             {% if 'user' in session %}
                                 {% for a in unmatched_values: %}
                                     {% if ad[0] == a: %}
-                                        <img src="/static/pngegg-9.png" type="hidden" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
+                                        <img src="/static/pngegg-9.png"  alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
