@@ -283,7 +283,7 @@ def delete_images(Removed_images):
         cursor = conn.cursor()
         for path in Removed_images:
             cursor.execute(f""" DELETE from image_pointer WHERE image_pointer.image_path = '{path}'; """ )
-            os.remove(f'C:/Users/Tom/Documents/GitHub/Stickling.gg{path}')
+            os.remove(f'{config.save_path} {path}')
         conn.commit()
         conn.close()
         return
@@ -474,11 +474,11 @@ def save():
             for image in images:
                 if image.filename.endswith(('.jpg', '.png', '.jpeg')):
                     image.filename = f'{title}_{username}_{image.filename}'
-                    if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
-                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                    if os.path.exists(os.path.join(config.save_image_path, image.filename)):
+                        image.save(config.save_image_path + image.filename)
                         image_paths.append(f'/static/{image.filename}')
                     else:    
-                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                        image.save(config.save_image_path + image.filename)
                         image_paths.append(f'/static/{image.filename}')
             insert_ad(title, description, price, type, username, image_paths)
             return redirect("/")
@@ -520,11 +520,11 @@ def update():
                 if image.filename.endswith(('.jpg', '.png', '.jpeg')):
                     image.filename = image.filename.replace('"', '')
                     image.filename = f'{ad_id}_{username}_{image.filename}'
-                    if os.path.exists(os.path.join('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/', image.filename)):
-                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                    if os.path.exists(os.path.join(config.save_image_path, image.filename)):
+                        image.save(config.save_image_path + image.filename)
                         image_paths.append(f'/static/{image.filename}')
                     else:    
-                        image.save('C:/Users/Tom/Documents/GitHub/Stickling.gg/Static/' + image.filename)
+                        image.save(config.save_image_path + image.filename)
                         image_paths.append(f'/static/{image.filename}')
             update_ad(title, ad_id, description, price, image_paths, type)
             delete_images(Removed_images)
