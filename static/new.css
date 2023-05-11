@@ -15,6 +15,12 @@ body {
     width: 100%;
     }
   
+  .navbar{
+    display: flex;
+    gap: 29%;
+  }
+
+
   /* CSS styling for small logo */
   .small_logo {
   font-family: 'Fasthand';
@@ -35,11 +41,9 @@ body {
   
   /* CSS styling for right box */
   .RBOX {
-    float: right;
     display: flex;
     text-align: center;
     margin-top: 1%;
-    margin-right: 18px;
     }
   
   /* CSS styling for bar icons */
@@ -88,7 +92,7 @@ body {
   /* CSS styling for dropdown content */
   .dropdown-content {
   border-radius: 5px;
-  right: 2%;
+  right: 1%;
   display: none;
   position: absolute;
   background-color: #f1e8e0;
@@ -123,6 +127,7 @@ body {
   
   /* CSS styling for creation box */
   .creation_box {
+    height: 55px;
   margin-right: 5px;
   display: flex;
   font-family: 'Lato', sans-serif;
@@ -305,6 +310,10 @@ main{
 
 
 .like {
+  margin-top :35px; ;
+  margin-bottom:  14px; ;
+  margin-left: 14px;
+  margin-right: 14px;
   cursor: pointer;
   padding:1px ;
   width: 30px;
@@ -324,5 +333,56 @@ background-size: cover;
 
 .category{
 padding:15px ;
-width: 30px;
+width: 60px;
+}
+
+.trade{
+  padding: 15px;
+  width: 100px;
+}
+
+
+.container_two
+{
+  float: right;
+}
+
+
+.nav_buttons{
+  width: 40px;
+  height: 45px;
+}
+
+.byt_buttons{
+  width: 70px;
+  height: 45px;
+}
+
+.middle_box{
+  margin-top: 15px;
+  display: flex;
+  gap: 30px;
+  margin-bottom: 5px;
+
+}
+
+.nav_p {
+  text-align: center;
+  margin: 0%;
+  color: #f0dfd1;
+}
+
+
+.nav_buttons:hover{
+  border-radius: 5px;
+  background-color: #62937c;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px 5px rgb(0,0,0,0.2);
+}
+
+.byt_buttons:hover{
+  border-radius: 5px;
+  background-color: #62937c;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px 5px rgb(0,0,0,0.2);
 }
