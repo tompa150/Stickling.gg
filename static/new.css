@@ -322,3 +322,7 @@ background-repeat: no-repeat;
 background-size: cover;
 }
 
+.category{
+padding:15px ;
+width: 30px;
+}
