@@ -64,35 +64,37 @@
                     </div>
                 {% endif %}
             </article>
-            <div class="line"></div>
-            <div>
+            <div class="line">
                 {% if ad[3] != None: %}
-                <!--kan lägga till en if här som byter 
-                    ut priset till logan för vilken typen 
-                    av annons det här-->
-                    <div id="pris">
-                        <h4>Pris: {{ad[3]}} SEK</h5>
+                    <div>
+                        <!--kan lägga till en if här som byter 
+                            ut priset till logan för vilken typen 
+                            av annons det här-->
+                            <div id="pris">
+                                <h4>Pris: {{ad[3]}} SEK</h5>
+                            </div>
+                            <div class="line"></div>
+                        {% endif %}
+                        {% if username != ad[1]: %}
+                            {%if ad_is_liked == True: %}
+                            <img src="/static/pngegg-9.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="true" id="{{ad[0]}}">      
+                                    {% else: %}
+                                    <img src="/static/pngegg-9.png" type="hidden" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
+                            {% endif %}
                     </div>
-                    <div class="line"></div>
-                {% endif %}
-                {% if username != ad[1]: %}
-                    {%if ad_is_liked == True: %}
-                    <img src="/static/pngegg-9.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="true" id="{{ad[0]}}">      
-                              {% else: %}
-                              <img src="/static/pngegg-9.png" type="hidden" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
-                    {% endif %}
+                    <div class="line">
+                        <aside id="aside">
+                            <form>
+                                <p for="Meddelande">Meddelande:</p>
+                                <textarea placeholder="...."></textarea>
+                                <p for="email">Email:</p>
+                                <input type="text" required name="email" id="mail" placeholder="...">
+                                <input type="submit" value="skicka">
+                            </form>
+                        </aside>
+                    </div>
                 {% endif %}
             </div>
-            <div class="line"></div>
-                <aside id="aside">
-                    <form>
-                        <p for="Meddelande">Meddelande:</p>
-                        <textarea placeholder="...."></textarea>
-                        <p for="email">Email:</p>
-                        <input type="text" required name="email" id="mail" placeholder="...">
-                        <input type="submit" value="skicka">
-                    </form>
-                </aside>
         </div>
         </main> 
         <footer id="information">
