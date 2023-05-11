@@ -50,7 +50,7 @@
                         <img class="annons" src="{{ ad[3] }}" data-col="0" alt="Stickling">
                         <div class="container">
                             <h4><b>{{ ad[1] }}</b></h4> 
-                            <p>{{ ad[2] }}</p> 
+                            <p>#{{ ad[2] }}</p> 
                             {% for x in liked_ads %}
                                 {% if 'user' in session %}
                                     {% if x[0] == session['user'] and x[1] == ad[0] and x[0] != ad[4] %}

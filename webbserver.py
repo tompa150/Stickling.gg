@@ -241,17 +241,17 @@ def image_ad_read_index():
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
-    cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' order by ads.time_stamp DESC; """)
+    cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.ad_type, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' order by ads.time_stamp DESC; """)
     results = cursor.fetchall()
     ads = {}
     for row in results:
         ad_id = row[0]
         ad_title = row[1]
-        ad_description = row[2]
+        ad_type = row[2]
         image_path = row[3]
         ad_username = row[4]
         if ad_id not in ads:
-            ads[ad_id] = {'title': ad_title, 'description': ad_description, 'image_path': [], 'username': ad_username}
+            ads[ad_id] = {'title': ad_title, 'description': ad_type, 'image_path': [], 'username': ad_username}
         ads[ad_id]['image_path'].append(image_path)
     conn.close()
     return results
@@ -449,7 +449,9 @@ def ad(id):
                         image_paths = [image[0] for image in images]
                         cursor.close()
                         conn.close()
-                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked)
+                        notify = session[f'message/{id}']
+                        session.pop(f'message/{id}', None)
+                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked, notify = notify)
                 else:
                     return redirect('/')
         
@@ -500,6 +502,28 @@ def save():
             return redirect("/")
 
     return render_template("ad_creation.html")
+
+@app.route("/send/", methods = ['POST', 'GET'])
+def send():
+    if 'user' not in session:
+        return redirect('/')
+    else:
+       Message = request.form.get("message")
+       sending_user = request.form.get("sending_user") 
+       recieving_user = request.form.get("recieving_user")
+       id = request.form.get("id")
+       message_insert(Message, sending_user, recieving_user)
+       session[f'message/{id}'] = 'Ditt meddelande har skickats!'
+       return redirect(f"/ad/{id}/")
+
+def message_insert(Message, sending_user, recieving_user):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" INSERT into user_to_user(sending_user, sent_message, recieving_user, status) VALUES ('{sending_user}', '{Message}', '{recieving_user}', 'unread'); """)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return 
 
 @app.route("/edit/<id>/")
 def edit_article(id):

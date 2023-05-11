@@ -86,12 +86,16 @@
             {% if username != ad[1]: %}
                 <div class="line">
                     <aside id="aside">
-                        <form>
+                        <form action="http://127.0.0.1:8080/send/" method="POST">
                             <p for="Meddelande">Meddelande:</p>
-                            <textarea placeholder="...."></textarea>
-                            <p for="email">Email:</p>
-                            <input type="text" required name="email" id="mail" placeholder="...">
+                            <textarea name="message" required placeholder="...."></textarea>
+                            <input type="hidden" name="sending_user" value="{{username}}" id="mail">
+                            <input type="hidden" name="recieving_user" value="{{ad[1]}}" id="mail">
+                            <input type="hidden" name="id" value="{{ad[0]}}" id="mail" placeholder="...">
                             <input type="submit" value="skicka">
+                            {% if notify != "": %}:
+                                <h3>{{notify}}</h3>
+                            {% endif %}
                         </form>
                     </aside>
                 </div>
