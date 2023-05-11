@@ -1,12 +1,12 @@
-from flask import Flask, render_template, request, url_for, session, g, redirect 
-import psycopg2
-from datetime import timedelta, datetime
-import os
-import json
-import bcrypt
-from flask_mail import Mail, Message
-import secrets
-import config
+from flask import Flask, render_template, request, url_for, session, g, redirect #Här importeras flask
+import psycopg2 #Här importeras psycopg2
+from datetime import timedelta, datetime #Här importeras datetime
+import os #Här importeras OS
+import json #Här importeras json
+import bcrypt #Här importeras bcrypt
+from flask_mail import Mail, Message #Här importeras Flask Mail
+import secrets #Här importeras secrets
+import config #Här importeras vår vår andra config.py fil
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
@@ -23,6 +23,7 @@ mail = Mail(app)
 
 
 def new_token(email):
+    '''Här skapas ett temporärt token och lagras i databasen'''
     deadline = datetime.now() + timedelta(hours=1)
     token = secrets.token_urlsafe(20)
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -33,6 +34,7 @@ def new_token(email):
     return token
 
 def send_reset(email):
+    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
     token = new_token(email)
     reset_url = url_for('password_reset', token=token, _external=True)
     message = Message('Återställning av lösenord', recipients=[email])
@@ -41,6 +43,7 @@ def send_reset(email):
     return
 
 def retrieve_token_expiration(token):
+    '''Denna funktion hämtar tokens med ett visst id'''
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT token_id, token_expiration, email FROM token_time WHERE token_id = '{token}'; """)
@@ -52,6 +55,7 @@ def retrieve_token_expiration(token):
 
 @app.route("/password_reset/<token>/", methods=['GET', 'POST'])
 def password_reset(token):
+    '''Denna route används för att skapa ett nytt lösenord, den kollar om token är valid eller expired.'''
     mail_token = retrieve_token_expiration(token)
     user = read_user_mail(mail_token[2])
     if mail_token[1] == None or mail_token[1] < datetime.now():
@@ -62,6 +66,7 @@ def password_reset(token):
         
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
 def reset_ur():
+    '''Denna route tar emot den email användaren ville skicka ett återställningsmail till'''
     if request.method == 'POST':
         session.pop('user', None)
         Email = request.form.get("Email")
@@ -70,10 +75,12 @@ def reset_ur():
 
 @app.route("/login/reset_password/", methods = ['POST', 'GET'])
 def reset_pass():
+    '''Denna route returnerar en template för att ange den mail som återställningsmailet ska skickas till'''
     return render_template("forgotpage1.html")
        
 @app.route("/validation_forgot/", methods = ['POST', 'GET'])
 def validation_pass():
+    '''Denna route tar emot användarens nyangivna lösenord och uppdaterar det i databasen.'''
     if request.method == 'POST':
         session.pop('user', None)
         Email = request.form.get("Email")
@@ -86,6 +93,7 @@ def validation_pass():
             
 
 def update_password(email, password):
+    '''Denna funktion uppdaterar lösenordet i databasen'''
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -97,10 +105,12 @@ def update_password(email, password):
 
 @app.before_request
 def make_session_permanent():
+    '''Denna funktion bestämmer att en användares session max får sparas på dess dator i 1 dag.'''
     session.permanent = True
     app.permanent_session_lifetime = timedelta(days=1)
 
 def new_ad_id():
+    '''Denna funktion skapar ett nytt id åt en ny artikel.'''
     largest_id = 1
     ads = ad_read_for_new_id()
     for ad in ads:
@@ -247,6 +257,7 @@ def image_ad_read_index():
     return results
 
 def ReadAdImages(id):
+    '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id'''
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT image_path from image_pointer WHERE image_pointer.ad_id = {id}; """)
@@ -278,6 +289,7 @@ def insert_ad(title, description, price, type, username, image_paths):
     return redirect('/')
 
 def delete_images(Removed_images):
+    '''Denna funktion tar emot alla bild sökvägar som ska raderas och raderar dom i databasen'''
     if Removed_images != "":
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
         cursor = conn.cursor()
@@ -309,6 +321,7 @@ def update_ad(title, ad_id, description, price, image_paths, type):
     return redirect('/')
 
 def check_liked_ads(id, username):
+    '''Denna funktion tar emot ett annons id och ett användarnamn och hämtar alla annonser som gillats av denna och annons med det givna id:et'''
     try:
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
         cursor = conn.cursor()
@@ -327,6 +340,7 @@ def check_liked_ads(id, username):
         return ad_is_liked
     
 def check_liked_ads_main():
+    '''Denna funktion hämtar all data från liked_ads databasen.'''
     try:
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
         cursor = conn.cursor()
@@ -341,6 +355,7 @@ def check_liked_ads_main():
 
 @app.route("/like_ad/<id>/", methods = ['POST'])
 def liking_ad(id):
+    '''Denna route tar emot ett id och och gillar annonsen åt användaren om den inte redan är det eller ger ett felmeddelande om den redan är det.'''
     username = session['user']
 
     try:
@@ -362,6 +377,7 @@ def liking_ad(id):
 
 @app.route("/unlike_ad/<id>/", methods = ['POST'])
 def unliking_ad(id):
+    '''Denna route tar emot ett id och avgillar annonsen om den är gillad och ger ett felmeddelande om den inte är det.'''
     username = session['user']
 
     try:
@@ -487,6 +503,7 @@ def save():
 
 @app.route("/edit/<id>/")
 def edit_article(id):
+    '''Denna route tar emot ett id och returnerar olika html dokument beroende på vad det är för typ av annons som idet tillhör.'''
     if 'user' not in session:
         return redirect('/')
     else:
@@ -503,6 +520,7 @@ def edit_article(id):
  
 @app.route("/update/", methods = ['POST', 'GET'])
 def update():
+    '''Denna funktionen tar emot information som en annons ska uppdateras med och sparar det i databasen.'''
     if 'user' not in session:
         return redirect('/')
     else:
@@ -532,6 +550,7 @@ def update():
             
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
+    '''Denna funktion ändrar en annons status i databasen från active till inactive.'''
     if request.method == 'POST':
         AdToDelete = request.form.get("ad_id")
 
