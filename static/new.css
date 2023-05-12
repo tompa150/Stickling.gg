@@ -17,12 +17,14 @@ body {
   
   .navbar{
     display: flex;
-    gap: 29%;
+    gap: 10%;
   }
 
 
   /* CSS styling for small logo */
   .small_logo {
+  margin-left: 72px;
+  margin-right: 218px;
   font-family: 'Fasthand';
   font-style: normal;
   font-weight: bold;
@@ -92,7 +94,7 @@ body {
   /* CSS styling for dropdown content */
   .dropdown-content {
   border-radius: 5px;
-  right: 1%;
+  right: 5%;
   display: none;
   position: absolute;
   background-color: #f1e8e0;
@@ -363,6 +365,7 @@ width: 60px;
   display: flex;
   gap: 30px;
   margin-bottom: 5px;
+  margin-right: 195px;
 
 }
 
