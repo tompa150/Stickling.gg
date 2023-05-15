@@ -57,9 +57,9 @@
                 </div>
                     <div  class="addition_2" >
                         <form action="http://127.0.0.1:8080/remove/" method="POST">
-                            <p class="remove_annons">Ta bort annons:</p>
+                            <br><br><br>
                             <input type="hidden" id="custId" name="ad_id" value="{{ ad[0] }}">
-                            <button type="submit" value="Ta bort annons">
+                            <button type="submit" id="TaBortAnnons" value="Ta bort annons" name="TA BORT ANNONS" onclick="alert('Annons Raderad!')"> Radera! </button>
                         </form>
                     </div>
                 {% endif %}

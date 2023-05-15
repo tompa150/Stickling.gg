@@ -449,9 +449,9 @@ def ad(id):
                         image_paths = [image[0] for image in images]
                         cursor.close()
                         conn.close()
-                        notify = session[f'message/{id}']
+                        """notify = session[f'message/{id}']"""
                         session.pop(f'message/{id}', None)
-                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked, notify = notify)
+                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked, )
                 else:
                     return redirect('/')
         
