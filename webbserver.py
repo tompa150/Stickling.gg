@@ -256,6 +256,51 @@ def image_ad_read_index():
     conn.close()
     return results
 
+def get_all_messages(username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' ORDER BY user_to_user.time_stamp DESC; """)
+    ads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return ads
+
+def get_read_messages(username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' and status = 'read' ORDER BY user_to_user.time_stamp DESC; """)
+    ads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return ads
+
+def get_unread_messages(username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' and status = 'unread' ORDER BY user_to_user.time_stamp DESC; """)
+    ads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return ads
+
+def change_message_status(message_id):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" UPDATE user_to_user set status = 'read' WHERE message_id = {message_id}; """)
+    conn.commit()
+    conn.close()
+    return
+
+def get_the_message(id):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT * from user_to_user where message_id = {id}; """)
+    ads = cursor.fetchall()
+    ad = ads[0]
+    print(ad)
+    cursor.close()
+    conn.close()
+    return ad
 def ReadAdImages(id):
     '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id'''
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
@@ -267,7 +312,7 @@ def ReadAdImages(id):
     return images
 
 def insert_ad(title, description, price, type, username, image_paths):
-    """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
+    """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilderna finns, annars
     skickas användaren tillbaka till hemsidan"""
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
@@ -449,9 +494,12 @@ def ad(id):
                         image_paths = [image[0] for image in images]
                         cursor.close()
                         conn.close()
-                        """notify = session[f'message/{id}']"""
-                        session.pop(f'message/{id}', None)
-                        return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked, )
+                        if session.get(f'message/{id}'):
+                            notify = session[f'message/{id}']
+                            session.pop(f'message/{id}', None)
+                            return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked, notify = notify)
+                        else:
+                            return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked)
                 else:
                     return redirect('/')
         
@@ -512,18 +560,64 @@ def send():
        sending_user = request.form.get("sending_user") 
        recieving_user = request.form.get("recieving_user")
        id = request.form.get("id")
-       message_insert(Message, sending_user, recieving_user)
+       message_insert(Message, sending_user, recieving_user, id)
        session[f'message/{id}'] = 'Ditt meddelande har skickats!'
        return redirect(f"/ad/{id}/")
 
-def message_insert(Message, sending_user, recieving_user):
+def message_insert(Message, sending_user, recieving_user, id):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" INSERT into user_to_user(sending_user, sent_message, recieving_user, status) VALUES ('{sending_user}', '{Message}', '{recieving_user}', 'unread'); """)
+    cursor.execute(f""" INSERT into user_to_user(sending_user, sent_message, recieving_user, status, ad_id) VALUES ('{sending_user}', '{Message}', '{recieving_user}', 'unread', {id}); """)
     conn.commit()
     cursor.close()
     conn.close()
     return 
+
+@app.route("/messages/")
+def check_all_messages():
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        username = session['user']
+        All_Messages = get_all_messages(username)
+        return render_template('AllMessages.html', All_Messages = All_Messages, session = session)
+    
+@app.route("/messages/read/")
+def check_read_messages():
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        username = session['user']
+        ReadMessages = get_read_messages(username)
+        return render_template('ReadMessages.html', ReadMessages = ReadMessages, session = session)
+    
+@app.route("/messages/unread/")
+def check_unread_messages():
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        username = session['user']
+        UnreadMessages = get_unread_messages(username)
+        return render_template('UnreadMessages.html', UnreadMessages = UnreadMessages, session = session)
+    
+@app.route("/messages/<id>/")
+def TheMessage(id):
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        username = session['user']
+        Message = get_the_message(id)
+        print(Message)
+        if Message[3] == username:
+            if Message[4] == 'read':
+                change_message_status(id)
+                TheMessage = get_the_message(id)
+                return render_template('TheMessage.html', TheMessage = TheMessage, session = session)
+            else:
+                TheMessage = get_the_message(id)
+                return render_template('TheMessage.html', TheMessage = TheMessage, session = session)
+        else:
+            return redirect("/")
 
 @app.route("/edit/<id>/")
 def edit_article(id):
@@ -702,15 +796,6 @@ def register_user():
         conn.close()
         return render_template("login.html")
             
-'''
-@app.route('/register/forgot_password/', methods = ['POST', 'GET'])
-def ForgPassword():
-'''
-
-"""@app.route("/about/")
-    def about():_
-    return render_template """
-
 
 if __name__ == "__main__":      
     app.run(host="127.0.0.1", port=8080, debug=True) #Här körs programmet

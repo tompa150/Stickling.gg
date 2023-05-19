@@ -3,16 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='Create_Sell.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body> 
         <nav>
             <div class="navbar">
                 <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                 <div class="RBOX">
+                    {% if 'user' in session %}
+                    <div class="creation_box">
+                        <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                            <img src="{{ url_for('static', filename='CUBE_f.png') }}"><p>Skapa Annons</p></a>
+                    </div >
+                {% endif %}
                     <div class="dropdown">
                         <button class="dropbtn">
                             <div class="bars"></div>
@@ -31,38 +37,37 @@
                 </div>
             </div>
         </nav>
-        <main>     
-            <div class="toptopform">
-                <a href="http://127.0.0.1:8080/new/choose_ad/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}"></a>
-                <h1>Annonsdetaljer</h1>
+        <main> 
+            <div>
+                <article>
+                    <p class="redigera_profile"> 
+                        TEXT HERE
+                    </p>
+                </article>
             </div>
-            <div class="ad_creation_box">
-                <form action="http://127.0.0.1:8080/save/" method = "POST" enctype="multipart/form-data" class="ad_information">
-                    <div class="topform">
-                        <input type="text" required name="Title" id="title" placeholder="Title...">
-                        <button class="create" type="submit">Upload</button>
-                    </div>
-                    <textarea  name="Description" required id="description" placeholder="Information..."> </textarea>
-                    <div class="bottomform">
-                        <div>
-                            <h3>Annonsbilder</h3>
-                            <p>Lägg till max 4 bilder på din stickling</p>
-                            <input type="file" name="images" multiple max="5" required accept="image/*">
-                        </div>
-                        <div class="Bbox">
-                            <p>Här sätter du ditt pris för din stickling</p>
-                            <input type="number" name="Price" required id="price" placeholder="Pris...">
-                        </div>
-                        <input type="hidden" id="custId" name="Type" value="sälj">
-                        <input type="hidden" id="custId" name="Username" value="{{ user }}">
-                    </div>
-                </form>
+            <div class="title_box">
+                <h3 class="A-title">Aktiva annonser</h3>
+                <h3 class="A-title">Inaktiv annonser</h3>
             </div>
+            <article class="new-old-box">
+                    <div class="box">
+                        {% for message in ReadMessages %}
+                        <div class="card">
+                            <div class="container">
+                                <h4><b>Sender: {{ message[1] }}</b></h4> 
+                                <p>{{ message[4] }}</p> 
+                                <p>Mottagit: {{ message[5] }}</p> 
+                                <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">Se meddelande</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+            </article>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
-            <a class="linkfoot" href="idk">Om oss</a>
-            <a class="linkfoot" href="idk">Kontakta oss</a>
+            <a class="linkfoot" href="idk">·Terms</a>
+            <a class="linkfoot" href="idk">·Privacy</a>
         </footer>
     </body>
 </html>
