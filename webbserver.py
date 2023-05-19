@@ -10,7 +10,6 @@ import config #Här importeras vår vår andra config.py fil
 
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
-f''
 
 app.config['MAIL_SERVER']=config.mail_server
 app.config['MAIL_PORT'] = config.mail_port
