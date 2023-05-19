@@ -609,7 +609,7 @@ def TheMessage(id):
         Message = get_the_message(id)
         print(Message)
         if Message[3] == username:
-            if Message[4] == 'read':
+            if Message[4] == 'unread':
                 change_message_status(id)
                 TheMessage = get_the_message(id)
                 return render_template('TheMessage.html', TheMessage = TheMessage, session = session)
