@@ -43,9 +43,6 @@
                     <p class="redigera_profile"> 
                         TEXT HERE
                     </p>
-                    <a href="http://127.0.0.1:8080/messages/unread/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Olästa meddelanden</a>
-                    <a href="http://127.0.0.1:8080/messages/read/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Lästa meddelanden</a>
-                    <a href="http://127.0.0.1:8080/messages/sent/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Skickade meddelanden</a>
                 </article>
             </div>
             <div class="title_box">
@@ -54,16 +51,16 @@
             </div>
             <article class="new-old-box">
                     <div class="box">
-                            {% for message in All_Messages %}
-                            <div class="card">
-                                <div class="container">
-                                    <h4><b>Sender: {{ message[1] }}</b></h4> 
-                                    <h4><b>Message: </b></h4> 
-                                    <p>{{ message[2] }}</p> 
-                                    <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">Se meddelande</a>
-                                </div>
+                        {% for message in SentMessages %}
+                        <div class="card">
+                            <div class="container">
+                                <h4><b>Reciepient: {{ message[3] }}</b></h4> 
+                                <p>{{ message[4] }}</p> 
+                                <p>Skickat: {{ message[5] }}</p> 
                             </div>
-                            {% endfor %}
+                            <a href="http://127.0.0.1:8080/messages/sent/{{message[0]}}/">Se meddelande</a>
+                        </div>
+                        {% endfor %}
                     </div>
             </article>
         </main>

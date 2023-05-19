@@ -38,7 +38,15 @@ def send_reset(email):
     token = new_token(email)
     reset_url = url_for('password_reset', token=token, _external=True)
     message = Message('Återställning av lösenord', recipients=[email])
-    message.body = f'Hej! Vänligen använd följande länk för att återställa ditt lösenord: {reset_url}'
+    message.body = f'Hej! \nVänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}'
+    mail.send(message)
+    return
+
+def send_message_notification(email, id):
+    '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
+    reset_url = url_for('TheMessage', id=id, _external=True)
+    message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
+    message.body = f'Hej! \nDu har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{reset_url}'
     mail.send(message)
     return
 
@@ -63,7 +71,7 @@ def password_reset(token):
     else:
         if mail_token[2] == user[2]:
             return render_template("reset_password.html", user = user)
-        
+         
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
 def reset_ur():
     '''Denna route tar emot den email användaren ville skicka ett återställningsmail till'''
@@ -91,7 +99,6 @@ def validation_pass():
             update_password(Email, Password)
             return redirect("/")
             
-
 def update_password(email, password):
     '''Denna funktion uppdaterar lösenordet i databasen'''
     salt = bcrypt.gensalt()
@@ -113,6 +120,15 @@ def new_ad_id():
     '''Denna funktion skapar ett nytt id åt en ny artikel.'''
     largest_id = 1
     ads = ad_read_for_new_id()
+    for ad in ads:
+        if ad[0] >= largest_id:
+            largest_id = ad[0] + 1
+    return largest_id
+
+def new_message_id():
+    '''Denna funktion skapar ett nytt id åt en ny artikel.'''
+    largest_id = 1
+    ads = get_messages()
     for ad in ads:
         if ad[0] >= largest_id:
             largest_id = ad[0] + 1
@@ -256,6 +272,15 @@ def image_ad_read_index():
     conn.close()
     return results
 
+def get_messages():
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT * from user_to_user ; """)
+    ads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return ads
+
 def get_all_messages(username):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
@@ -278,6 +303,15 @@ def get_unread_messages(username):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
     cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' and status = 'unread' ORDER BY user_to_user.time_stamp DESC; """)
+    ads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return ads
+
+def get_sent_messages(username):
+    conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(f""" SELECT * from user_to_user where sending_user = '{username}'; """)
     ads = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -560,14 +594,17 @@ def send():
        sending_user = request.form.get("sending_user") 
        recieving_user = request.form.get("recieving_user")
        id = request.form.get("id")
-       message_insert(Message, sending_user, recieving_user, id)
+       message_id = new_message_id()
+       message_insert(message_id, Message, sending_user, recieving_user, id)
+       recipient=read_user_specific(recieving_user)
+       send_message_notification(recipient[2], message_id)
        session[f'message/{id}'] = 'Ditt meddelande har skickats!'
        return redirect(f"/ad/{id}/")
 
-def message_insert(Message, sending_user, recieving_user, id):
+def message_insert(message_id, Message, sending_user, recieving_user, id):
     conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
     cursor = conn.cursor()
-    cursor.execute(f""" INSERT into user_to_user(sending_user, sent_message, recieving_user, status, ad_id) VALUES ('{sending_user}', '{Message}', '{recieving_user}', 'unread', {id}); """)
+    cursor.execute(f""" INSERT into user_to_user(message_id, sending_user, sent_message, recieving_user, status, ad_id) VALUES ({message_id}, '{sending_user}', '{Message}', '{recieving_user}', 'unread', {id}); """)
     conn.commit()
     cursor.close()
     conn.close()
@@ -599,6 +636,15 @@ def check_unread_messages():
         username = session['user']
         UnreadMessages = get_unread_messages(username)
         return render_template('UnreadMessages.html', UnreadMessages = UnreadMessages, session = session)
+
+@app.route("/messages/sent/")
+def check_sent_messages():
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        username = session['user']
+        SentMessages = get_sent_messages(username)
+        return render_template('ReadMessages.html', SentMessages = SentMessages, session = session)
     
 @app.route("/messages/<id>/")
 def TheMessage(id):
@@ -616,6 +662,20 @@ def TheMessage(id):
             else:
                 TheMessage = get_the_message(id)
                 return render_template('TheMessage.html', TheMessage = TheMessage, session = session)
+        else:
+            return redirect("/")
+        
+@app.route("/messages/sent/<id>/")
+def SentMessage(id):
+    if 'user' not in session:
+        return redirect('/')
+    else:
+        username = session['user']
+        Message = get_the_message(id)
+        print(Message)
+        if Message[1] == username:
+            TheMessage = get_the_message(id)
+            return render_template('TheMessage.html', TheMessage = TheMessage, session = session)
         else:
             return redirect("/")
 
