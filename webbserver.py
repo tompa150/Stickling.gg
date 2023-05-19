@@ -38,7 +38,7 @@ def send_reset(email):
     token = new_token(email)
     reset_url = url_for('password_reset', token=token, _external=True)
     message = Message('Återställning av lösenord', recipients=[email])
-    message.body = f'Hej! \nVänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}'
+    message.body = f'Hej!\n \nVänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}'
     mail.send(message)
     return
 
@@ -46,7 +46,7 @@ def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
     reset_url = url_for('TheMessage', id=id, _external=True)
     message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
-    message.body = f'Hej! \nDu har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{reset_url}'
+    message.body = f'Hej!\n \nDu har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{reset_url}'
     mail.send(message)
     return
 
