@@ -44,7 +44,7 @@ def send_reset(email):
 def send_reset_confirmation(email):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
     message = Message('Lösenord ändrat.', recipients=[email])
-    message.body = f'Hej!\n \nDitt lösenord har nu ändrats.\nNotera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}'
+    message.body = f'Hej!\n\nDitt lösenord har nu ändrats.\nNotera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}'
     mail.send(message)
     return
 
@@ -81,7 +81,7 @@ def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
     notification = url_for('TheMessage', id=id, _external=True)
     message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
-    message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{notification}'
+    message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser.\nKlicka på länken för att se ditt meddelande:\n{notification}'
     mail.send(message)
     return
 
