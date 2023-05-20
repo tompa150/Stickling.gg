@@ -63,7 +63,7 @@ def send_welcome(email, username):
         2. Byt och Dela: Anslut med andra växtentusiaster och byt dina älskade växtsticklingar eller 
         föröka nya för att dela. Vår gemenskap handlar om att främja generositet och utbyte av 
         grönt godis.\n
-        3. Begär och Anslut: Letar du efter en specifik växt eller råd om skötsel av dina gröna 
+        3. Efterfråga: Letar du efter en specifik växt eller råd om skötsel av dina gröna 
         kamrater? Skicka en förfrågan och dra nytta av gemenskapens samlade kunskap av 
         växtälskare.\n
         För att komma igång, logga helt enkelt in på ditt Stickling.gg-konto med din registrerade 
