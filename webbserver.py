@@ -13,7 +13,7 @@ app.secret_key = "stickling.gg"
 
 app.config['MAIL_SERVER']=config.mail_server
 app.config['MAIL_PORT'] = config.mail_port
-app.config['MAIL_USERNAME'] = config.mai_username
+app.config['MAIL_USERNAME'] = config.mail_username
 app.config['MAIL_PASSWORD'] = config.mail_password
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
@@ -41,11 +41,40 @@ def send_reset(email):
     mail.send(message)
     return
 
+def send_welcome(email, username):
+    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
+    message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
+    message.body = f"""        Välkommen till {username}! Detta är din plats för att köpa, byta och begära växter! 
+        Vi är glada att ha dig som en del av vårt växande community av växtentusiaster. Gör dig redo att 
+        utforska en värld av köp, byte och förfrågningar om växter som aldrig förr.\n
+        På Stickling.gg strävar vi efter att erbjuda en sömlös och trevlig upplevelse för växtälskare 
+        som dig själv. Oavsett om du är en erfaren trädgårdsmästare eller precis har börjat din 
+        växtresa, så erbjuder vår plattform ett brett utbud av alternativ för att passa dina behov. Här 
+        är vad du kan förvänta dig:\n
+        1. Bläddra och Köp: Upptäck ett omfattande utbud av växter som finns tillgängliga för köp. 
+        Från sällsynta exemplar till vardagliga favoriter, finns det något för varje växtälskare.\n
+        2. Byt och Dela: Anslut med andra växtentusiaster och byt dina älskade växtsticklingar eller 
+        föröka nya för att dela. Vår gemenskap handlar om att främja generositet och utbyte av 
+        grönt godis.\n
+        3. Begär och Anslut: Letar du efter en specifik växt eller råd om skötsel av dina gröna 
+        kamrater? Skicka en förfrågan och dra nytta av gemenskapens samlade kunskap av 
+        växtälskare.\n
+        För att komma igång, logga helt enkelt in på ditt Stickling.gg-konto med din registrerade 
+        e-postadress och lösenord. Utforska de olika avsnitten på webbplatsen, engagera dig med 
+        andra växtentusiaster och dra nytta av din växtälskarresa till fullo.\n
+        Om du har några frågor, funderingar eller helt enkelt vill dela dina växtäventyr med oss, tveka inte att kontakta 
+        vårt vänliga support på {config.mail_username}. Vi finns här för att hjälpa dig varje steg på vägen.\n
+        Ännu en gång, välkommen till Stickling.gg-familjen! Låt oss vårda vår kärlek till växter tillsammans och 
+        skapa en blomstrande gemenskap av gröna tummar.\n
+        Lycka till med din plantering! 🌿🌿🌿\n"""
+    mail.send(message)
+    return
+
 def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
-    reset_url = url_for('TheMessage', id=id, _external=True)
+    notification = url_for('TheMessage', id=id, _external=True)
     message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
-    message.body = f'Hej!\n \nDu har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{reset_url}'
+    message.body = f'Hej!\n \nDu har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{notification}'
     mail.send(message)
     return
 
@@ -535,22 +564,7 @@ def ad(id):
                             return render_template("annonsen.html", ad = ad, image_paths = image_paths, username = username, ad_is_liked = ad_is_liked)
                 else:
                     return redirect('/')
-        
-'''
-@app.route("/new/")
-def create_ad():
-    if g.user:
-        user = session['user']
-        user_info = read_user_info()
-        for one_user in user_info:
-            if user == one_user[0]:
-                return render_template("ad_creation.html", one_user = one_user)
-        else:
-            return redirect(url_for('/login/'))
-    else:
-        return redirect(url_for('/login/'))
-'''
-    
+           
 @app.route("/save/", methods = ['POST', 'GET'])
 def save():
     """I denna funktionen tas titel, beskrivning, typ, pris, användarnamn, bildsökvägar emot från ett formulär.
@@ -853,6 +867,7 @@ def register_user():
         cursor.execute(f""" INSERT INTO users(username, password, email, number, salt) VALUES ('{username}', '{hashed.decode('utf-8')}', '{email}', {number}, '{salt.decode('utf-8')}'); """)
         conn.commit()
         conn.close()
+        send_welcome(email, username)
         return render_template("login.html")
             
 
