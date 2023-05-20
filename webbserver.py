@@ -37,14 +37,21 @@ def send_reset(email):
     token = new_token(email)
     reset_url = url_for('password_reset', token=token, _external=True)
     message = Message('Återställning av lösenord', recipients=[email])
-    message.body = f'Hej!\n \nVänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}'
+    message.body = f'Hej!\n\nVänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}'
+    mail.send(message)
+    return
+
+def send_reset_confirmation(email):
+    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
+    message = Message('Lösenord ändrat.', recipients=[email])
+    message.body = f'Hej!\n \nDitt lösenord har nu ändrats.\nNotera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}'
     mail.send(message)
     return
 
 def send_welcome(email, username):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
     message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
-    message.body = f"""        Välkommen till {username}! Detta är din plats för att köpa, byta och begära växter! 
+    message.body = f"""        Välkommen {username}!\n Detta är din plats för att köpa, byta och begära växter! 
         Vi är glada att ha dig som en del av vårt växande community av växtentusiaster. Gör dig redo att 
         utforska en värld av köp, byte och förfrågningar om växter som aldrig förr.\n
         På Stickling.gg strävar vi efter att erbjuda en sömlös och trevlig upplevelse för växtälskare 
@@ -66,7 +73,7 @@ def send_welcome(email, username):
         vårt vänliga support på {config.mail_username}. Vi finns här för att hjälpa dig varje steg på vägen.\n
         Ännu en gång, välkommen till Stickling.gg-familjen! Låt oss vårda vår kärlek till växter tillsammans och 
         skapa en blomstrande gemenskap av gröna tummar.\n
-        Lycka till med din plantering! 🌿🌿🌿\n"""
+        Lycka till med din plantering! 🌿🌿🌿"""
     mail.send(message)
     return
 
@@ -74,7 +81,7 @@ def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
     notification = url_for('TheMessage', id=id, _external=True)
     message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
-    message.body = f'Hej!\n \nDu har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{notification}'
+    message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser. \nKlicka på länken för att se ditt meddelande: \n{notification}'
     mail.send(message)
     return
 
@@ -136,6 +143,8 @@ def update_password(email, password):
     cursor.execute(f""" UPDATE users set password = '{hashed.decode('utf-8')}', salt = '{salt.decode('utf-8')}' WHERE email = '{email}'; """)
     conn.commit()
     conn.close()
+    send_reset_confirmation(email)
+    return
 
 
 @app.before_request
@@ -735,8 +744,14 @@ def update():
                     else:    
                         image.save(f'{config.save_image_path}/{image.filename}')
                         image_paths.append(f'/static/{image.filename}')
-            update_ad(title, ad_id, description, price, image_paths, type)
-            delete_images(Removed_images)
+
+            if Removed_images and images:
+                update_ad(title, ad_id, description, price, image_paths, type)
+                delete_images(Removed_images)
+            elif Removed_images and not images:
+                delete_images(Removed_images)
+            elif not Removed_images and images:
+                update_ad(title, ad_id, description, price, image_paths, type)
             return redirect("/")
             
 @app.route("/remove/", methods = ['POST', 'GET'])
@@ -744,7 +759,6 @@ def remove():
     '''Denna funktion ändrar en annons status i databasen från active till inactive.'''
     if request.method == 'POST':
         AdToDelete = request.form.get("ad_id")
-
         conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
         cursor = conn.cursor()
         cursor.execute(f""" UPDATE ads SET status = 'inactive' WHERE ad_id = {AdToDelete}; """)
