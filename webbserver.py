@@ -67,7 +67,7 @@ def send_welcome(email, username):
         kamrater? Skicka en förfrågan och dra nytta av gemenskapens samlade kunskap av 
         växtälskare.\n
         För att komma igång, logga helt enkelt in på ditt Stickling.gg-konto med din registrerade 
-        e-postadress och lösenord. Utforska de olika avsnitten på webbplatsen, engagera dig med 
+        e-postadress och lösenord. Utforska de olika annonserna på webbplatsen, engagera dig med 
         andra växtentusiaster och dra nytta av din växtälskarresa till fullo.\n
         Om du har några frågor, funderingar eller helt enkelt vill dela dina växtäventyr med oss, tveka inte att kontakta 
         vårt vänliga support på {config.mail_username}. Vi finns här för att hjälpa dig varje steg på vägen.\n
