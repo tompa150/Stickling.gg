@@ -20,6 +20,18 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_DEFAULT_SENDER'] = config.mail_sender
 mail = Mail(app)
 
+
+def connect_to_db():
+    """Skapat en funktion som ansluter till databasen. Den här funktionen kan vi sedan kalla på i alla andra funktioner. 
+    Så slipper vi skriva ut strängen varje gång, eller bara ändra på ett ställe om vi ska ändra något. """
+    connection = psycopg2.connect(
+        database = config.database_name, 
+        user = config.database_user, 
+        password = config.database_password, 
+        host=config.database_host, 
+        port=config.database_port)
+    return connection
+
 @app.before_request
 def make_session_permanent():
     '''Denna funktion bestämmer att en användares session max får sparas på dess dator i 1 dag.'''
@@ -31,7 +43,7 @@ def new_token(email):
     try:
         deadline = datetime.now() + timedelta(hours=1)
         token = secrets.token_urlsafe(20)
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" INSERT into token_time(token_id, token_expiration, email) VALUES ('{token}', '{deadline}', '{email}'); """ )
         conn.commit()
@@ -40,7 +52,6 @@ def new_token(email):
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
-
 
 def send_reset(email):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
@@ -98,7 +109,7 @@ def send_message_notification(email, id):
 def retrieve_token_expiration(token):
     '''Denna funktion hämtar tokens med ett visst id'''
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT token_id, token_expiration, email FROM token_time WHERE token_id = '{token}'; """)
         products = cursor.fetchall()
@@ -153,7 +164,7 @@ def update_password(email, password):
     try:
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" UPDATE users set password = '{hashed.decode('utf-8')}', salt = '{salt.decode('utf-8')}' WHERE email = '{email}'; """)
         conn.commit()
@@ -181,19 +192,11 @@ def new_message_id():
         if ad[0] >= largest_id:
             largest_id = ad[0] + 1
     return largest_id
-
-def connect_to_db():
-    
-    """Skapat en funktion som ansluter till databasen. Den här funktionen kan vi sedan kalla på i alla andra funktioner. 
-    Så slipper vi skriva ut strängen varje gång, eller bara ändra på ett ställe om vi ska ändra något. """
-    
-    connection = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
-    return connection
     
 def read_user_info():
     """Här läses alla användaruppgifter in från databasen"""
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute("SELECT username, password, email, number, salt FROM users;")
         products = cursor.fetchall()
@@ -207,7 +210,7 @@ def read_user_info():
 def read_user_specific(user):
     """Här läses alla användaruppgifter in från databasen"""
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f"SELECT username, password, email, number, salt FROM users WHERE username = '{user}';")
         user_list = cursor.fetchall()
@@ -222,7 +225,7 @@ def read_user_specific(user):
 def read_user_mail(Email):
     """Här läses alla användaruppgifter in från databasen"""
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f"SELECT username, password, email, number, salt FROM users WHERE email = '{Email}';")
         user_list = cursor.fetchall()
@@ -236,7 +239,7 @@ def read_user_mail(Email):
 def ad_read():
     """Här läses alla annonser från databasen där statusen = active """
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(""" SELECT * FROM ads WHERE ads.status = 'active'; """)
         products = cursor.fetchall()
@@ -250,7 +253,7 @@ def ad_read():
 def ad_read_for_new_id():
     """Här läses alla annonser från databasen där statusen = active """
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(""" SELECT * FROM ads; """)
         products = cursor.fetchall()
@@ -263,7 +266,7 @@ def ad_read_for_new_id():
 def image_ad_read_active(user):
     """Här läses alla annonser från databasen in, tillsammans med alla dess bilders sökvägar, där statusen = active """
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.username = '{user}' AND ads.status = 'active' """)
         results = cursor.fetchall()
@@ -285,7 +288,7 @@ def image_ad_read_active(user):
 
 def id_ad(id):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * FROM ads WHERE ads.ad_id = {id}; """)
         ads = cursor.fetchall()
@@ -300,7 +303,7 @@ def id_ad(id):
 def image_ad_read_inactive(user):
     """Här läses alla annonser in från databasen, tillsammans med 1 bild per annons, där status = inactive"""
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.username = '{user}' AND ads.status = 'inactive' """)
         results = cursor.fetchall()
@@ -322,7 +325,7 @@ def image_ad_read_inactive(user):
 
 def liked_ads(username):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT ads.username, ads.ad_id, ads.title, ads.description, image_pointer.image_path, ads.status FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id JOIN liked_ads on ads.ad_id = liked_ads.liked_ad WHERE liked_ads.user_liking_ad = '{username}' AND ads.status = 'active' ORDER BY liked_ads.timestamp_col DESC; """)
         ads = cursor.fetchall()
@@ -336,7 +339,7 @@ def liked_ads(username):
 def image_ad_read_index():
     """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
         cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.ad_type, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' order by ads.time_stamp DESC; """)
@@ -359,7 +362,7 @@ def image_ad_read_index():
 
 def get_messages():
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * from user_to_user ; """)
         ads = cursor.fetchall()
@@ -372,7 +375,7 @@ def get_messages():
 
 def get_all_messages(username):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' ORDER BY user_to_user.time_stamp DESC; """)
         ads = cursor.fetchall()
@@ -385,7 +388,7 @@ def get_all_messages(username):
 
 def get_read_messages(username):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' and status = 'read' ORDER BY user_to_user.time_stamp DESC; """)
         ads = cursor.fetchall()
@@ -398,7 +401,7 @@ def get_read_messages(username):
     
 def get_unread_messages(username):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * from user_to_user where recieving_user = '{username}' and status = 'unread' ORDER BY user_to_user.time_stamp DESC; """)
         ads = cursor.fetchall()
@@ -411,7 +414,7 @@ def get_unread_messages(username):
     
 def get_sent_messages(username):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * from user_to_user where sending_user = '{username}'; """)
         ads = cursor.fetchall()
@@ -424,7 +427,7 @@ def get_sent_messages(username):
 
 def change_message_status(message_id):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" UPDATE user_to_user set status = 'read' WHERE message_id = {message_id}; """)
         conn.commit()
@@ -436,7 +439,7 @@ def change_message_status(message_id):
 
 def get_the_message(id):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT * from user_to_user where message_id = {id}; """)
         ads = cursor.fetchall()
@@ -452,7 +455,7 @@ def get_the_message(id):
 def ReadAdImages(id):
     '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id'''
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT image_path from image_pointer WHERE image_pointer.ad_id = {id}; """)
         results = cursor.fetchall()
@@ -467,7 +470,7 @@ def insert_ad(title, description, price, type, username, image_paths):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilderna finns, annars
     skickas användaren tillbaka till hemsidan"""
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         ad_id = new_ad_id()
         if type == "sälj":
@@ -493,7 +496,7 @@ def delete_images(Removed_images):
     '''Denna funktion tar emot alla bild sökvägar som ska raderas och raderar dom i databasen'''
     try:
         if Removed_images != "":
-            conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+            conn = connect_to_db()
             cursor = conn.cursor()
             for path in Removed_images:
                 cursor.execute(f""" DELETE from image_pointer WHERE image_pointer.image_path = '{path}'; """ )
@@ -511,7 +514,7 @@ def update_ad(title, ad_id, description, price, image_paths, type):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
     skickas användaren tillbaka till hemsidan"""
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         if type == "sälj":
             cursor.execute(f""" UPDATE ads SET title = '{title}', price = {price}, description = '{description}' WHERE ad_id = {ad_id}; """)
@@ -532,7 +535,7 @@ def update_ad(title, ad_id, description, price, image_paths, type):
 def check_liked_ads(id, username):
     '''Denna funktion tar emot ett annons id och ett användarnamn och hämtar alla annonser som gillats av denna och annons med det givna id:et'''
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT user_liking_ad, liked_ad from liked_ads WHERE user_liking_ad = '{username}' and liked_ad = {id}; """)
         results = cursor.fetchall()
@@ -551,7 +554,7 @@ def check_liked_ads(id, username):
 def check_liked_ads_main():
     '''Denna funktion hämtar all data från liked_ads databasen.'''
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" SELECT user_liking_ad, liked_ad from liked_ads; """)
         results = cursor.fetchall()
@@ -567,7 +570,7 @@ def liking_ad(id):
     '''Denna route tar emot ett id och och gillar annonsen åt användaren om den inte redan är det eller ger ett felmeddelande om den redan är det.'''
     username = session['user']
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" INSERT into liked_ads(user_liking_ad, liked_ad) VALUES ('{username}', {id}); """)
         conn.commit()
@@ -588,7 +591,7 @@ def unliking_ad(id):
     '''Denna route tar emot ett id och avgillar annonsen om den är gillad och ger ett felmeddelande om den inte är det.'''
     username = session['user']
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" DELETE from liked_ads WHERE user_liking_ad = '{username}' AND liked_ad = {id}; """)
         conn.commit()
@@ -657,7 +660,7 @@ def ad(id):
                     ad_is_liked = check_liked_ads(id, username)
                     for ad in ads:
                         if int(id) == ad[0]:
-                            conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+                            conn = connect_to_db()
                             cursor = conn.cursor()
                             cursor.execute(f""" SELECT image_path FROM image_pointer WHERE ad_id = {id} """)
                             images = cursor.fetchall()
@@ -735,7 +738,7 @@ def send():
 
 def message_insert(message_id, Message, sending_user, recieving_user, id):
     try:
-        conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+        conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f""" INSERT into user_to_user(message_id, sending_user, sent_message, recieving_user, status, ad_id) VALUES ({message_id}, '{sending_user}', '{Message}', '{recieving_user}', 'unread', {id}); """)
         conn.commit()
@@ -906,7 +909,7 @@ def remove():
     try:
         if request.method == 'POST':
             AdToDelete = request.form.get("ad_id")
-            conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432")
+            conn = connect_to_db()
             cursor = conn.cursor()
             cursor.execute(f""" UPDATE ads SET status = 'inactive' WHERE ad_id = {AdToDelete}; """)
             conn.commit()
@@ -1060,7 +1063,7 @@ def register_user():
             else:
                 salt = bcrypt.gensalt()
                 hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-                conn = psycopg2.connect(database="stickling_databas1", user="ai8542", password="f4ptdubn", host='pgserver.mau.se', port="5432") 
+                conn = connect_to_db()
                 cursor = conn.cursor()
                 cursor.execute(f""" INSERT INTO users(username, password, email, number, salt) VALUES ('{username}', '{hashed.decode('utf-8')}', '{email}', {number}, '{salt.decode('utf-8')}'); """)
                 conn.commit()
