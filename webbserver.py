@@ -778,6 +778,7 @@ def check_all_messages():
     
 @app.route("/messages/read/")
 def check_read_messages():
+    """ Routefunktion för att kontrollera lästa meddelanden, om användaren inte finns omdirigeras de till startsidan."""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -791,6 +792,7 @@ def check_read_messages():
     
 @app.route("/messages/unread/")
 def check_unread_messages():
+    """Routefunktion för att kontrollera olästa meddelanden"""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -804,6 +806,7 @@ def check_unread_messages():
 
 @app.route("/messages/sent/")
 def check_sent_messages():
+    """Routefunktion för att kontrollera skickade meddelanden"""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -816,7 +819,7 @@ def check_sent_messages():
             return error
     
 @app.route("/messages/<id>/")
-def TheMessage(id):
+def the_message(id):
     if 'user' not in session:
         return redirect('/')
     else:
@@ -839,7 +842,7 @@ def TheMessage(id):
             return error
         
 @app.route("/messages/sent/<id>/")
-def SentMessage(id):
+def sent_message(id):
     if 'user' not in session:
         return redirect('/')
     else:
