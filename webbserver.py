@@ -287,6 +287,7 @@ def image_ad_read_active(user):
         return error  
 
 def id_ad(id):
+    """Funktionen försöker att ansluta till databasen och hämtar ett id. Om den misslyckas får vi ett error"""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -324,6 +325,7 @@ def image_ad_read_inactive(user):
         return error  
 
 def liked_ads(username):
+    """Ansluter till databasen och hämtar alla gillade annonser. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -361,6 +363,7 @@ def image_ad_read_index():
         return error  
 
 def get_messages():
+    """Hämtar meddelanden mellan användare från databasen."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -374,6 +377,7 @@ def get_messages():
         return error  
 
 def get_all_messages(username):
+    """Hämtar alla meddelanden som skickats till en specifik användare."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -387,6 +391,7 @@ def get_all_messages(username):
         return error  
 
 def get_read_messages(username):
+    """Funktionen hämtar alla lästa meddelanden"""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -400,6 +405,7 @@ def get_read_messages(username):
         return error
     
 def get_unread_messages(username):
+    """Hämtar olästa meddelanden som skickats till en specifik användare."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -413,6 +419,7 @@ def get_unread_messages(username):
         return error
     
 def get_sent_messages(username):
+    """Hämtar alla meddelanden som skickats av en specifik användare"""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -426,6 +433,7 @@ def get_sent_messages(username):
         return error
 
 def change_message_status(message_id):
+    """Ändrar statusen för ett meddelande till 'läst' i databasen"""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -438,6 +446,8 @@ def change_message_status(message_id):
         return error
 
 def get_the_message(id):
+    """Hämtar ett specifikt meddelande baserat på dess ID.
+    Använder ID som ett argument"""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -630,6 +640,7 @@ def profile():
 
 @app.route("/profile/liked_ads/")
 def user_liked_ads():
+    """Hanterar en GET-förfrågan till '/profile/liked_ads/' """
     ads = image_ad_read_index()
     if 'user' not in session:
         return redirect('/')
@@ -718,6 +729,7 @@ def save():
 
 @app.route("/send/", methods = ['POST', 'GET'])
 def send():
+    """Hanterar en POST eller GET-förfrågan till '/send/' """
     if 'user' not in session:
         return redirect('/')
     else:
@@ -737,6 +749,7 @@ def send():
             return error
 
 def message_insert(message_id, Message, sending_user, recieving_user, id):
+    """Infogar ett meddelande i databasen."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -751,6 +764,7 @@ def message_insert(message_id, Message, sending_user, recieving_user, id):
 
 @app.route("/messages/")
 def check_all_messages():
+    """Hanterar en GET förfrågan till '/messages/' för att visa alla meddelanden för en användare"""
     if 'user' not in session:
         return redirect('/')
     else:
