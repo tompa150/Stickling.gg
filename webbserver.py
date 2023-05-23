@@ -663,12 +663,12 @@ def send_chat(recieving_user):
     except:
         return render_template("TheChat.html", username = username, recieving_user = recieving_user)
     
-@app.route("/receive_latest_message/<string:username>/<string:receiving_user>/", methods=['GET'])  
+@app.route("/receive_latest_message/<string:username>/<string:receiving_user>/", methods=['POST'])  
 def receive_latest_message(username, receiving_user):
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE recieving_user ='{username}' and sending_user = '{receiving_user}' ORDER BY time_stamp DESC LIMIT 1;")
+        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE recieving_user ='{receiving_user}' and sending_user = '{username}' ORDER BY time_stamp DESC LIMIT 1;")
         latest_message = cursor.fetchone()
         cursor.close()
         conn.close()

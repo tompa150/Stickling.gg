@@ -113,21 +113,20 @@
             function receiveLatestMessage(sendingUser, receivingUser) {
                 $.ajax({
                     url: `/receive_latest_message/{{username}}/{{recieving_user}}/`,
-                    type: 'GET',
+                    type: 'POST',
+                    dataType: "JSON",
                     success: function(response) {
-                        var answer = JSON.parse(response);
+                        var answer = response;
                         console.log('Received message user:', answer.user);
+                        console.log('response:', response);
                         console.log('Message:', answer.answer);
                         var messageHTML = '<div class="card">' +
                             '<p>' + answer.user + ': ' + answer.answer + '</p>' +
                             '<p>' + answer.timestamp + '</p>' +
                             '</div>';
-        
-                        // Check if the latest message is already present in the container
                         
-        
-                        // Call the function again to continue receiving latest messages
                         receiveLatestMessage(sendingUser, receivingUser);
+        
                     },
                     error: function(xhr, status, error) {
                         console.error('Error receiving latest message:', error);
