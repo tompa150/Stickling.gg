@@ -5,12 +5,11 @@ body {
 }
 
   .main_image{
-    margin-right: 10%;
+    margin-right: 15%;
     margin-top: 50px;
     margin-bottom: 90px;
-    margin-left: 3%;
-    width: 700px;
-    height: auto;
+    margin-left: 4%;
+    width: 600px;
   }
 
   .main_main{
