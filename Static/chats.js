@@ -1,5 +1,5 @@
 function sendMessage(message) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); 
 
     var messageInput = document.getElementById('message-input');
     var message = messageInput.value;
@@ -16,8 +16,17 @@ function sendMessage(message) {
         message: message,
         sendingUser: sendingUser,
         receivingUser: receivingUser},
-      success: function(response) {
+        success: function(response) {
         console.log('Message sent successfully:', response);
+        var chatMessagesContainer = document.getElementById('latest-messages-container');
+        var newMessageHTML = '<div class="card">' +
+          '<p>' + sendingUser + ': ' + message + '</p>' +
+          '<p>' + response.message + '</p>' +
+          '</div>';
+        chatMessagesContainer.innerHTML += newMessageHTML;
+
+      // Clear the message input
+      messageInput.value = '';
       },
       error: function(xhr, status, error) {
         console.error('Error sending message:', error);
@@ -25,10 +34,9 @@ function sendMessage(message) {
     });
 }
 
-
-function receiveLatestMessage() {
+function receiveLatestMessage(sendingUser, receivingUser) {
   $.ajax({
-    url: `/receive_latest_message/`,
+    url: `/receive_latest_message/${sendingUser}/${receivingUser}/`,
     type: 'GET',
     success: function(response) {
       var message = response;
@@ -44,15 +52,16 @@ function receiveLatestMessage() {
       }
 
       // Call the function again to continue receiving latest messages
-      receiveLatestMessage();
+      receiveLatestMessage(sendingUser, receivingUser);
     },
     error: function(xhr, status, error) {
       console.error('Error receiving latest message:', error);
     }
   });
 }
+receiveLatestMessage(sendingUser, receivingUser)
 
 function isMessagePresent(messageHTML) {
     var containerHTML = $('#latest-messages-container').html();
     return containerHTML.includes(messageHTML);
-  }
+}

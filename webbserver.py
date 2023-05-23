@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, session, g, redirect #Här importeras flask
+from flask import Flask, render_template, request, url_for, session, g, redirect  #Här importeras flask
 import psycopg2 #Här importeras psycopg2
 from datetime import timedelta, datetime #Här importeras datetime
 import os #Här importeras OS
@@ -191,6 +191,7 @@ def new_chat_id():
     for chat in chats:
         if chat[0] >= largest_id:
             largest_id = chat[0] + 1
+    print(largest_id)
     return largest_id
 
 def new_message_id():
@@ -223,6 +224,7 @@ def read_chat_info():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM chats;")
         products = cursor.fetchall()
+        print(products)
         cursor.close()
         conn.close()
         return products
@@ -639,8 +641,9 @@ def read_specific_chats(username, recieving_user):
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT sending_user, recieving_user, text, time_stamp FROM chats where (sending_user = '{username}' AND receiving_user = '{recieving_user}') AND (sending_user = '{recieving_user}' AND receiving_user = '{username}'); Order by time_stamp ASC;")
+        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{username}' AND recieving_user = '{recieving_user}' UNION SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{recieving_user}' AND recieving_user = '{username}' ORDER BY time_stamp ASC;")
         products = cursor.fetchall()
+        prod = products[0]
         cursor.close()
         conn.close()
         print(products)
@@ -655,6 +658,7 @@ def send_chat(recieving_user):
     try:
         username = session['user']
         chat_messages = read_specific_chats(username, recieving_user)
+        print(chat_messages)
         return render_template("TheChat.html", chat_messages = chat_messages, username = username, recieving_user = recieving_user)
     except:
         return render_template("TheChat.html", username = username, recieving_user = recieving_user)
@@ -664,17 +668,15 @@ def receive_latest_message(username, receiving_user):
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT sending_user, receiving_user, text, time_stamp FROM chats WHERE (sending_user = '{username}' AND receiving_user = '{receiving_user}') OR (sending_user = '{receiving_user}' AND receiving_user = '{username}') ORDER BY time_stamp DESC LIMIT 1;")
+        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE recieving_user ='{receiving_user}' and sending_user = '{username}' ORDER BY time_stamp DESC LIMIT 1;")
         latest_message = cursor.fetchone()
         cursor.close()
         conn.close()
-
-        message = {
-            'user': latest_message[0],
-            'message': latest_message[2],
-            'timestamp': latest_message[3]
+        print(latest_message)
+        response = {
+            'user': str(latest_message[0]), 'message': str(latest_message[2]),'timestamp': str(latest_message[3])
         }
-        return json.dumps(message)
+        return json.dumps(response)
     except:
         error_message = {
             'error': 'Error receiving latest message',
@@ -685,18 +687,22 @@ def receive_latest_message(username, receiving_user):
 @app.route('/send_message/<username>/<receiving_user>/', methods=['POST'])
 def send_message(username, receiving_user): 
     try:
+        print(username, receiving_user)
         message = request.form['message']
         id = new_chat_id()
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"INSERT into chats (chat_message_id, sending_user, receiving_user, message_string) values ({id}, '{username}', '{receiving_user}', '{message}');")
-        conn.commit()  # Commit the changes to the database
+        cursor.execute(f"INSERT into chats (chat_message_id, sending_user, recieving_user, message_string) values ({id}, '{username}', '{receiving_user}', '{message}');")
+        conn.commit() 
         cursor.close()
         conn.close()
-        response = {'status': 'success', 'message': 'Message sent successfully'}
+        time = datetime.now()
+        response = {'status': 'success', 'message': time}
+        print(message)
         return json.dumps(response)  
     except (Exception, psycopg2.Error) as error:
         response = {'status': 'error', 'message': 'Error sending message: ' + str(error)}
+        print(response)
         return json.dumps(response)  
 
 @app.route("/chats/")
