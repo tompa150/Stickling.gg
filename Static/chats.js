@@ -1,6 +1,16 @@
 function sendMessage(message) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var messageInput = document.getElementById('message-input');
+    var message = messageInput.value;
+
+    var sendingUserInput = document.getElementById('sending-user');
+    var sendingUser = sendingUserInput.value;
+    var receivingUserInput = document.getElementById('receiving-user');
+    var receivingUser = receivingUserInput.value;
+
     $.ajax({
-      url: `/send_message/${username}/${recieving_user}/`,
+      url: `/send_message/${sendingUser}/${receivingUser}/`,
       type: 'POST',
       data: { 
         message: message,
@@ -13,12 +23,12 @@ function sendMessage(message) {
         console.error('Error sending message:', error);
       }
     });
-  }
+}
 
 
 function receiveLatestMessage() {
   $.ajax({
-    url: `/receive_latest_message/${username}/${recieving_user}/`,
+    url: `/receive_latest_message/`,
     type: 'GET',
     success: function(response) {
       var message = response;
