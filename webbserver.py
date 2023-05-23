@@ -668,15 +668,16 @@ def receive_latest_message(username, receiving_user):
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE recieving_user ='{receiving_user}' and sending_user = '{username}' ORDER BY time_stamp DESC LIMIT 1;")
+        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE recieving_user ='{username}' and sending_user = '{receiving_user}' ORDER BY time_stamp DESC LIMIT 1;")
         latest_message = cursor.fetchone()
         cursor.close()
         conn.close()
         print(latest_message)
-        response = {
-            'user': str(latest_message[0]), 'message': str(latest_message[2]),'timestamp': str(latest_message[3])
-        }
-        return json.dumps(response)
+        return json.dumps({
+            'user': str(latest_message[0]),
+            'answer': str(latest_message[2]),
+            'timestamp': str(latest_message[3])
+        })
     except:
         error_message = {
             'error': 'Error receiving latest message',
@@ -697,7 +698,7 @@ def send_message(username, receiving_user):
         cursor.close()
         conn.close()
         time = datetime.now()
-        response = {'status': 'success', 'message': time}
+        response = {'status': 'success', 'message': str(time)}
         print(message)
         return json.dumps(response)  
     except (Exception, psycopg2.Error) as error:

@@ -74,8 +74,6 @@
         <script>
             var sendingUser = '{{ username }}';
             var receivingUser = '{{ receiving_user }}';
-            receiveLatestMessage(sendingUser, receivingUser);
-        
             function sendMessage(message) {
                 event.preventDefault();
         
@@ -117,17 +115,16 @@
                     url: `/receive_latest_message/{{username}}/{{recieving_user}}/`,
                     type: 'GET',
                     success: function(response) {
-                        var message = response;
+                        var answer = JSON.parse(response);
+                        console.log('Received message user:', answer.user);
+                        console.log('Message:', answer.answer);
                         var messageHTML = '<div class="card">' +
-                            '<p>' + message.user + ': ' + message.message + '</p>' +
-                            '<p>' + message.timestamp + '</p>' +
+                            '<p>' + answer.user + ': ' + answer.answer + '</p>' +
+                            '<p>' + answer.timestamp + '</p>' +
                             '</div>';
         
                         // Check if the latest message is already present in the container
-                        if (!isMessagePresent(messageHTML)) {
-                            // Append the latest message to the container
-                            $('#latest-messages-container').html(messageHTML);
-                        }
+                        
         
                         // Call the function again to continue receiving latest messages
                         receiveLatestMessage(sendingUser, receivingUser);
