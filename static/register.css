@@ -199,6 +199,11 @@ body {
     transform: translate(-50%, -50%);
   }
 
+  .centered > h1{
+    margin-top: 0;
+    
+  }
+
   .main_main{
     display: flex;
   }

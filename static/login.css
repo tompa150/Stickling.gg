@@ -6,11 +6,11 @@ body {
 
   .main_image{
     margin-right: 10%;
-    margin-top: 160px;
-    margin-bottom: 150px;
+    margin-top: 50px;
+    margin-bottom: 90px;
     margin-left: 3%;
     width: 700px;
-    height: 500px;
+    height: auto;
   }
 
   .main_main{
