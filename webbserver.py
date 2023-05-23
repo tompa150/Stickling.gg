@@ -184,6 +184,15 @@ def new_ad_id():
             largest_id = ad[0] + 1
     return largest_id
 
+def new_chat_id():
+    '''Denna funktion skapar ett nytt id åt en ny artikel.'''
+    largest_id = 1
+    chats = read_chat_info()
+    for chat in chats:
+        if chat[0] >= largest_id:
+            largest_id = chat[0] + 1
+    return largest_id
+
 def new_message_id():
     '''Denna funktion skapar ett nytt id åt en ny artikel.'''
     largest_id = 1
@@ -206,6 +215,21 @@ def read_user_info():
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error  
+    
+def read_chat_info():
+    """Här läses alla användaruppgifter in från databasen"""
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM chats;")
+        products = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return products
+    except:
+        error = "Ett fel har uppstått, vänligen försök igen."
+        return error  
+
 
 def read_user_specific(user):
     """Här läses alla användaruppgifter in från databasen"""
@@ -595,6 +619,93 @@ def liking_ad(id):
         "success": True,
         "message": "Gillningen är sparad i databasen"
     })
+
+def read_all_but_one(username):
+    """Här läses alla användaruppgifter in från databasen"""
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT username FROM users where username != '{username}';")
+        products = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return products
+    except:
+        error = "Ett fel har uppstått, vänligen försök igen."
+        return error
+    
+def read_specific_chats(username, recieving_user):
+    """Här läses alla användaruppgifter in från databasen"""
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT sending_user, recieving_user, text, time_stamp FROM chats where (sending_user = '{username}' AND receiving_user = '{recieving_user}') AND (sending_user = '{recieving_user}' AND receiving_user = '{username}'); Order by time_stamp ASC;")
+        products = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        print(products)
+        return products
+    except:
+        error = "Ett fel har uppstått, vänligen försök igen."
+        return error 
+
+@app.route("/chats/<recieving_user>/")
+def send_chat(recieving_user):
+    '''Denna route tar emot ett id och och gillar annonsen åt användaren om den inte redan är det eller ger ett felmeddelande om den redan är det.'''
+    try:
+        username = session['user']
+        chat_messages = read_specific_chats(username, recieving_user)
+        return render_template("TheChat.html", chat_messages = chat_messages, username = username, recieving_user = recieving_user)
+    except:
+        return render_template("TheChat.html", username = username, recieving_user = recieving_user)
+    
+@app.route("/receive_latest_message/<string:username>/<string:receiving_user>/", methods=['GET'])  
+def receive_latest_message(username, receiving_user):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT sending_user, receiving_user, text, time_stamp FROM chats WHERE (sending_user = '{username}' AND receiving_user = '{receiving_user}') OR (sending_user = '{receiving_user}' AND receiving_user = '{username}') ORDER BY time_stamp DESC LIMIT 1;")
+        latest_message = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        message = {
+            'user': latest_message[0],
+            'message': latest_message[2],
+            'timestamp': latest_message[3]
+        }
+        return json.dumps(message)
+    except:
+        error_message = {
+            'error': 'Error receiving latest message',
+            'message': 'error'
+        }
+        return json.dumps(error_message)
+
+@app.route('/send_message/<username>/<receiving_user>/', methods=['POST'])
+def send_message(username, receiving_user): 
+    try:
+        message = request.form['message']
+        id = new_chat_id()
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute(f"INSERT into chats (chat_message_id, sending_user, receiving_user, message_string) values ({id}, '{username}', '{receiving_user}', '{message}');")
+        conn.commit()  # Commit the changes to the database
+        cursor.close()
+        conn.close()
+        response = {'status': 'success', 'message': 'Message sent successfully'}
+        return json.dumps(response)  
+    except (Exception, psycopg2.Error) as error:
+        response = {'status': 'error', 'message': 'Error sending message: ' + str(error)}
+        return json.dumps(response)  
+
+@app.route("/chats/")
+def chats():
+    username = session['user']
+    users = read_all_but_one(username)
+    for user in users:
+        print(user)
+    return render_template("chats.html", users = users)
 
 @app.route("/unlike_ad/<id>/", methods = ['POST'])
 def unliking_ad(id):
