@@ -40,32 +40,20 @@
         <main> 
             <div>
                 <article>
-                    <p class="redigera_profile"> 
-                        TEXT HERE
-                    </p>
+
                     <a href="http://127.0.0.1:8080/messages/unread/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Olästa meddelanden</a>
                     <a href="http://127.0.0.1:8080/messages/read/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Lästa meddelanden</a>
                     <a href="http://127.0.0.1:8080/messages/sent/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Skickade meddelanden</a>
                 </article>
             </div>
-            <div class="title_box">
-                <h3 class="A-title">Aktiva annonser</h3>
-                <h3 class="A-title">Inaktiv annonser</h3>
+            <div>
+                {% for message in All_Messages %}
+                <h4><b>Sender: {{ message[1] }}</b></h4> 
+                <h4><b>Message: </b></h4> 
+                <p>{{ message[2] }}</p> 
+                <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">Se meddelande</a>
+                {% endfor %}
             </div>
-            <article class="new-old-box">
-                    <div class="box">
-                            {% for message in All_Messages %}
-                            <div class="card">
-                                <div class="container">
-                                    <h4><b>Sender: {{ message[1] }}</b></h4> 
-                                    <h4><b>Message: </b></h4> 
-                                    <p>{{ message[2] }}</p> 
-                                    <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">Se meddelande</a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                    </div>
-            </article>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>

@@ -14,15 +14,15 @@
                     <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
                     <div class="middle_box">
                         <div class="Filter_buttons">
-                            <img class="nav_buttons" src="{{ url_for('static', filename='image-9.png') }}" alt="sök">
+                            <img class="nav_buttons" src="{{ url_for('static', filename='image-13.png') }}" alt="köp">
                             <p class="nav_p" >Köp</p>
                         </div>
                         <div class="Filter_buttons">
-                            <img class="byt_buttons" src="{{ url_for('static', filename='image-8.png') }}" alt="köp">
+                            <img class="byt_buttons" src="{{ url_for('static', filename='image-8.png') }}" alt="byt">
                             <p class="nav_p" >Byt</p>
                         </div>
                         <div class="Filter_buttons">
-                            <img class="nav_buttons" src="{{ url_for('static', filename='image-10.png') }}" alt="byt">
+                            <img class="nav_buttons" src="{{ url_for('static', filename='image-10.png') }}" alt="sök">
                             <p class="nav_p" >Söker</p>
                         </div>
                     </div>
@@ -65,31 +65,34 @@
                         <img class="annons" src="{{ ad[3] }}" data-col="0" alt="Stickling">
                         <div class="container">
                             <h4><b>{{ ad[1] }}</b></h4> 
-                            <div class="container_two">
-                            {% for x in liked_ads %}
-                                {% if 'user' in session %}
-                                    {% if x[0] == session['user'] and x[1] == ad[0] and x[0] != ad[4] %}
-                                        <img src="/static/pngegg-9.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="true" id="{{ad[0]}}">
-                                    {% endif %}
+                            <div class="info_annons">
+                                <p>{{ ad[4] }}</p>
+                                {% if ad[2] == "efterfråga": %}
+                                    <img class="category" src="/static/efterfråga.png" alt="efterfråga-logga">
                                 {% endif %}
-                            {% endfor %}
-                            {% if 'user' in session %}
-                                {% for a in unmatched_values: %}
-                                    {% if ad[0] == a: %}
-                                        <img src="/static/pngegg-9.png"  alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
+                                {% if ad[2] == "sälj": %}
+                                    <img class="category" src="/static/image-13.png" alt="efterfråga-logga">
+                                {% endif %}
+                                {% if ad[2] == "byt": %}
+                                    <img class="trade" src="/static/trade.png" alt="efterfråga-logga">
+                                {% endif %}
+                                <div class="container_two">
+                                    {% for x in liked_ads %}
+                                        {% if 'user' in session %}
+                                            {% if x[0] == session['user'] and x[1] == ad[0] and x[0] != ad[4] %}
+                                                <img src="/static/pngegg-9.png" alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="true" id="{{ad[0]}}">
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if 'user' in session %}
+                                        {% for a in unmatched_values: %}
+                                            {% if ad[0] == a: %}
+                                                <img src="/static/pngegg-9.png"  alt="Like button" data-id="{{ad[0]}}" class="like" data-liked="false" id="{{ad[0]}}">
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endif %}
-                                {% endfor %}
-                            {% endif %}
+                                </div>
                             </div>
-                            {% if ad[2] == "efterfråga": %}
-                                <img class="category" src="/static/efterfråga.png" alt="efterfråga-logga">
-                            {% endif %}
-                            {% if ad[2] == "sälj": %}
-                                <img class="category" src="/static/sälj.png" alt="efterfråga-logga">
-                            {% endif %}
-                            {% if ad[2] == "byt": %}
-                                <img class="trade" src="/static/trade.png" alt="efterfråga-logga">
-                            {% endif %}
                         </div>
                     </div>
                 </a>
@@ -104,4 +107,4 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
         <script src="/static/like.js"></script>
     </body>
-</html>
+</html> 

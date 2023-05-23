@@ -37,7 +37,7 @@ body {
   /* CSS styling for logo image */
   .small_logo > img {
   width: 55px;
-  height: 55px;
+  height: 55px; 
   margin-left: 4px;
   }
   
@@ -277,42 +277,9 @@ main{
 
   }
   
-  /* CSS styling for smaller screens */
-  @media screen and (max-width: 600px) {
-  /* Styles for the dropdown content */
-  .dropdown-content {
-  right: 35px;
-  }
-
-  
-  /* Styles for the card container */
-  .card {
-  width: 100%;
-  }
-  
-  /* Styles for the main container */
-  #main{
-  justify-content: space-evenly;
-  column-count: 2;
-  column-gap: 20px;
-  }
-  
-  /* Styles for the main container */
-  #main{
-  margin-bottom: 10%;
-  margin-right: 0%;
-  }
-}
-  
-  @media screen and (min-width: 800px) {
-  /* Styles for larger screens */
-  
-  }
-
-
 
 .like {
-  margin-top :35px; ;
+  margin-top: 15px;
   margin-bottom:  14px; ;
   margin-left: 14px;
   margin-right: 14px;
@@ -334,12 +301,23 @@ background-size: cover;
 }
 
 .category{
-padding:15px ;
+  padding-top: 0%;
+  padding-left: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
 width: 60px;
 }
 
+.container > p{
+  margin: 0px;
+  width: 5px;
+}
+
 .trade{
-  padding: 15px;
+  padding-top: 0%;
+  padding-left: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
   width: 100px;
 }
 
@@ -348,6 +326,11 @@ width: 60px;
 {
   float: right;
 }
+
+.info_annons{
+  display:flex ;
+}
+
 
 
 .nav_buttons{
@@ -388,4 +371,47 @@ width: 60px;
   background-color: #62937c;
   cursor: pointer;
   box-shadow: 2px 2px 5px 5px rgb(0,0,0,0.2);
+}
+
+@media screen and (max-width: 1050px) {
+  /* Styles for larger screens */
+  #main{
+    justify-content: space-evenly;
+    column-count: 3;
+    column-gap: 20px;
+    }
+
+
+  }
+
+
+
+
+
+
+  /* CSS styling for smaller screens */
+  @media screen and (max-width: 900px) {
+  /* Styles for the dropdown content */
+  .dropdown-content {
+  right: 35px;
+  }
+
+  
+  /* Styles for the card container */
+  .card {
+  width: 100%;
+  }
+  
+  /* Styles for the main container */
+  #main{
+  justify-content: space-evenly;
+  column-count: 2;
+  column-gap: 20px;
+  }
+  
+  /* Styles for the main container */
+  #main{
+  margin-bottom: 10%;
+  margin-right: 0%;
+  }
 }
