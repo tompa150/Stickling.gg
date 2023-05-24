@@ -72,17 +72,15 @@
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
         <script>
-            var sendingUser = '{{ username }}';
-            var receivingUser = '{{ receiving_user }}';
+            var sendingUserInput = document.getElementById('sending-user');
+            var sendingUser = sendingUserInput.value;
+            var receivingUserInput = document.getElementById('receiving-user');
+            var receivingUser = receivingUserInput.value;
             function sendMessage(message) {
                 event.preventDefault();
         
                 var messageInput = document.getElementById('message-input');
                 var message = messageInput.value;
-                var sendingUserInput = document.getElementById('sending-user');
-                var sendingUser = sendingUserInput.value;
-                var receivingUserInput = document.getElementById('receiving-user');
-                var receivingUser = receivingUserInput.value;
         
                 $.ajax({
                     url: `/send_message/${sendingUser}/${receivingUser}/`,
@@ -112,7 +110,7 @@
         
             function receiveLatestMessage(sendingUser, receivingUser) {
                 $.ajax({
-                    url: `/receive_latest_message/{{username}}/{{recieving_user}}/`,
+                    url: `/receive_latest_message/${sendingUser}/${receivingUser}/`,
                     type: 'POST',
                     dataType: "JSON",
                     success: function(response) {
@@ -124,8 +122,11 @@
                             '<p>' + answer.user + ': ' + answer.answer + '</p>' +
                             '<p>' + answer.timestamp + '</p>' +
                             '</div>';
-                        
+                        if (!isMessagePresent(messageHTML)) {
+                            $('#latest-messages-container').html(messageHTML);
+                        }
                         receiveLatestMessage(sendingUser, receivingUser);
+
         
                     },
                     error: function(xhr, status, error) {

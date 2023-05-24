@@ -663,20 +663,26 @@ def send_chat(recieving_user):
     except:
         return render_template("TheChat.html", username = username, recieving_user = recieving_user)
     
-@app.route("/receive_latest_message/<string:username>/<string:receiving_user>/", methods=['POST'])  
+@app.route("/receive_latest_message/<username>/<receiving_user>/", methods=['POST'])  
 def receive_latest_message(username, receiving_user):
     try:
+        print(username)
+        print(receiving_user)
+        print(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{username}' and recieving_user ='{receiving_user}' ORDER BY time_stamp DESC LIMIT 1;")
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE recieving_user ='{receiving_user}' and sending_user = '{username}' ORDER BY time_stamp DESC LIMIT 1;")
+        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{receiving_user}' and recieving_user ='{username}' ORDER BY time_stamp DESC LIMIT 1;")
         latest_message = cursor.fetchone()
+        print(latest_message)
         cursor.close()
         conn.close()
-        print(latest_message)
+        user = latest_message[0]
+        answer = latest_message[2]
+        timestamp = latest_message[3]
         return json.dumps({
-            'user': str(latest_message[0]),
-            'answer': str(latest_message[2]),
-            'timestamp': str(latest_message[3])
+            'user': str(user),
+            'answer': str(answer),
+            'timestamp': str(timestamp)
         })
     except:
         error_message = {
