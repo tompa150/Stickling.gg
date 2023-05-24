@@ -1176,7 +1176,7 @@ def validation():
                     return render_template("login.html")
             else:
                 wrong_username = "Användarnamnet du angav är ogiltigt."
-                return render_template("login.html", wrong_username = wrong_username)
+                return redirect("login.html", wrong_username = wrong_username)
         else:        
             return render_template("login.html")
     except:
@@ -1191,6 +1191,11 @@ def register():
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
+    
+
+@app.route("/register/new/success/")
+def register_new_success():
+    return render_template("Register_success.html")
 
 @app.route("/register/new/", methods = ['POST', 'GET'])
 def register_user():
@@ -1216,7 +1221,7 @@ def register_user():
                 conn.commit()
                 conn.close()
                 send_welcome(email, username)
-                return render_template("Register_success.html")
+                return redirect("/register/new/success/")
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
