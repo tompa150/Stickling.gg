@@ -1,0 +1,305 @@
+/* Same CSS for all HTML -----------------------------------------------------*/
+body {
+    margin: 0%;
+    background-color: #f1e8e0;
+    }
+    
+    /* CSS styling for navigation bar--------------------------------------- */
+    nav {
+      background-color: #5B9279;
+      z-index: 2;
+      position: fixed;
+      border-bottom: white;
+      border-bottom-style: solid;
+      border-bottom-width: thin;
+      width: 100%;
+      }
+    
+    /* CSS styling for small logo */
+    .small_logo {
+    font-family: 'Fasthand';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 35px;
+    color: #f1e8e0;
+    text-decoration: none;
+    cursor: pointer;
+    }
+    
+    /* CSS styling for logo image */
+    .small_logo > img {
+      width: 55px;
+      height: 55px;
+      margin-left: 4px;
+      }
+    
+    /* CSS styling for right box */
+    .RBOX {
+      float: right;
+      display: flex;
+      text-align: center;
+      margin-top: 1%;
+      margin-right: 18px;
+      }
+    
+    /* CSS styling for bar icons */
+    .bar_icons {
+    width: 60px;
+    height: auto;
+    }
+    
+    /* CSS styling for bars */
+    .bars {
+    width: 25px;
+    height: 3px;
+    background-color: #f1e8e0;
+    margin: 4px 0;
+    }
+    
+    /* CSS styling for dropdown container */
+    .dropdown {
+    font-weight: bold;
+    border-radius: 5px;
+    float: right;
+    overflow: hidden;
+    cursor: pointer;
+    margin-right: 5px;
+    }
+    
+    /* CSS styling for dropdown button */
+    .dropdown .dropbtn {
+    border: none;
+    outline: none;
+    color: #f1e8e0;
+    padding: 14px 16px;
+    background-color: inherit;
+    margin: 0;
+    cursor: pointer;
+    }
+    
+    /* CSS styling for navbar links on hover */
+    .dropdown:hover .dropbtn {
+    border-radius: 5px;
+    background-color: #62937c;
+    cursor: pointer;
+    box-shadow: 0px 16px 16px 0px rgb(0,0,0,0.2);
+    }
+    
+    /* CSS styling for dropdown content */
+    .dropdown-content {
+    border-radius: 5px;
+    right: 2%;
+    display: none;
+    position: absolute;
+    background-color: #f1e8e0;
+    min-width: 300px;
+    z-index: 1;
+    cursor: pointer;
+    }
+    
+    /* CSS styling for links inside the dropdown */
+    .dropdown-content a {
+    float: none;
+    color: rgb(0, 0, 0);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+    font-size: 20px;
+    }
+    
+    /* CSS styling for dropdown links on hover */
+    .dropdown-content a:hover {
+    background-color: #eaddd0;
+    cursor: pointer;
+    }
+    
+    /* CSS styling to show dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+    display: block;
+    cursor: pointer;
+    }
+    
+    /* CSS styling for creation box */
+    .creation_box {
+    margin-right: 5px;
+    display: flex;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    }
+    
+    /* CSS styling for creation button link */
+    .creation_button:link, .creation_button:visited {
+    display: flex;
+    color: #f1e8e0;
+    padding: 5px 5px;
+    text-decoration: none;
+    border-radius: 10px;
+  
+    }
+    
+    
+  /* Styling for creation button image */
+  .creation_button:link > img {
+    width: 40px;
+    height: 40px;
+    }
+    
+    /* Styling for creation button text */
+    .creation_button:link > p{
+    margin: 0;
+    margin-top: 13px;
+    }
+  
+  
+  .creation_button:hover{
+      background-color: #62937c;
+      box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
+  
+    }
+    
+    /* Footer styling -----------------------------------------------------------------------------------*/
+    footer{
+    padding: 5px;
+    border-top: #f1e8e0;
+    border-top-style: solid;
+    background-color: #eaddd0;
+    display: flex;
+    position: fixed;
+    bottom: 0%;
+    z-index: 2;
+    width: 100%;
+    }
+    
+    /* Information section in the footer */
+    #information{
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    }
+    
+    /* Footer links styling */
+    .linkfoot{
+    text-decoration: none;
+    color: black;
+    margin: 0%;
+    }
+  /* Unika css för profile.css (.card --> .conrtainer finns också i new.css *-----------------------------------------------------------------------*/
+  
+  /*CSS styling för main------------------------------------*/
+  main{
+    background-color: #f1e8e0;
+    padding: 10%;
+   }
+    
+  /* CSS styles for the card */
+  .card {
+    background-color: #f1e8e0; /* set the background color */
+    transition: 0.3s; /* add transition effect */
+    border-radius: 10px; /* set rounded corners */
+    height: auto;
+    margin-bottom: 20%; /* add margin at the bottom */
+    break-inside: avoid;
+    display: grid;
+    grid-template-rows: 1fr auto; /* set one row and one auto */
+    border-bottom-width: thin;
+    box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
+  }
+    
+  /* CSS styles for the image */
+  .annons {
+    border-radius: 10px 10px 0 0; /* set rounded corners */
+    width: 100%; /* set width to 100% */
+    height: auto; /* set height to auto */
+  }
+  
+  /* CSS styles for the card on mouse hover */
+  .card:hover {
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
+    background-color: #f0dfd1;
+    border-bottom: none;
+  }
+  
+  /* CSS styles for the container inside the card */
+  .container {
+    padding: 2px 16px; /* add padding */
+  }
+  
+  /* CSS styles for the "redigera_profile" element */
+  .redigera_profile {
+    padding-top: 20%; /* add padding at the top */
+    padding-left: 10%; /* add padding at the left */
+    padding-right: 10%; /* add padding at the right */
+    text-align: center; /* center align the text */
+  }
+  
+  /* CSS styles for the "new-old-box" element */
+  .new-old-box {
+    padding-right: 40%; /* add padding */
+    column-count: 2;
+    column-gap: 40px; /* add gap between columns */
+  }
+  
+  /* CSS styles for the "box2" element */
+  .box2 {
+    margin-top: 10% ; /* add margin */
+  }
+  
+  /* CSS styles for the "box" element */
+  .box {
+    margin-top: 10% ; /* add margin */
+  }
+  
+  /* CSS styles for the "A-title" element */
+  .A-title {
+  padding: 20px;
+  }
+  
+  
+  .title_box{
+    display: flex;
+    gap: 15%;
+  }
+
+a{
+    color: black;
+    text-decoration: none;
+}
+  .messages{
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
+    background-color: #f0dfd1;
+    text-decoration: none;
+  }
+
+  .Allmessages{
+    flex-wrap: wrap;
+    margin-top: 100px;
+    gap: 20px;
+    display: flex;
+  }
+
+ .all_message_link{
+
+    display: flex;
+ }
+
+ 
+.message_link{
+    width: 200px;
+    height: 200px;
+    margin: 100px;
+   border-radius: 10%;
+   box-sizing: border-box;
+   display: block;
+   font-size: 20px;
+   color: #090909;
+   padding: 0.7em 1.7em;
+   background: #5B9279;
+   border: 1px solid #f1e8e0;
+   box-shadow: 6px 6px 12px #000000,
+   
+
+}

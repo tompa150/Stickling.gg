@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='AllMessages.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
@@ -38,20 +38,33 @@
             </div>
         </nav>
         <main> 
-            <div>
-                <article>
-
-                    <a href="http://127.0.0.1:8080/messages/unread/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Olästa meddelanden</a>
-                    <a href="http://127.0.0.1:8080/messages/read/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Lästa meddelanden</a>
-                    <a href="http://127.0.0.1:8080/messages/sent/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Skickade meddelanden</a>
-                </article>
+            <div class="all_message_link">
+                <div class="message_link">
+                    <a href="http://127.0.0.1:8080/messages/unread/">
+                    <img class="bar_icons" src="{{ url_for('static', filename='image-19.png') }}">
+                     Olästa meddelanden
+                    </a>
+                </div>
+                <div class="message_link">
+                    <a href="http://127.0.0.1:8080/messages/read/"> 
+                    <img class="bar_icons" src="{{ url_for('static', filename='image-21.png') }}">
+                    Lästa meddelanden</a>
+                </div>
+                <div class="message_link">
+                    <a href="http://127.0.0.1:8080/messages/sent/">
+                    <img class="bar_icons" src="{{ url_for('static', filename='image-20.png') }}">
+                     Skickade meddelanden</a>
+                </div>
             </div>
-            <div>
+            <div class="Allmessages">
                 {% for message in All_Messages %}
-                <h4><b>Sender: {{ message[1] }}</b></h4> 
-                <h4><b>Message: </b></h4> 
-                <p>{{ message[2] }}</p> 
-                <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">Se meddelande</a>
+                <div class="messages">
+                    <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">
+                    <h4><b>Sender: {{ message[1] }}</b></h4> 
+                    <h4><b>Message: </b></h4> 
+                    <p>{{ message[2] }}</p> 
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         </main>
