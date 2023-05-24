@@ -58,21 +58,26 @@ def send_reset(email):
     token = new_token(email)
     reset_url = url_for('password_reset', token=token, _external=True)
     message = Message('Återställning av lösenord', recipients=[email])
-    message.body = f'Hej!\n\nVänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}'
+    message.body = f""" Hej!
+        
+        Vänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}""" 
     mail.send(message)
     return
 
 def send_reset_confirmation(email):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
     message = Message('Lösenord ändrat.', recipients=[email])
-    message.body = f'Hej!\n\nDitt lösenord har nu ändrats.\nNotera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}'
+    message.body = f"""Hej!
+        Ditt lösenord har nu ändrats.\n
+        Notera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}"""
     mail.send(message)
     return
 
 def send_welcome(email, username):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
     message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
-    message.body = f"""        Välkommen {username}!\n Detta är din plats för att köpa, byta och begära växter! 
+    message.body = f"""        Välkommen {username}!\n 
+        Detta är din plats för att köpa, byta och begära växter! 
         Vi är glada att ha dig som en del av vårt växande community av växtentusiaster. Gör dig redo att 
         utforska en värld av köp, byte och förfrågningar om växter som aldrig förr.\n
         På Stickling.gg strävar vi efter att erbjuda en sömlös och trevlig upplevelse för växtälskare 
