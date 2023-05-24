@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Stickling.gg</title>
+        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
+    </head>
+    <body> 
+        <nav>
+            <div class="navbar">
+                <a href="http://127.0.0.1:8080/" class="small_logo"> <img alt="liten logotyp" src="{{ url_for('static', filename='monstera-animated-logo.gif') }}">Stickling</a>
+                <div class="RBOX">
+                    {% if 'user' in session %}
+                    <div class="creation_box">
+                        <a class="creation_button"href="http://127.0.0.1:8080/new/choose_ad/">
+                            <img src="{{ url_for('static', filename='CUBE_f.png') }}"><p>Skapa Annons</p></a>
+                    </div >
+                {% endif %}
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                            <div class="bars"></div>
+                        </button>
+                        <div class="dropdown-content">   
+                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
+                            <a href="http://127.0.0.1:8080/profile/liked_ads/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
+                            <a href="http://127.0.0.1:8080/messages/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Meddelande</a>
+                            {% if 'user' in session: %}
+                            <a href="http://127.0.0.1:8080/logout/"><img class="bar_icons" src="{{ url_for('static', filename='logout.png') }}"> Logga ut</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main> 
+            <div>
+                <article>
+                    <p class="redigera_profile"> 
+                        TEXT HERE
+                    </p>
+                </article>
+            </div>
+            <article class="new-old-box">
+                    <div class="box">
+                        {% for message in chat_messages %}
+                            <div class="card">
+                                <p>{{message[0]}}: {{message[2]}}</p>
+                                <p>{{message[3]}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id="latest-messages-container">
+                        <!-- Latest chat messages will be appended here -->
+                    </div>
+                    <form id="message-form">
+                        <input type="hidden" id="sending-user" value="{{ username }}">
+                        <input type="hidden" id="receiving-user" value="{{ recieving_user }}">
+                        <input type="text" id="message-input" placeholder="Type your message...">
+                        <button type="submit" onclick="sendMessage(event)">Send</button>
+                    </form>
+            </article>
+        </main>
+        <footer id="information">
+            <p class="linkfoot">  © 2023 Stickling, Inc.</p>
+            <a class="linkfoot" href="idk">·Terms</a>
+            <a class="linkfoot" href="idk">·Privacy</a>
+        </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> 
+        <script>
+            var sendingUser = '{{ username }}';
+            var receivingUser = '{{ receiving_user }}';
+            function sendMessage(message) {
+                event.preventDefault();
+        
+                var messageInput = document.getElementById('message-input');
+                var message = messageInput.value;
+                var sendingUserInput = document.getElementById('sending-user');
+                var sendingUser = sendingUserInput.value;
+                var receivingUserInput = document.getElementById('receiving-user');
+                var receivingUser = receivingUserInput.value;
+        
+                $.ajax({
+                    url: `/send_message/${sendingUser}/${receivingUser}/`,
+                    type: 'POST',
+                    data: {
+                        message: message,
+                        sendingUser: sendingUser,
+                        receivingUser: receivingUser
+                    },
+                    success: function(response) {
+                        console.log('Message sent successfully:', response);
+                        var chatMessagesContainer = document.getElementById('latest-messages-container');
+                        var newMessageHTML = '<div class="card">' +
+                            '<p>' + sendingUser + ': ' + message + '</p>' +
+                            '<p>' + response.message + '</p>' +
+                            '</div>';
+                        chatMessagesContainer.innerHTML += newMessageHTML;
+        
+                        // Clear the message input
+                        messageInput.value = '';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error sending message:', error);
+                    }
+                });
+            }
+        
+            function receiveLatestMessage(sendingUser, receivingUser) {
+                $.ajax({
+                    url: `/receive_latest_message/{{username}}/{{recieving_user}}/`,
+                    type: 'POST',
+                    dataType: "JSON",
+                    success: function(response) {
+                        var answer = response;
+                        console.log('Received message user:', answer.user);
+                        console.log('response:', response);
+                        console.log('Message:', answer.answer);
+                        var messageHTML = '<div class="card">' +
+                            '<p>' + answer.user + ': ' + answer.answer + '</p>' +
+                            '<p>' + answer.timestamp + '</p>' +
+                            '</div>';
+                        
+                        receiveLatestMessage(sendingUser, receivingUser);
+        
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error receiving latest message:', error);
+                    }
+                });
+            }
+        
+            receiveLatestMessage(sendingUser, receivingUser);
+        
+            function isMessagePresent(messageHTML) {
+                var containerHTML = $('#latest-messages-container').html();
+                return containerHTML.includes(messageHTML);
+            }
+        </script>
+         
+    </body>
+</html>
