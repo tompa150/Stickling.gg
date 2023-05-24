@@ -25,11 +25,11 @@ def connect_to_db():
     """Skapat en funktion som ansluter till databasen. Den här funktionen kan vi sedan kalla på i alla andra funktioner. 
     Så slipper vi skriva ut strängen varje gång, eller bara ändra på ett ställe om vi ska ändra något. """
     connection = psycopg2.connect(
-        database = config.database_name, 
-        user = config.database_user, 
-        password = config.database_password, 
-        host=config.database_host, 
-        port=config.database_port)
+    database = config.database_name, 
+    user = config.database_user, 
+    password = config.database_password, 
+    host=config.database_host, 
+    port=config.database_port)
     return connection
 
 @app.before_request
@@ -105,7 +105,8 @@ def send_welcome(email, username):
 
 def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
-    notification = url_for('TheMessage', id=id, _external=True)
+    print(email)
+    notification = url_for('the_message', id=id, _external=True)
     message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
     message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser.\nKlicka på länken för att se ditt meddelande:\n{notification}'
     mail.send(message)
@@ -866,14 +867,15 @@ def send():
             recieving_user = request.form.get("recieving_user")
             id = request.form.get("id")
             message_id = new_message_id()
+            print(id)
             message_insert(message_id, Message, sending_user, recieving_user, id)
             recipient=read_user_specific(recieving_user)
+            print(recipient)
             send_message_notification(recipient[2], message_id)
             session[f'message/{id}'] = 'Ditt meddelande har skickats!'
             return redirect(f"/ad/{id}/")
-        except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+        except error as e:
+            return e
 
 def message_insert(message_id, Message, sending_user, recieving_user, id):
     """Infogar ett meddelande i databasen."""
