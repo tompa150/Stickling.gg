@@ -17,7 +17,10 @@
       <img class="main_image" src="{{ url_for('static', filename='image-11.png') }}" alt="">
       <div class="main">
         <p class="sign" align="center">Logga in</p>
-        <form class="form1" action="http://127.0.0.1:8080/validation/" method="POST">
+        <form class="form1" action="http://127.0.0.1:8080/validation/" method="POST">¨
+          {% if wrong_username: %}
+          <h4>{{wrong_username}}</h4>
+          {% endif %}
           <input class="un " name = 'Username' type="text" required align="center" placeholder="Användarnamn">
           <input class="pass" type='Password' required name = "Password" align="center" placeholder="Lösenord">
           <input type="submit"  class="submit" align="center" value="Logga in">

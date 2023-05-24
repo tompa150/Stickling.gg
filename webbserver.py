@@ -1169,6 +1169,9 @@ def validation():
                     return redirect("/")
                 else:
                     return render_template("login.html")
+            else:
+                wrong_username = "Användarnamnet du angav är ogiltigt."
+                return render_template("login.html", wrong_username = wrong_username)
         else:        
             return render_template("login.html")
     except:
