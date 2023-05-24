@@ -106,8 +106,7 @@
                         console.error('Error sending message:', error);
                     }
                 });
-            }
-        
+            }      
             function receiveLatestMessage(sendingUser, receivingUser) {
                 $.ajax({
                     url: `/receive_latest_message/${sendingUser}/${receivingUser}/`,
@@ -123,7 +122,7 @@
                             '<p>' + answer.timestamp + '</p>' +
                             '</div>';
                         if (!isMessagePresent(messageHTML)) {
-                            $('#latest-messages-container').html(messageHTML);
+                            $('#latest-messages-container').append(messageHTML);
                         }
                         receiveLatestMessage(sendingUser, receivingUser);
 
@@ -142,6 +141,5 @@
                 return containerHTML.includes(messageHTML);
             }
         </script>
-         
     </body>
 </html>
