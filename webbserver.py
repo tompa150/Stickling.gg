@@ -628,10 +628,11 @@ def read_all_but_one(username):
         conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f"SELECT username FROM users where username != '{username}';")
-        products = cursor.fetchall()
+        All_usernames = cursor.fetchall()
+        usernames = [username[0] for username in All_usernames] 
         cursor.close()
         conn.close()
-        return products
+        return usernames
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
@@ -641,12 +642,10 @@ def read_specific_chats(username, recieving_user):
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{username}' AND recieving_user = '{recieving_user}' UNION SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{recieving_user}' AND recieving_user = '{username}' ORDER BY time_stamp ASC;")
+        cursor.execute(f"Select * from (SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{username}' AND recieving_user = '{recieving_user}' UNION SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{recieving_user}' AND recieving_user = '{username}' ORDER BY time_stamp DESC LIMIT 10) AS recent ORDER BY time_stamp ASC;")
         products = cursor.fetchall()
-        prod = products[0]
         cursor.close()
         conn.close()
-        print(products)
         return products
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
@@ -654,7 +653,6 @@ def read_specific_chats(username, recieving_user):
 
 @app.route("/chats/<recieving_user>/")
 def send_chat(recieving_user):
-    '''Denna route tar emot ett id och och gillar annonsen åt användaren om den inte redan är det eller ger ett felmeddelande om den redan är det.'''
     try:
         username = session['user']
         chat_messages = read_specific_chats(username, recieving_user)
