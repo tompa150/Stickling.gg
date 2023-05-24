@@ -1192,6 +1192,10 @@ def register():
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
     
+@app.route("/error/")
+def error():
+    return render_template("Error_404.html")
+    
 
 @app.route("/register/new/success/")
 def register_new_success():
