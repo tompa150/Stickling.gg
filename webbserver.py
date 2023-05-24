@@ -1216,7 +1216,7 @@ def register_user():
                 conn.commit()
                 conn.close()
                 send_welcome(email, username)
-                return render_template("login.html")
+                return render_template("Register_success.html")
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
