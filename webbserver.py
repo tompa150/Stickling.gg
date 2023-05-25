@@ -74,7 +74,7 @@ def send_reset_confirmation(email):
     return
 
 def send_welcome(email, username):
-    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
+    '''Här tas en email emot av funktionen och skicka ut välkomstmail till ny registrerade användare'''
     message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
     message.body = f"""        Välkommen {username}!\n 
         Detta är din plats för att sälja, köpa, byta och efterfråga växter! 
@@ -494,7 +494,7 @@ def get_the_message(id):
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
     
-def ReadAdImages(id):
+def read_ad_images(id):
     '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id'''
     try:
         conn = connect_to_db()
@@ -1002,7 +1002,7 @@ def edit_article(id):
     else:
         try:
             TheAd = id_ad(id)
-            Images = ReadAdImages(id)
+            Images = read_ad_images(id)
             if TheAd[5] == 'sälj':
                 return render_template("edit_sälj.html", TheAd = TheAd, Images = Images, id = id)
             elif TheAd[5] == "byt":
