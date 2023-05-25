@@ -38,7 +38,7 @@
                 <form class="ad_information"action="http://127.0.0.1:8080/update/" method = "POST" enctype="multipart/form-data">
                     <div class="topform">
                         <input type="text" name="Title" id="title" value="{{TheAd[2]}}" placeholder="Title...">
-                        <button class="create"type="submit">Uppdate ad</button>
+                        <button class="create" type="submit" onclick="return confirm('Är du nöjd med dina ändringar?');">Uppdatera annons</button>
                     </div>
                     <textarea name="Description" id="Description" placeholder="Information...">{{TheAd[4]}}</textarea>
                     <div class="bottomform">

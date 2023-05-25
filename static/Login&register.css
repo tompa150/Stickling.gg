@@ -192,3 +192,52 @@ form.RegisterForm1 {
   margin-top: 10px;
 
 }
+
+body {
+	background-color: #CECECE !important;
+   margin: 20px !important;
+}
+
+p{
+   margin-bottom: 0px;
+   margin-top:0px;
+}
+
+* {
+  transition: all .2s ease;
+}
+
+.extra-info {
+  display: none;
+   inline-size:300px;
+  line-height: 15px;
+  font-size: 14px;
+   position: absolute;
+align-items: center;
+}
+
+.info:hover .extra-info {
+  display: block;
+}
+
+.info {
+  font-size: 20px;
+  padding-left: 5px;
+  width: 20px;
+  border-radius: 15px;
+}
+
+.info:hover {
+  border-radius: 10px;
+  background-color: white;
+  padding: 0 0 0 5px;
+  height: 80px;
+  width: 400px;
+  text-align: left !important;
+}
+
+.icon-info-sign{
+width: 20px;
+height: auto;
+}
+

@@ -37,6 +37,12 @@
                 <input type="password" placeholder="Lösenord" required           
                 pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
               </div>
+              <div class="info">
+                <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
+                <span class="extra-info">
+                      Du måste använda minst 8 tecken, två versala tecken, en  siffra och ett special tecken:               !@#$%^&*()+-=
+                 </span>
+             </div>
               <div class="pass-link"><a href="#">Glömt lösenord?</a></div>
               <div class="field btn">
                 <div class="btn-layer"></div>
@@ -59,9 +65,15 @@
                     <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required  placeholder="Användarnamn">
                 </div>
               <div class="field">
-                <input type="password" placeholder="Password" required        
+                <input type="password" placeholder="Lösenord" required        
                   pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
               </div>
+              <div class="info">
+                <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
+                <span class="extra-info">
+                      Du måste använda minst 8 tecken, två versala tecken, en  siffra och ett special tecken:  !@#$%^&*()+-=
+                 </span>
+             </div>
               <div class="field">
                 <input type="password" placeholder="Bekräfta lösenord" required>
               </div>
