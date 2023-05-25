@@ -1133,6 +1133,7 @@ def new_2():
             return render_template("ad_byt.html", user = user)
         except:
             return redirect("Error_500.html")
+        
     
 @app.route("/new/3/")
 def new_3():
@@ -1178,7 +1179,11 @@ def validation():
             return render_template("login.html")
     except:
         return redirect("Error_500.html")
-           
+
+@app.route("/success/")
+def success():
+    """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
+    return render_template("GL_success.html")
 
 @app.route("/register/")
 def register():
