@@ -50,67 +50,78 @@ def new_token(email):
         conn.close()
         return token
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def send_reset(email):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
-    token = new_token(email)
-    reset_url = url_for('password_reset', token=token, _external=True)
-    message = Message('Återställning av lösenord', recipients=[email])
-    message.body = f""" Hej!
-        
-        Vänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}""" 
-    mail.send(message)
-    return
+    try:
+        token = new_token(email)
+        reset_url = url_for('password_reset', token=token, _external=True)
+        message = Message('Återställning av lösenord', recipients=[email])
+        message.body = f""" Hej!
+            
+            Vänligen använd följande länk för att återställa ditt lösenord: \n{reset_url}""" 
+        mail.send(message)
+        return
+    except:
+        return redirect("Error_500.html")
 
 def send_reset_confirmation(email):
-    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
-    message = Message('Lösenord ändrat.', recipients=[email])
-    message.body = f"""Hej!
-        Ditt lösenord har nu ändrats.\n
-        Notera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}"""
-    mail.send(message)
-    return
+    try:
+        '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
+        message = Message('Lösenord ändrat.', recipients=[email])
+        message.body = f"""Hej!
+            Ditt lösenord har nu ändrats.\n
+            Notera att ditt gamla lösenord är inaktiverat.\nHar du några frågor är du välkommen att kontakt oss\npå {config.mail_username}"""
+        mail.send(message)
+        return
+    except:
+        return redirect("Error_500.html")
 
 def send_welcome(email, username):
     '''Här tas en email emot av funktionen och skicka ut välkomstmail till ny registrerade användare'''
-    message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
-    message.body = f"""        Välkommen {username}!\n 
-        Detta är din plats för att sälja, köpa, byta och efterfråga växter! 
-        Vi är glada att ha dig som en del av vårt växande community av växtentusiaster. Gör dig redo att 
-        utforska en värld av köp, byte och förfrågningar om växter som aldrig förr.\n
-        På Stickling.gg strävar vi efter att erbjuda en sömlös och trevlig upplevelse för växtälskare 
-        som dig själv. Oavsett om du är en erfaren trädgårdsmästare eller precis har börjat din 
-        växtresa, så erbjuder vår plattform ett brett utbud av alternativ för att passa dina behov. Här 
-        är vad du kan förvänta dig:\n
-        1. Bläddra och Köp: Upptäck ett omfattande utbud av växter som finns tillgängliga för köp. 
-        Från sällsynta exemplar till vardagliga favoriter, finns det något för varje växtälskare.\n
-        2. Byt och Dela: Anslut med andra växtentusiaster och byt dina älskade växtsticklingar eller 
-        föröka nya för att dela. Vår gemenskap handlar om att främja generositet och utbyte av 
-        grönt godis.\n
-        3. Efterfråga: Letar du efter en specifik växt eller råd om skötsel av dina gröna 
-        kamrater? Skicka en förfrågan och dra nytta av gemenskapens samlade kunskap av 
-        växtälskare.\n
-        För att komma igång, logga helt enkelt in på ditt Stickling.gg-konto med din registrerade 
-        e-postadress och lösenord. Utforska de olika annonserna på webbplatsen, engagera dig med 
-        andra växtentusiaster och dra nytta av din växtälskarresa till fullo.\n
-        Om du har några frågor, funderingar eller helt enkelt vill dela dina växtäventyr med oss, tveka inte att kontakta 
-        vårt vänliga support på {config.mail_username}. Vi finns här för att hjälpa dig varje steg på vägen.\n
-        Ännu en gång, välkommen till Stickling.gg-familjen! Låt oss vårda vår kärlek till växter tillsammans och 
-        skapa en blomstrande gemenskap av gröna tummar.\n
-        Lycka till med din plantering! 🌿🌿🌿"""
-    mail.send(message)
-    return
+    try:
+        message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
+        message.body = f"""        Välkommen {username}!\n 
+            Detta är din plats för att sälja, köpa, byta och efterfråga växter! 
+            Vi är glada att ha dig som en del av vårt växande community av växtentusiaster. Gör dig redo att 
+            utforska en värld av köp, byte och förfrågningar om växter som aldrig förr.\n
+            På Stickling.gg strävar vi efter att erbjuda en sömlös och trevlig upplevelse för växtälskare 
+            som dig själv. Oavsett om du är en erfaren trädgårdsmästare eller precis har börjat din 
+            växtresa, så erbjuder vår plattform ett brett utbud av alternativ för att passa dina behov. Här 
+            är vad du kan förvänta dig:\n
+            1. Bläddra och Köp: Upptäck ett omfattande utbud av växter som finns tillgängliga för köp. 
+            Från sällsynta exemplar till vardagliga favoriter, finns det något för varje växtälskare.\n
+            2. Byt och Dela: Anslut med andra växtentusiaster och byt dina älskade växtsticklingar eller 
+            föröka nya för att dela. Vår gemenskap handlar om att främja generositet och utbyte av 
+            grönt godis.\n
+            3. Efterfråga: Letar du efter en specifik växt eller råd om skötsel av dina gröna 
+            kamrater? Skicka en förfrågan och dra nytta av gemenskapens samlade kunskap av 
+            växtälskare.\n
+            För att komma igång, logga helt enkelt in på ditt Stickling.gg-konto med din registrerade 
+            e-postadress och lösenord. Utforska de olika annonserna på webbplatsen, engagera dig med 
+            andra växtentusiaster och dra nytta av din växtälskarresa till fullo.\n
+            Om du har några frågor, funderingar eller helt enkelt vill dela dina växtäventyr med oss, tveka inte att kontakta 
+            vårt vänliga support på {config.mail_username}. Vi finns här för att hjälpa dig varje steg på vägen.\n
+            Ännu en gång, välkommen till Stickling.gg-familjen! Låt oss vårda vår kärlek till växter tillsammans och 
+            skapa en blomstrande gemenskap av gröna tummar.\n
+            Lycka till med din plantering! 🌿🌿🌿"""
+        mail.send(message)
+        return
+    except:
+        return redirect("Error_500.html")
 
 def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
-    print(email)
-    notification = url_for('the_message', id=id, _external=True)
-    message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
-    message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser.\nKlicka på länken för att se ditt meddelande:\n{notification}'
-    mail.send(message)
-    return
+    try:
+        print(email)
+        notification = url_for('the_message', id=id, _external=True)
+        message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
+        message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser.\nKlicka på länken för att se ditt meddelande:\n{notification}'
+        mail.send(message)
+        return
+    except:
+        return redirect("Error_500.html")
 
 def retrieve_token_expiration(token):
     '''Denna funktion hämtar tokens med ett visst id'''
@@ -124,28 +135,33 @@ def retrieve_token_expiration(token):
         conn.close()
         return user_token
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error      
+        return redirect("Error_500.html")     
 
 @app.route("/password_reset/<token>/", methods=['GET', 'POST'])
 def password_reset(token):
     '''Denna route används för att skapa ett nytt lösenord, den kollar om token är valid eller expired.'''
-    mail_token = retrieve_token_expiration(token)
-    user = read_user_mail(mail_token[2])
-    if mail_token[1] == None or mail_token[1] < datetime.now():
-        pass
-    else:
-        if mail_token[2] == user[2]:
-            return render_template("reset_password.html", user = user)
+    try:
+        mail_token = retrieve_token_expiration(token)
+        user = read_user_mail(mail_token[2])
+        if mail_token[1] == None or mail_token[1] < datetime.now():
+            pass
+        else:
+            if mail_token[2] == user[2]:
+                return render_template("reset_password.html", user = user)
+    except:
+        return redirect("Error_500.html")
          
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
 def reset_ur():
     '''Denna route tar emot den email användaren ville skicka ett återställningsmail till'''
-    if request.method == 'POST':
-        session.pop('user', None)
-        Email = request.form.get("Email")
-        send_reset(Email)
-    return redirect("/")
+    try:
+        if request.method == 'POST':
+            session.pop('user', None)
+            Email = request.form.get("Email")
+            send_reset(Email)
+        return redirect("/")
+    except:
+        return redirect("Error_500.html")
 
 @app.route("/login/reset_password/", methods = ['POST', 'GET'])
 def reset_pass():
@@ -155,15 +171,18 @@ def reset_pass():
 @app.route("/validation_forgot/", methods = ['POST', 'GET'])
 def validation_pass():
     '''Denna route tar emot användarens nyangivna lösenord och uppdaterar det i databasen.'''
-    if request.method == 'POST':
-        session.pop('user', None)
-        Email = request.form.get("Email")
-        Password = request.form.get("Password")
-        Password2 = request.form.get("Password2")
-        user_info = read_user_mail(Email)
-        if Email == user_info[2]:
-            update_password(Email, Password)
-            return redirect("/")
+    try:
+        if request.method == 'POST':
+            session.pop('user', None)
+            Email = request.form.get("Email")
+            Password = request.form.get("Password")
+            Password2 = request.form.get("Password2")
+            user_info = read_user_mail(Email)
+            if Email == user_info[2]:
+                update_password(Email, Password)
+                return redirect("/")
+    except:
+        return redirect("Error_500.html")
             
 def update_password(email, password):
     '''Denna funktion uppdaterar lösenordet i databasen'''
@@ -178,36 +197,44 @@ def update_password(email, password):
         send_reset_confirmation(email)
         return
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def new_ad_id():
     '''Denna funktion skapar ett nytt id åt en ny artikel.'''
-    largest_id = 1
-    ads = ad_read_for_new_id()
-    for ad in ads:
-        if ad[0] >= largest_id:
-            largest_id = ad[0] + 1
-    return largest_id
+    try:
+        largest_id = 1
+        ads = ad_read_for_new_id()
+        for ad in ads:
+            if ad[0] >= largest_id:
+                largest_id = ad[0] + 1
+        return largest_id
+    except:
+        return redirect("Error_500.html")
 
 def new_chat_id():
     '''Denna funktion skapar ett nytt id åt en ny chat.'''
-    largest_id = 1
-    chats = read_chat_info()
-    for chat in chats:
-        if chat[0] >= largest_id:
-            largest_id = chat[0] + 1
-    print(largest_id)
-    return largest_id
+    try:
+        largest_id = 1
+        chats = read_chat_info()
+        for chat in chats:
+            if chat[0] >= largest_id:
+                largest_id = chat[0] + 1
+        print(largest_id)
+        return largest_id
+    except:
+        return redirect("Error_500.html")
 
 def new_message_id():
     '''Denna funktion skapar ett nytt id åt en ny artikel.'''
-    largest_id = 1
-    ads = get_messages()
-    for ad in ads:
-        if ad[0] >= largest_id:
-            largest_id = ad[0] + 1
-    return largest_id
+    try:
+        largest_id = 1
+        ads = get_messages()
+        for ad in ads:
+            if ad[0] >= largest_id:
+                largest_id = ad[0] + 1
+        return largest_id
+    except:
+        return redirect("Error_500.html")
     
 def read_user_info():
     """Här läses alla användaruppgifter in från databasen"""
@@ -220,8 +247,7 @@ def read_user_info():
         conn.close()
         return products
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
     
 def read_chat_info():
     """Här läses alla användaruppgifter in från databasen"""
@@ -235,8 +261,7 @@ def read_chat_info():
         conn.close()
         return products
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")  
 
 
 def read_user_specific(user):
@@ -251,8 +276,7 @@ def read_user_specific(user):
         conn.close()
         return user
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
 
 def read_user_mail(Email):
     """Här läses alla användaruppgifter in från databasen"""
@@ -266,8 +290,8 @@ def read_user_mail(Email):
         conn.close()
         return user
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
+    
 def ad_read():
     """Här läses alla annonser från databasen där statusen = active """
     try:
@@ -279,8 +303,7 @@ def ad_read():
         conn.close()
         return products
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
     
 def ad_read_for_new_id():
     """Här läses alla annonser från databasen där statusen = active """
@@ -293,8 +316,8 @@ def ad_read_for_new_id():
         conn.close()
         return products
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
+    
 def image_ad_read_active(user):
     """Här läses alla annonser från databasen in, tillsammans med alla dess bilders sökvägar, där statusen = active """
     try:
@@ -315,8 +338,7 @@ def image_ad_read_active(user):
         conn.close()
         return results
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
 
 def id_ad(id):
     """Funktionen försöker att ansluta till databasen och hämtar ett id. Om den misslyckas får vi ett error"""
@@ -330,8 +352,7 @@ def id_ad(id):
         conn.close()
         return ad
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def image_ad_read_inactive(user):
     """Här läses alla annonser in från databasen, tillsammans med 1 bild per annons, där status = inactive"""
@@ -353,8 +374,7 @@ def image_ad_read_inactive(user):
         conn.close()
         return results
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
 
 def liked_ads(username):
     """Ansluter till databasen och hämtar alla gillade annonser. """
@@ -367,8 +387,7 @@ def liked_ads(username):
         conn.close()
         return ads
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html") 
     
 def image_ad_read_index():
     """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
@@ -391,8 +410,7 @@ def image_ad_read_index():
         conn.close()
         return results
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")  
 
 def get_messages():
     """Hämtar meddelanden mellan användare från databasen."""
@@ -405,8 +423,7 @@ def get_messages():
         conn.close()
         return ads
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
 
 def get_all_messages(username):
     """Hämtar alla meddelanden som skickats till en specifik användare."""
@@ -419,8 +436,7 @@ def get_all_messages(username):
         conn.close()
         return ads
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error  
+        return redirect("Error_500.html")
 
 def get_read_messages(username):
     """Funktionen hämtar alla lästa meddelanden"""
@@ -433,8 +449,7 @@ def get_read_messages(username):
         conn.close()
         return ads
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
     
 def get_unread_messages(username):
     """Hämtar olästa meddelanden som skickats till en specifik användare."""
@@ -447,8 +462,7 @@ def get_unread_messages(username):
         conn.close()
         return ads
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
     
 def get_sent_messages(username):
     """Hämtar alla meddelanden som skickats av en specifik användare"""
@@ -461,8 +475,7 @@ def get_sent_messages(username):
         conn.close()
         return ads
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def change_message_status(message_id):
     """Ändrar statusen för ett meddelande till 'läst' i databasen"""
@@ -474,8 +487,7 @@ def change_message_status(message_id):
         conn.close()
         return
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def get_the_message(id):
     """Hämtar ett specifikt meddelande baserat på dess ID.
@@ -491,8 +503,7 @@ def get_the_message(id):
         conn.close()
         return ad
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
     
 def read_ad_images(id):
     '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id'''
@@ -505,8 +516,7 @@ def read_ad_images(id):
         images = [row[0] for row in results]
         return images
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def insert_ad(title, description, price, type, username, image_paths):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilderna finns, annars
@@ -531,8 +541,7 @@ def insert_ad(title, description, price, type, username, image_paths):
         conn.close()
         return redirect('/')
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def delete_images(Removed_images):
     '''Denna funktion tar emot alla bild sökvägar som ska raderas och raderar dom i databasen'''
@@ -549,8 +558,7 @@ def delete_images(Removed_images):
         else:
             return
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def update_ad(title, ad_id, description, price, image_paths, type):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
@@ -571,8 +579,7 @@ def update_ad(title, ad_id, description, price, image_paths, type):
         conn.close()
         return redirect('/')
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 def check_liked_ads(id, username):
     '''Denna funktion tar emot ett annons id och ett användarnamn och hämtar alla annonser som gillats av denna och annons med det givna id:et'''
@@ -590,8 +597,7 @@ def check_liked_ads(id, username):
             ad_is_liked = False
             return ad_is_liked
     except:
-        ad_is_liked = False
-        return ad_is_liked
+        return redirect("Error_500.html")
     
 def check_liked_ads_main():
     '''Denna funktion hämtar all data från liked_ads databasen.'''
@@ -604,8 +610,7 @@ def check_liked_ads_main():
         ad_is_liked = True
         return results
     except:
-        ad_is_liked = False
-        return ad_is_liked
+        return redirect("Error_500.html")
 
 @app.route("/like_ad/<id>/", methods = ['POST'])
 def liking_ad(id):
@@ -640,8 +645,7 @@ def read_all_but_one(username):
         conn.close()
         return usernames
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
     
 def read_specific_chats(username, recieving_user):
     """Här läses alla användaruppgifter in från databasen"""
@@ -654,8 +658,7 @@ def read_specific_chats(username, recieving_user):
         conn.close()
         return products
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error 
+        return redirect("Error_500.html")
 
 @app.route("/chats/<recieving_user>/")
 def send_chat(recieving_user):
@@ -666,7 +669,7 @@ def send_chat(recieving_user):
         print(chat_messages)
         return render_template("TheChat.html", chat_messages = chat_messages, username = username, recieving_user = recieving_user)
     except:
-        return render_template("TheChat.html", username = username, recieving_user = recieving_user)
+        return redirect("Error_500.html")
     
 @app.route("/receive_latest_message/<username>/<receiving_user>/", methods=['POST'])  
 def receive_latest_message(username, receiving_user):
@@ -722,11 +725,14 @@ def send_message(username, receiving_user):
 @app.route("/chats/")
 def chats():
     """Funktionen hämtar användarnamnet från sessionen och hämtar sedan alla chatter. """
-    username = session['user']
-    users = read_all_but_one(username)
-    for user in users:
-        print(user)
-    return render_template("chats.html", users = users)
+    try:
+        username = session['user']
+        users = read_all_but_one(username)
+        for user in users:
+            print(user)
+        return render_template("chats.html", users = users)
+    except:
+        return redirect("Error_500.html")
 
 @app.route("/unlike_ad/<id>/", methods = ['POST'])
 def unliking_ad(id):
@@ -767,8 +773,7 @@ def profile():
 
         return redirect(url_for('login'))
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 @app.route("/profile/liked_ads/")
 def user_liked_ads():
@@ -784,8 +789,7 @@ def user_liked_ads():
                 LikedAds = liked_ads(username)
                 return render_template("liked.html", LikedAds = LikedAds)
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
     
 @app.route("/ad/<id>/")
 def ad(id):
@@ -819,8 +823,7 @@ def ad(id):
                     else:
                         return redirect('/')
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
            
 @app.route("/save/", methods = ['POST', 'GET'])
 def save():
@@ -856,8 +859,7 @@ def save():
 
         return render_template("ad_creation.html")
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 @app.route("/send/", methods = ['POST', 'GET'])
 def send():
@@ -878,8 +880,8 @@ def send():
             send_message_notification(recipient[2], message_id)
             session[f'message/{id}'] = 'Ditt meddelande har skickats!'
             return redirect(f"/ad/{id}/")
-        except error as e:
-            return e
+        except:
+            return redirect("Error_500.html")
 
 def message_insert(message_id, Message, sending_user, recieving_user, id):
     """Infogar ett meddelande i databasen."""
@@ -892,8 +894,7 @@ def message_insert(message_id, Message, sending_user, recieving_user, id):
         conn.close()
         return
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 @app.route("/messages/")
 def check_all_messages():
@@ -906,8 +907,7 @@ def check_all_messages():
             All_Messages = get_all_messages(username)
             return render_template('AllMessages.html', All_Messages = All_Messages, session = session)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
     
 @app.route("/messages/read/")
 def check_read_messages():
@@ -920,8 +920,7 @@ def check_read_messages():
             ReadMessages = get_read_messages(username)
             return render_template('ReadMessages.html', ReadMessages = ReadMessages, session = session)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
     
 @app.route("/messages/unread/")
 def check_unread_messages():
@@ -934,8 +933,7 @@ def check_unread_messages():
             UnreadMessages = get_unread_messages(username)
             return render_template('UnreadMessages.html', UnreadMessages = UnreadMessages, session = session)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
 
 @app.route("/messages/sent/")
 def check_sent_messages():
@@ -948,8 +946,7 @@ def check_sent_messages():
             SentMessages = get_sent_messages(username)
             return render_template('ReadMessages.html', SentMessages = SentMessages, session = session)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
     
 @app.route("/messages/<id>/")
 def the_message(id):
@@ -972,8 +969,7 @@ def the_message(id):
             else:
                 return redirect("/")
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
         
 @app.route("/messages/sent/<id>/")
 def sent_message(id):
@@ -991,8 +987,7 @@ def sent_message(id):
             else:
                 return redirect("/")
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
 
 @app.route("/edit/<id>/")
 def edit_article(id):
@@ -1012,8 +1007,7 @@ def edit_article(id):
             else:
                 return redirect(f'/ad/{id}/')
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
  
 @app.route("/update/", methods = ['POST', 'GET'])
 def update():
@@ -1052,8 +1046,7 @@ def update():
                     update_ad(title, ad_id, description, price, image_paths, type)
                 return redirect("/")
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
             
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
@@ -1071,8 +1064,7 @@ def remove():
         else:
             pass
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
    
 @app.route("/")
 def index():
@@ -1097,8 +1089,7 @@ def index():
                             unmatched_values.append(ad[0])
                     return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
 
 @app.route("/login/")
 def login():
@@ -1106,8 +1097,7 @@ def login():
     try:
         return render_template("login.html")
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
 
 @app.route("/new/choose_ad/")
 def choose_ad():
@@ -1118,8 +1108,7 @@ def choose_ad():
         try:
             return render_template("choose_ad.html")
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
 
 @app.route("/new/1/")
 def new_1():
@@ -1131,8 +1120,7 @@ def new_1():
             user = session['user']
             return render_template("Create_Sell.html", user = user)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
     
 @app.route("/new/2/")
 def new_2():
@@ -1144,8 +1132,7 @@ def new_2():
             user = session['user']
             return render_template("ad_byt.html", user = user)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
     
 @app.route("/new/3/")
 def new_3():
@@ -1157,14 +1144,16 @@ def new_3():
             user = session['user']
             return render_template("ad_efterfråga.html", user = user)
         except:
-            error = "Ett fel har uppstått, vänligen försök igen."
-            return error
+            return redirect("Error_500.html")
 
 @app.route("/logout/")
 def logout():
     """Här loggas användaren ut och skickar användaren till hemskärmen """
-    session.pop('user', None)
-    return redirect("/")
+    try:
+        session.pop('user', None)
+        return redirect("/")
+    except:
+        return redirect("Error_500.html")
 
 @app.route("/validation/", methods = ['POST', 'GET'])
 def validation():
@@ -1188,9 +1177,9 @@ def validation():
         else:        
             return render_template("login.html")
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
            
+
 @app.route("/register/")
 def register():
     """Här returneras register.html"""
@@ -1200,10 +1189,15 @@ def register():
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
     
-@app.route("/error/")
-def error():
-    """Denna funktion skickar användaren till error-sidan när ett fel uppstår."""
-    return render_template("Error_404.html")
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('Error_404.html')
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    # note that we set the 500 status explicitly
+    return render_template('Error_500.html')
 
 @app.route("/error500/")
 def error500():
@@ -1246,8 +1240,7 @@ def register_user():
                 send_welcome(email, username)
                 return redirect("/register/new/success/")
     except:
-        error = "Ett fel har uppstått, vänligen försök igen."
-        return error
+        return redirect("Error_500.html")
             
 
 if __name__ == "__main__":      
