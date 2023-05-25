@@ -77,7 +77,7 @@ def send_welcome(email, username):
     '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
     message = Message('Välkommen till Stickling.gg! 🌱', recipients=[email])
     message.body = f"""        Välkommen {username}!\n 
-        Detta är din plats för att köpa, byta och begära växter! 
+        Detta är din plats för att sälja, köpa, byta och efterfråga växter! 
         Vi är glada att ha dig som en del av vårt växande community av växtentusiaster. Gör dig redo att 
         utforska en värld av köp, byte och förfrågningar om växter som aldrig förr.\n
         På Stickling.gg strävar vi efter att erbjuda en sömlös och trevlig upplevelse för växtälskare 
@@ -191,7 +191,7 @@ def new_ad_id():
     return largest_id
 
 def new_chat_id():
-    '''Denna funktion skapar ett nytt id åt en ny artikel.'''
+    '''Denna funktion skapar ett nytt id åt en ny chat.'''
     largest_id = 1
     chats = read_chat_info()
     for chat in chats:
@@ -659,6 +659,7 @@ def read_specific_chats(username, recieving_user):
 
 @app.route("/chats/<recieving_user>/")
 def send_chat(recieving_user):
+    """Denna route används för att skicka meddelanden till en specifik användare. """
     try:
         username = session['user']
         chat_messages = read_specific_chats(username, recieving_user)
@@ -669,6 +670,7 @@ def send_chat(recieving_user):
     
 @app.route("/receive_latest_message/<username>/<receiving_user>/", methods=['POST'])  
 def receive_latest_message(username, receiving_user):
+    """Funktionen gör en SQL-förfrågan och ansluter till databasen och skriver ut de senaste meddelandena. Om det sker ett fel returneras ett felmeddelande som en JSON-fil."""
     try:
         print(username)
         print(receiving_user)
@@ -696,7 +698,8 @@ def receive_latest_message(username, receiving_user):
         return json.dumps(error_message)
 
 @app.route('/send_message/<username>/<receiving_user>/', methods=['POST'])
-def send_message(username, receiving_user): 
+def send_message(username, receiving_user):
+    """Den här funktionen skriver ett meddelande från en användare till en annan. Om det sker något fel returneras ett error-meddelande som en JSON-fil.""" 
     try:
         print(username, receiving_user)
         message = request.form['message']
@@ -718,6 +721,7 @@ def send_message(username, receiving_user):
 
 @app.route("/chats/")
 def chats():
+    """Funktionen hämtar användarnamnet från sessionen och hämtar sedan alla chatter. """
     username = session['user']
     users = read_all_but_one(username)
     for user in users:
@@ -949,6 +953,7 @@ def check_sent_messages():
     
 @app.route("/messages/<id>/")
 def the_message(id):
+    """Funktionen visar ett enskilt meddelande baserat på ID."""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -972,6 +977,7 @@ def the_message(id):
         
 @app.route("/messages/sent/<id>/")
 def sent_message(id):
+    """Funktionen hämtar skickade meddelanden. Om användaren inte finns med i sessionen omdirigeras den till startsidan. """
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1196,11 +1202,13 @@ def register():
     
 @app.route("/error/")
 def error():
+    """Denna funktion skickar användaren till error-sidan när ett fel uppstår."""
     return render_template("Error_404.html")
     
 
 @app.route("/register/new/success/")
 def register_new_success():
+    """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
     return render_template("Register_success.html")
 
 @app.route("/register/new/", methods = ['POST', 'GET'])
