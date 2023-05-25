@@ -237,6 +237,7 @@ align-items: center;
 }
 
 .icon-info-sign{
+  margin-top: 5px;
 width: 20px;
 height: auto;
 }
