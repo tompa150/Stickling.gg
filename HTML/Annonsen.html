@@ -59,7 +59,7 @@
                         <form action="http://127.0.0.1:8080/remove/" method="POST">
                             <br><br><br>
                             <input type="hidden" id="custId" name="ad_id" value="{{ ad[0] }}">
-                            <button type="submit" id="TaBortAnnons" value="Ta bort annons" name="TA BORT ANNONS" onclick="alert('Annons Raderad!')"> Radera! </button>
+                            <button type="submit" id="TaBortAnnons" value="Ta bort annons" name="TA BORT ANNONS" onclick="return confirm('Är du säker på att du vill radera din annons?');"> Radera! </button>  
                         </form>
                     </div>
                 {% endif %}

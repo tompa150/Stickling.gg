@@ -186,3 +186,9 @@ form.RegisterForm1 {
   text-align: center;
   margin-top: 30px;
 }
+
+.error_message{
+  text-align: center;
+  margin-top: 10px;
+
+}
