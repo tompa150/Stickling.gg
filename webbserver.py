@@ -1204,12 +1204,21 @@ def register():
 def error():
     """Denna funktion skickar användaren till error-sidan när ett fel uppstår."""
     return render_template("Error_404.html")
-    
+
+@app.route("/error500/")
+def error():
+    """Denna funktion skickar användaren till error-sidan när ett fel uppstår."""
+    return render_template("Error_500.html")    
 
 @app.route("/register/new/success/")
 def register_new_success():
     """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
     return render_template("Register_success.html")
+
+@app.route("/custom/")
+def register_new_success():
+    """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
+    return render_template("Login&register.html")
 
 @app.route("/register/new/", methods = ['POST', 'GET'])
 def register_user():
