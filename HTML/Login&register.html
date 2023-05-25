@@ -46,20 +46,19 @@
                     {% if invalid_email != "": %}
                       <p class="error_message">{{invalid_email}}</p>
                     {% endif %}
+                    <p class="test">Ogiltig email</p>
                     <div class="field">
-                        <input type="text" placeholder="Email Address" required>
-                      </div>                    {% if invalid_email != "": %}
-                      <p class="error_message" >{{invalid_email}}</p>
-                    {% endif %}
+                      <input type="text" placeholder="Email Address" required>
+                    </div>                    
               <div class="field">
                 <input type="password" placeholder="Password" required        
-                   pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
+                  pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
               </div>
               <div class="field">
                 <input type="password" placeholder="Confirm password" required>
               </div>
               <div class="field">
-                <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" required name="Telefonnummer" placeholder="Mobilnummer: +46....">
+                <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" name="Telefonnummer" placeholder="Mobilnummer: +46....">
             </div>
               <div class="field btn">
                 <div class="btn-layer"></div>
