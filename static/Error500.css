@@ -1,0 +1,26 @@
+body {
+    margin: 0%;
+    background-color: #f1e8e0;
+    font-family: 'Ubuntu', sans-serif;
+        padding: 0;
+
+}
+
+  .main_image{
+    width: 700px;
+
+  }
+
+  .main_image_two{
+    float: right;
+    width: 600px;
+}
+
+
+.main {   
+    display: flex;
+    margin-top: 120px;
+    margin-right: 5%;
+
+}
+
