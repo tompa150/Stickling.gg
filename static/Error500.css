@@ -6,22 +6,19 @@ body {
 
 }
 
-.main_main{
-  display: flex;
-}
   .main_image{
     width: 700px;
 
   }
 
   .main_image_two{
-    margin-top: 10%;
-    margin-left: 10%;
-    width: 300px;
+    float: right;
+    width: 600px;
 }
 
 
 .main {   
+    display: flex;
     margin-top: 120px;
     margin-right: 5%;
 
