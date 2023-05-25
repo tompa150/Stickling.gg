@@ -11,7 +11,7 @@ import config #Här importeras vår vår andra config.py fil
 app = Flask(__name__, template_folder='HTML')
 app.secret_key = "stickling.gg"
 
-app.config['MAIL_SERVER']=config.mail_server
+app.config['MAIL_SERVER'] = config.mail_server
 app.config['MAIL_PORT'] = config.mail_port
 app.config['MAIL_USERNAME'] = config.mail_username
 app.config['MAIL_PASSWORD'] = config.mail_password
@@ -1203,12 +1203,7 @@ def page_not_found(e):
 def internal_server_error(e):
     # note that we set the 500 status explicitly
     return render_template('Error_500.html')
-
-@app.route("/error500/")
-def error500():
-    """Denna funktion skickar användaren till error-sidan när ett fel uppstår."""
-    return render_template("Error_500.html")    
-
+ 
 @app.route("/register/new/success/")
 def register_new_success():
     """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
@@ -1230,10 +1225,17 @@ def register_user():
             password = request.form.get("Lösenord")
             number = request.form.get("Telefonnummer")
             user_info = read_user_info()
-            for row in user_info:   
-                if email == row[2] or username == row[0]:
-                    invalid_email = "Den angivna email/användarnamnet är redan registrerad."
-                    return render_template("register.html", invalid_email = invalid_email)
+            for row in user_info:
+                if email == row[2] and username == row[0]:
+                    invalid_email = "Den angivna emailadressen är redan registrerad."
+                    invalid_username = "Det angivna användarnamnet är redan registrerat."
+                    return render_template("register.html", invalid_email = invalid_email, invalid_username = invalid_username)
+                elif email == row[2] and username != row[0]:
+                    invalid_email = "Den angivna emailadressen är redan registrerad."
+                    return render_template("register.html", invalid_email = invalid_email)   
+                elif email != row[2] and username == row[0]:
+                    invalid_username = "Det angivna användarnamnet är redan registrerat."
+                    return render_template("register.html", invalid_username = invalid_username)
             else:
                 salt = bcrypt.gensalt()
                 hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
