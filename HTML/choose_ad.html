@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="se">
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
@@ -20,11 +20,11 @@
                             <div class="bars"></div>
                         </button>
                         <div class="dropdown-content">   
-                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}"> Profil</a>
-                            <a href="http://127.0.0.1:8080/profile/liked_ads/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}"> Sparade</a>
-                            <a href="http://127.0.0.1:8080/messages/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}"> Meddelande</a>
+                            <a href="http://127.0.0.1:8080/profile/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-8.png') }}" alt="profil-ikon"> Profil</a>
+                            <a href="http://127.0.0.1:8080/profile/liked_ads/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-9.png') }}" alt="sparade-ikon" > Sparade</a>
+                            <a href="http://127.0.0.1:8080/messages/"><img class="bar_icons" src="{{ url_for('static', filename='pngegg-10.png') }}" alt="chat-ikon" > Meddelande</a>
                             {% if 'user' in session: %}
-                            <a href="http://127.0.0.1:8080/logout/"><img class="bar_icons" src="{{ url_for('static', filename='logout.png') }}"> Logga ut</a>
+                            <a href="http://127.0.0.1:8080/logout/"><img class="bar_icons" src="{{ url_for('static', filename='logout.png') }}" alt="logga ut-ikon"> Logga ut</a>
                         {% endif %}
                         </div>
                     </div>
