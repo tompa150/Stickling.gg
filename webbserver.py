@@ -8,17 +8,17 @@ from flask_mail import Mail, Message #Här importeras Flask Mail
 import secrets #Här importeras secrets
 import config #Här importeras vår vår andra config.py fil
 
-app = Flask(__name__, template_folder='HTML')
-app.secret_key = "stickling.gg"
+app = Flask(__name__, template_folder='HTML') #Den sätter template-folder till HTML och sen används den för att köra funktionen main.  
+app.secret_key = "stickling.gg" #Denna variabel är nyckeln till mailen och finns i config-filen 
 
-app.config['MAIL_SERVER'] = config.mail_server
-app.config['MAIL_PORT'] = config.mail_port
-app.config['MAIL_USERNAME'] = config.mail_username
-app.config['MAIL_PASSWORD'] = config.mail_password
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_DEFAULT_SENDER'] = config.mail_sender
-mail = Mail(app)
+app.config['MAIL_SERVER'] = config.mail_server #Denna variabel är till för mailservern och finns i config-filen
+app.config['MAIL_PORT'] = config.mail_port #Denna variabel är till för mail-porten och finns i config-filen 
+app.config['MAIL_USERNAME'] = config.mail_username #Denna variabel är till för mail-namnet och finns i config-filen 
+app.config['MAIL_PASSWORD'] = config.mail_password #Denna variabel är till för mail-lösen och finns i config-filen 
+app.config['MAIL_USE_TLS'] = False #Denna variabel är till för mailfunktionen och finns i config-filen 
+app.config['MAIL_USE_SSL'] = True #Denna variabel är till för mailfunktionen och finns i config-filen 
+app.config['MAIL_DEFAULT_SENDER'] = config.mail_sender #Denna variabel är till för mailen och finns i config-filen 
+mail = Mail(app) #Denna variabel ser till att mailfunktionen körs
 
 
 def connect_to_db():
