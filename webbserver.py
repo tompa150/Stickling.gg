@@ -143,11 +143,12 @@ def password_reset(token):
     try:
         mail_token = retrieve_token_expiration(token)
         user = read_user_mail(mail_token[2])
+        token = mail_token[0]
         if mail_token[1] == None or mail_token[1] < datetime.now():
             pass
         else:
             if mail_token[2] == user[2]:
-                return render_template("reset_password.html", user = user)
+                return render_template("reset_password.html", user = user, token = token)
     except:
         return redirect("Error_500.html")
          
@@ -177,10 +178,21 @@ def validation_pass():
             Email = request.form.get("Email")
             Password = request.form.get("Password")
             Password2 = request.form.get("Password2")
+            Token = request.form.get("Token")
             user_info = read_user_mail(Email)
             if Email == user_info[2]:
                 update_password(Email, Password)
                 return redirect("/")
+            elif Password != Password2:
+                mail_token = retrieve_token_expiration(token)
+                user = read_user_mail(mail_token[2])
+                token = mail_token[0]
+                if mail_token[1] == None or mail_token[1] < datetime.now():
+                    pass
+                else:
+                    if mail_token[2] == user[2]:
+                        No_match = "Dina lösenord matchar inte, vänligen försök igen"
+                        return render_template("reset_password.html", user = user, Token = Token, No_match = No_match)
     except:
         return redirect("Error_500.html")
             
@@ -1171,7 +1183,8 @@ def validation():
                     session['user'] = username
                     return redirect("/")
                 else:
-                    return render_template("login.html")
+                    Wrong_pass = "Lösenordet du angav är ogiltigt."
+                    return render_template("login.html", Wrong_pass = Wrong_pass)
             else:
                 wrong_username = "Användarnamnet du angav är ogiltigt."
                 return redirect("login.html", wrong_username = wrong_username)

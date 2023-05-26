@@ -12,82 +12,84 @@
   <title>Login&Register</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="title-text">
-          <div class="title login">Logga in</div>
-          <div class="title signup">Registrera ny användare</div>
-        </div>
-        <div class="form-container">
-          <div class="slide-controls">
-            <input type="radio" name="slide" id="login" checked>
-            <input type="radio" name="slide" id="signup">
-            <label for="login" class="slide login">Logga in</label>
-            <label for="signup" class="slide signup">Registrera</label>
-            <div class="slider-tab"></div>
-          </div>
-          <div class="form-inner">
-            <form action="#" class="login">
-                <div class="field">
-                    <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required  placeholder="Användarnamn">
-                </div>
-              <div class="field">
-                <input type="text" placeholder="Email Address" required>
-              </div>
-              <div class="field">
-                <input type="password" placeholder="Lösenord" required           
-                pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
-              </div>
-              <div class="info">
-                <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
-                <span class="extra-info">
-                      Du måste använda minst 8 tecken, två versala tecken, en  siffra och ett special tecken:               !@#$%^&*()+-=
-                 </span>
-             </div>
-              <div class="pass-link"><a href="#">Glömt lösenord?</a></div>
-              <div class="field btn">
-                <div class="btn-layer"></div>
-                <input type="submit" value="logga in!">
-              </div>
-              <div class="signup-link">Inte medlem? <a href="">Registrera dig här</a></div>
-            </form>
-            <form action="#" class="signup">
-                    <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
-                        {% if invalid_email != "": %}
-                          <p class="error_message">{{invalid_email}}</p>
-                        {% endif %}
-                        <div class="field">
-                            <input type="text" placeholder="Email Address" required>
-                          </div>                   
-                        {% if invalid_username != "": %}
-                          <p class="error_message" >{{invalid_username}}</p>
-                        {% endif %}         
-                <div class="field">
-                    <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required  placeholder="Användarnamn">
-                </div>
-              <div class="field">
-                <input type="password" placeholder="Lösenord" required        
-                  pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
-              </div>
-              <div class="info">
-                <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
-                <span class="extra-info">
-                      Du måste använda minst 8 tecken, två versala tecken, en  siffra och ett special tecken:  !@#$%^&*()+-=
-                 </span>
-             </div>
-              <div class="field">
-                <input type="password" placeholder="Bekräfta lösenord" required>
-              </div>
-              <div class="field">
-                <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" name="Telefonnummer" placeholder="Mobilnummer: +46....">
-            </div>
-              <div class="field btn">
-                <div class="btn-layer"></div>
-                <input type="submit" value="Registrera!">
-              </div>
-            </form>
-          </div>
-        </div>
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Logga in</div>
+      <div class="title signup">Registrera ny användare</div>
+    </div>
+    <div class="form-container">
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Logga in</label>
+        <label for="signup" class="slide signup">Registrera</label>
+        <div class="slider-tab"></div>
       </div>
-      <script src="/static/Login&register.js"></script>
+      <div class="form-inner">
+        <form action="http://127.0.0.1:8080/validation/" class="login" method="POST">
+          <div class="field">
+            {% if wrong_username != "": %}
+              <p>{{wrong_username}}</p>
+            {% endif %}
+            <input class="RegisterUn " id="Användarnamn" name="Username" type="text" required placeholder="Användarnamn">
+          </div>
+          <div class="field">
+            {% if Wrong_pass != "": %}
+              <p>{{Wrong_pass}}</p>
+            {% endif %}
+            <input type="password" placeholder="Password" required>
+          </div>
+          <div class="info">
+            <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
+            <span class="extra-info">
+              Du måste använda minst 8 tecken, två versala tecken, en siffra och ett specialtecken: !@#$%^&*()+-=
+            </span>
+          </div>
+          <div class="pass-link"><a href="#">Glömt lösenord?</a></div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="logga in!">
+          </div>
+          <div class="signup-link">Inte medlem? <a href="">Registrera dig här</a></div>
+        </form>
+        <form action="#" class="signup">
+          <form action="http://127.0.0.1:8080/register/new/" method="POST" class="form1">
+            {% if invalid_email != "": %}
+              <p class="error_message">{{invalid_email}}</p>
+            {% endif %}
+            <div class="field">
+              <input type="text" placeholder="Email Address" required name="Email">
+            </div>
+            {% if invalid_username != "": %}
+              <p class="error_message">{{invalid_username}}</p>
+            {% endif %}
+            <div class="field">
+              <input class="RegisterUn " id="Användarnamn" name="Användarnamn" type="text" required placeholder="Användarnamn">
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Lösenord" required pattern="^(?=.*[A-Ö])(?=.*[a-ö])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{8,}$">
+            </div>
+            <div class="info">
+              <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
+              <span class="extra-info">
+                Du måste använda minst 8 tecken, två versala tecken, en siffra och ett specialtecken: !@#$%^&*()+-=
+              </span>
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Bekräfta lösenord" required name="Bekräfta_lösenord">
+            </div>
+            <div class="field">
+              <input class="RegisterUn" id="Telefonnummer" type="text" maxlength="9" name="Telefonnummer" placeholder="Mobilnummer: +46....">
+            </div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Registrera!">
+            </div>
+          </form>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="/static/Login&register.js"></script>
 </body>
 </html>
