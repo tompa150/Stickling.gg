@@ -20,7 +20,6 @@ app.config['MAIL_USE_SSL'] = True #Denna variabel är till för mailfunktionen o
 app.config['MAIL_DEFAULT_SENDER'] = config.mail_sender #Denna variabel är till för mailen och finns i config-filen 
 mail = Mail(app) #Denna variabel ser till att mailfunktionen körs
 
-
 def connect_to_db():
     """Skapat en funktion som ansluter till databasen. Den här funktionen kan vi sedan kalla på i alla andra funktioner. 
     Så slipper vi skriva ut strängen varje gång, eller bara ändra på ett ställe om vi ska ändra något. """
@@ -109,12 +108,11 @@ def send_welcome(email, username):
         mail.send(message)
         return
     except:
-        return redirect("Error_500.html")
+        return
 
 def send_message_notification(email, id):
     '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
     try:
-        print(email)
         notification = url_for('the_message', id=id, _external=True)
         message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
         message.body = f'Hej!\n Du har fått en ny intresseanmälan för en av dina annonser.\nKlicka på länken för att se ditt meddelande:\n{notification}'
@@ -180,19 +178,18 @@ def validation_pass():
             Password2 = request.form.get("Password2")
             Token = request.form.get("Token")
             user_info = read_user_mail(Email)
-            if Email == user_info[2]:
+            if Email == user_info[2] and Password == Password2:
                 update_password(Email, Password)
-                return redirect("/")
+                return render_template("GL_success.html")
             elif Password != Password2:
                 mail_token = retrieve_token_expiration(token)
                 user = read_user_mail(mail_token[2])
                 token = mail_token[0]
                 if mail_token[1] == None or mail_token[1] < datetime.now():
                     pass
-                else:
-                    if mail_token[2] == user[2]:
-                        No_match = "Dina lösenord matchar inte, vänligen försök igen"
-                        return render_template("reset_password.html", user = user, Token = Token, No_match = No_match)
+                elif mail_token[2] == user[2]:
+                    No_match = "Dina lösenord matchar inte, vänligen försök igen"
+                    return render_template("reset_password.html", user = user, Token = Token, No_match = No_match)
     except:
         return redirect("Error_500.html")
             
@@ -231,7 +228,6 @@ def new_chat_id():
         for chat in chats:
             if chat[0] >= largest_id:
                 largest_id = chat[0] + 1
-        print(largest_id)
         return largest_id
     except:
         return redirect("Error_500.html")
@@ -268,7 +264,6 @@ def read_chat_info():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM chats;")
         products = cursor.fetchall()
-        print(products)
         cursor.close()
         conn.close()
         return products
@@ -288,7 +283,8 @@ def read_user_specific(user):
         conn.close()
         return user
     except:
-        return redirect("Error_500.html")
+        user = False
+        return user
 
 def read_user_mail(Email):
     """Här läses alla användaruppgifter in från databasen"""
@@ -510,7 +506,6 @@ def get_the_message(id):
         cursor.execute(f""" SELECT * from user_to_user where message_id = {id}; """)
         ads = cursor.fetchall()
         ad = ads[0]
-        print(ad)
         cursor.close()
         conn.close()
         return ad
@@ -678,7 +673,6 @@ def send_chat(recieving_user):
     try:
         username = session['user']
         chat_messages = read_specific_chats(username, recieving_user)
-        print(chat_messages)
         return render_template("TheChat.html", chat_messages = chat_messages, username = username, recieving_user = recieving_user)
     except:
         return redirect("Error_500.html")
@@ -687,14 +681,10 @@ def send_chat(recieving_user):
 def receive_latest_message(username, receiving_user):
     """Funktionen gör en SQL-förfrågan och ansluter till databasen och skriver ut de senaste meddelandena. Om det sker ett fel returneras ett felmeddelande som en JSON-fil."""
     try:
-        print(username)
-        print(receiving_user)
-        print(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{username}' and recieving_user ='{receiving_user}' ORDER BY time_stamp DESC LIMIT 1;")
         conn = connect_to_db()
         cursor = conn.cursor()
         cursor.execute(f"SELECT sending_user, recieving_user, message_string, time_stamp FROM chats WHERE sending_user = '{receiving_user}' and recieving_user ='{username}' ORDER BY time_stamp DESC LIMIT 1;")
         latest_message = cursor.fetchone()
-        print(latest_message)
         cursor.close()
         conn.close()
         user = latest_message[0]
@@ -716,7 +706,6 @@ def receive_latest_message(username, receiving_user):
 def send_message(username, receiving_user):
     """Den här funktionen skriver ett meddelande från en användare till en annan. Om det sker något fel returneras ett error-meddelande som en JSON-fil.""" 
     try:
-        print(username, receiving_user)
         message = request.form['message']
         id = new_chat_id()
         conn = connect_to_db()
@@ -727,11 +716,9 @@ def send_message(username, receiving_user):
         conn.close()
         time = datetime.now()
         response = {'status': 'success', 'message': str(time)}
-        print(message)
         return json.dumps(response)  
     except (Exception, psycopg2.Error) as error:
         response = {'status': 'error', 'message': 'Error sending message: ' + str(error)}
-        print(response)
         return json.dumps(response)  
 
 @app.route("/chats/")
@@ -740,8 +727,6 @@ def chats():
     try:
         username = session['user']
         users = read_all_but_one(username)
-        for user in users:
-            print(user)
         return render_template("chats.html", users = users)
     except:
         return redirect("Error_500.html")
@@ -885,10 +870,8 @@ def send():
             recieving_user = request.form.get("recieving_user")
             id = request.form.get("id")
             message_id = new_message_id()
-            print(id)
             message_insert(message_id, Message, sending_user, recieving_user, id)
             recipient=read_user_specific(recieving_user)
-            print(recipient)
             send_message_notification(recipient[2], message_id)
             session[f'message/{id}'] = 'Ditt meddelande har skickats!'
             return redirect(f"/ad/{id}/")
@@ -969,7 +952,6 @@ def the_message(id):
         try:
             username = session['user']
             Message = get_the_message(id)
-            print(Message)
             if Message[3] == username:
                 if Message[4] == 'unread':
                     change_message_status(id)
@@ -992,7 +974,6 @@ def sent_message(id):
         try:
             username = session['user']
             Message = get_the_message(id)
-            print(Message)
             if Message[1] == username:
                 TheMessage = get_the_message(id)
                 return render_template('TheMessage.html', TheMessage = TheMessage, session = session)
@@ -1107,7 +1088,7 @@ def index():
 def login():
     """Här returneras login.html"""
     try:
-        return render_template("login.html")
+        return render_template("Login&register.html")
     except:
         return redirect("Error_500.html")
 
@@ -1177,32 +1158,28 @@ def validation():
             username = request.form.get("Username")
             password = request.form.get("Password")
             user_info = read_user_specific(username)
-            if username == user_info[0]:
+            if user_info == False:
+                wrong_username = "Användarnamnet du angav är ogiltigt."
+                return render_template("Login&register.html", wrong_username = wrong_username)
+            elif username == user_info[0]:
                 hashed_p = bcrypt.hashpw(password.encode('utf-8'), user_info[4].encode('utf-8'))
+
                 if hashed_p == user_info[1].encode('utf-8'):
                     session['user'] = username
                     return redirect("/")
                 else:
                     Wrong_pass = "Lösenordet du angav är ogiltigt."
-                    return render_template("login.html", Wrong_pass = Wrong_pass)
-            else:
-                wrong_username = "Användarnamnet du angav är ogiltigt."
-                return redirect("login.html", wrong_username = wrong_username)
+                    return render_template("Login&register.html", Wrong_pass = Wrong_pass)
         else:        
-            return render_template("login.html")
+            return render_template("Login&register.html")
     except:
         return redirect("Error_500.html")
 
-@app.route("/success/")
-def success():
-    """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
-    return render_template("GL_success.html")
-
 @app.route("/register/")
 def register():
-    """Här returneras register.html"""
+    """Här returneras Login&register.html"""
     try:
-        return render_template("register.html")
+        return render_template("Login&register.html")
     except:
         error = "Ett fel har uppstått, vänligen försök igen."
         return error
@@ -1236,25 +1213,49 @@ def register_user():
             email = request.form.get("Email")
             username = request.form.get("Användarnamn")
             password = request.form.get("Lösenord")
+            password2 = request.form.get("Lösenord2")
             number = request.form.get("Telefonnummer")
             user_info = read_user_info()
             for row in user_info:
-                if email == row[2] and username == row[0]:
+                if email == row[2] and username == row[0] and  password == password2:
                     invalid_email = "Den angivna emailadressen är redan registrerad."
                     invalid_username = "Det angivna användarnamnet är redan registrerat."
-                    return render_template("register.html", invalid_email = invalid_email, invalid_username = invalid_username)
-                elif email == row[2] and username != row[0]:
+                    return render_template("Login&register.html", invalid_email = invalid_email, invalid_username = invalid_username)
+                elif email == row[2] and username != row[0] and  password == password2:
                     invalid_email = "Den angivna emailadressen är redan registrerad."
-                    return render_template("register.html", invalid_email = invalid_email)   
-                elif email != row[2] and username == row[0]:
+                    return render_template("Login&register.html", invalid_email = invalid_email)   
+                elif email != row[2] and username == row[0]and password == password2:
                     invalid_username = "Det angivna användarnamnet är redan registrerat."
-                    return render_template("register.html", invalid_username = invalid_username)
-            else:
+                    return render_template("Login&register.html", invalid_username = invalid_username)
+                elif email == row[2] and username == row[0] and password != password2:
+                    unmatch = "Lösenorden matchar ej varandra, försök igen."
+                    invalid_email = "Den angivna emailadressen är redan registrerad."
+                    invalid_username = "Det angivna användarnamnet är redan registrerat."
+                    return render_template("Login&register.html", invalid_email = invalid_email, invalid_username = invalid_username, unmatch = unmatch)
+                elif email == row[2] and username != row[0] and password != password2:
+                    unmatch = "Lösenorden matchar ej varandra, försök igen."
+                    invalid_email = "Den angivna emailadressen är redan registrerad."
+                    return render_template("Login&register.html", invalid_email = invalid_email, unmatch = unmatch)   
+                elif email != row[2] and username == row[0] and password != password2:
+                    unmatch = "Lösenorden matchar ej varandra, försök igen."
+                    invalid_username = "Det angivna användarnamnet är redan registrerat."
+                    return render_template("Login&register.html", invalid_username = invalid_username, unmatch = unmatch)
+            if number != "":
                 salt = bcrypt.gensalt()
                 hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
                 conn = connect_to_db()
                 cursor = conn.cursor()
                 cursor.execute(f""" INSERT INTO users(username, password, email, number, salt) VALUES ('{username}', '{hashed.decode('utf-8')}', '{email}', {number}, '{salt.decode('utf-8')}'); """)
+                conn.commit()
+                conn.close()
+                send_welcome(email, username)
+                return redirect("/register/new/success/")
+            else:
+                salt = bcrypt.gensalt()
+                hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+                conn = connect_to_db()
+                cursor = conn.cursor()
+                cursor.execute(f""" INSERT INTO users(username, password, email, salt) VALUES ('{username}', '{hashed.decode('utf-8')}', '{email}', '{salt.decode('utf-8')}'); """)
                 conn.commit()
                 conn.close()
                 send_welcome(email, username)
