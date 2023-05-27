@@ -41,25 +41,26 @@
             <div class="all_message_link">
                 <div class="message_link">
                     <a href="http://127.0.0.1:8080/messages/unread/">
-                    <img class="bar_icons" src="{{ url_for('static', filename='image-19.png') }}">
-                     Olästa meddelanden
+                    <img class="message_image" src="{{ url_for('static', filename='image-19.png') }}">
+                     <p>olästa meddelanden</p>
                     </a>
                 </div>
                 <div class="message_link">
                     <a href="http://127.0.0.1:8080/messages/read/"> 
-                    <img class="bar_icons" src="{{ url_for('static', filename='image-21.png') }}">
-                    Lästa meddelanden</a>
+                    <img class="message_image" src="{{ url_for('static', filename='image-21.png') }}">
+                    <p>Lästa meddelanden</p></a>
                 </div>
                 <div class="message_link">
                     <a href="http://127.0.0.1:8080/messages/sent/">
-                    <img class="bar_icons" src="{{ url_for('static', filename='image-20.png') }}">
-                     Skickade meddelanden</a>
+                    <img class="message_image" src="{{ url_for('static', filename='image-20.png') }}">
+                     <p>Skickade meddelanden</p></a>
                 </div>
             </div>
+            <p class="title">Historik</p>
             <div class="Allmessages">
                 {% for message in All_Messages %}
                 <div class="messages">
-                    <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">
+                    <a  class="Mlink"href="http://127.0.0.1:8080/messages/{{message[0]}}/">
                     <h4><b>Sender: {{ message[1] }}</b></h4> 
                     <h4><b>Message: </b></h4> 
                     <p>{{ message[2] }}</p> 
