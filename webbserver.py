@@ -1156,7 +1156,7 @@ def index():
         
 
 @app.route("/buy/")
-def index():
+def buy():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index_buy()
     if 'user' not in session:
@@ -1181,7 +1181,7 @@ def index():
             return redirect("Error_500.html")
         
 @app.route("/trade/")
-def index():
+def trade():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index_trade()
     if 'user' not in session:
@@ -1206,7 +1206,7 @@ def index():
             return redirect("Error_500.html")
         
 @app.route("/request/")
-def index():
+def requests():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index_request()
     if 'user' not in session:
