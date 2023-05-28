@@ -1160,7 +1160,7 @@ def buy():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index_buy()
     if 'user' not in session:
-        return render_template("new.html", ads = ads)
+        return render_template("new_köp.html", ads = ads)
     else:
         try:
             user_info = read_user_info()
@@ -1176,7 +1176,7 @@ def buy():
                                 break
                         if not matched and ad[4]!= session['user']:
                             unmatched_values.append(ad[0])
-                    return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
+                    return render_template("new_köp.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
         except:
             return redirect("Error_500.html")
         
@@ -1185,7 +1185,7 @@ def trade():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index_trade()
     if 'user' not in session:
-        return render_template("new.html", ads = ads)
+        return render_template("new_byt.html", ads = ads)
     else:
         try:
             user_info = read_user_info()
@@ -1201,7 +1201,7 @@ def trade():
                                 break
                         if not matched and ad[4]!= session['user']:
                             unmatched_values.append(ad[0])
-                    return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
+                    return render_template("new_byt.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
         except:
             return redirect("Error_500.html")
         
@@ -1210,7 +1210,7 @@ def requests():
     """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
     ads = image_ad_read_index_request()
     if 'user' not in session:
-        return render_template("new.html", ads = ads)
+        return render_template("new_sök.html", ads = ads)
     else:
         try:
             user_info = read_user_info()
@@ -1226,7 +1226,7 @@ def requests():
                                 break
                         if not matched and ad[4]!= session['user']:
                             unmatched_values.append(ad[0])
-                    return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
+                    return render_template("new_sök.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
         except:
             return redirect("Error_500.html")
         
