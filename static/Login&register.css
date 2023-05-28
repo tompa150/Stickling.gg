@@ -10,7 +10,7 @@ html,body{
   height: 100%;
   width: 100%;
   place-items: center;
-  background-color: #f1e8e0;
+    background: linear-gradient(to right, #8FCB9B, #5B9279 );
 }
 ::selection{
   background: #f1e8e0;
@@ -193,10 +193,6 @@ form.RegisterForm1 {
 
 }
 
-body {
-	background-color: #CECECE !important;
-   margin: 20px !important;
-}
 
 p{
    margin-bottom: 0px;
