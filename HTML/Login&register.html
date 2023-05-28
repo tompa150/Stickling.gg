@@ -27,17 +27,17 @@
       </div>
       <div class="form-inner">
         <form action="http://127.0.0.1:8080/validation/" class="login" method="POST">
+          {% if wrong_username != "": %}
+          <p>{{wrong_username}}</p>
+        {% endif %}
           <div class="field">
-            {% if wrong_username != "": %}
-              <p>{{wrong_username}}</p>
-            {% endif %}
             <input class="RegisterUn " id="Användarnamn" name="Username" type="text" required placeholder="Användarnamn">
           </div>
+          {% if Wrong_pass != "": %}
+          <p class="E_message">{{Wrong_pass}}</p>
+          {% endif %}
           <div class="field">
-            {% if Wrong_pass != "": %}
-              <p>{{Wrong_pass}}</p>
-            {% endif %}
-            <input type="password" name="Password" placeholder="Password" required>
+            <input class="RegisterUn" type="password" name="Password" placeholder="Password" required>
           </div>
           <div class="info">
             <img class="icon-info-sign" src="{{ url_for('static', filename='info-button.png') }}" alt="info">
