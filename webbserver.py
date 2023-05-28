@@ -939,7 +939,8 @@ def check_sent_messages():
         try:
             username = session['user']
             SentMessages = get_sent_messages(username)
-            return render_template('ReadMessages.html', SentMessages = SentMessages, session = session)
+            print(SentMessages)
+            return render_template('SentMessages.html', SentMessages = SentMessages, session = session)
         except:
             return redirect("Error_500.html")
     
