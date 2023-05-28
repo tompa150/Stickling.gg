@@ -334,6 +334,8 @@ width: 60px;
 .nav_buttons{
   width: 40px;
   height: 45px;
+  text-decoration: none;
+  color: #f1e8e0;
 }
 
 .byt_buttons{
@@ -362,6 +364,41 @@ width: 60px;
   cursor: pointer;
   box-shadow: 2px 2px 5px 5px rgb(0,0,0,0.2);
 }
+
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+  /* Styles for the login button link */
+  .undo {
+    color: #f1e8e0;
+    padding: 10px;
+    font-family: 'Lato', sans-serif;
+    text-decoration: none;
+    font-size: 15px;
+    border-radius: 10px;
+    }
+    
+    /* Styles for the login button on hover and active */
+    .undo:hover {
+    color: #f1e8e0;
+    padding: 10px;
+    background-color: #62937c;
+    box-shadow: 0px 2px 2px 0px rgb(0,0,0,0.2);
+    }
 
 .byt_buttons:hover{
   border-radius: 5px;

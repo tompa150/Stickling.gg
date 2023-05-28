@@ -26,13 +26,13 @@
                             <p class="nav_p" >Söker</p>
                         </div>
                         <div  class="Filter_buttons" >
-                           <a class="logga_in_button" href="http://127.0.0.1:8080/"><p>Visa alla annonser</p></a> 
+                           <a href="http://127.0.0.1:8080/"><p class="undo" >Visa alla annonser</p></a> 
                         </div>
                     </div>
                 <div class="RBOX">
                     {% if 'user' not in session %}
                         <div class="logga_in_box">
-                            <a class="logga_in_button" href="http://127.0.0.1:8080/login/">Logga In</a>
+                            <a class="logga_in_button"  href="http://127.0.0.1:8080/login/">Logga In</a>
                         </div>
                     {% else %}
                         <div class="creation_box">
