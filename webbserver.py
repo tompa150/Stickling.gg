@@ -418,6 +418,75 @@ def image_ad_read_index():
         conn.close()
         return results
     except:
+        return redirect("Error_500.html")
+    
+def image_ad_read_index_buy():
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
+        cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.ad_type, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' and ad_type = 'sälj' order by ads.time_stamp DESC; """)
+        results = cursor.fetchall()
+        ads = {}
+        for row in results:
+            ad_id = row[0]
+            ad_title = row[1]
+            ad_type = row[2]
+            image_path = row[3]
+            ad_username = row[4]
+            if ad_id not in ads:
+                ads[ad_id] = {'title': ad_title, 'description': ad_type, 'image_path': [], 'username': ad_username}
+            ads[ad_id]['image_path'].append(image_path)
+        conn.close()
+        return results
+    except:
+        return redirect("Error_500.html")
+    
+def image_ad_read_index_trade():
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
+        cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.ad_type, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' and ad_type = 'byt' order by ads.time_stamp DESC; """)
+        results = cursor.fetchall()
+        ads = {}
+        for row in results:
+            ad_id = row[0]
+            ad_title = row[1]
+            ad_type = row[2]
+            image_path = row[3]
+            ad_username = row[4]
+            if ad_id not in ads:
+                ads[ad_id] = {'title': ad_title, 'description': ad_type, 'image_path': [], 'username': ad_username}
+            ads[ad_id]['image_path'].append(image_path)
+        conn.close()
+        return results
+    except:
+        return redirect("Error_500.html")
+    
+def image_ad_read_index_request():
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        """" Den här raden läser in alla annonsers id, titlar, beskrivningar och alla bilder som tillhör varje enskild annons.  """
+        cursor.execute(f"""SELECT ads.ad_id, ads.title, ads.ad_type, image_pointer.image_path, ads.username FROM ads LEFT JOIN (SELECT ad_id, MIN(image_path) AS image_path FROM image_pointer GROUP BY ad_id) AS image_pointer ON ads.ad_id = image_pointer.ad_id WHERE ads.status = 'active' and ad_type = 'efterfråga' order by ads.time_stamp DESC; """)
+        results = cursor.fetchall()
+        ads = {}
+        for row in results:
+            ad_id = row[0]
+            ad_title = row[1]
+            ad_type = row[2]
+            image_path = row[3]
+            ad_username = row[4]
+            if ad_id not in ads:
+                ads[ad_id] = {'title': ad_title, 'description': ad_type, 'image_path': [], 'username': ad_username}
+            ads[ad_id]['image_path'].append(image_path)
+        conn.close()
+        return results
+    except:
         return redirect("Error_500.html")  
 
 def get_messages():
@@ -1084,6 +1153,83 @@ def index():
                     return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
         except:
             return redirect("Error_500.html")
+        
+
+@app.route("/buy/")
+def index():
+    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    ads = image_ad_read_index_buy()
+    if 'user' not in session:
+        return render_template("new.html", ads = ads)
+    else:
+        try:
+            user_info = read_user_info()
+            for user in user_info:
+                if session['user'] == user[0]:
+                    liked_ads = check_liked_ads_main()
+                    unmatched_values = []
+                    for ad in ads:
+                        matched = False
+                        for x in liked_ads:
+                            if x[0] == session['user'] and x[1] == ad[0]:
+                                matched = True
+                                break
+                        if not matched and ad[4]!= session['user']:
+                            unmatched_values.append(ad[0])
+                    return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
+        except:
+            return redirect("Error_500.html")
+        
+@app.route("/trade/")
+def index():
+    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    ads = image_ad_read_index_trade()
+    if 'user' not in session:
+        return render_template("new.html", ads = ads)
+    else:
+        try:
+            user_info = read_user_info()
+            for user in user_info:
+                if session['user'] == user[0]:
+                    liked_ads = check_liked_ads_main()
+                    unmatched_values = []
+                    for ad in ads:
+                        matched = False
+                        for x in liked_ads:
+                            if x[0] == session['user'] and x[1] == ad[0]:
+                                matched = True
+                                break
+                        if not matched and ad[4]!= session['user']:
+                            unmatched_values.append(ad[0])
+                    return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
+        except:
+            return redirect("Error_500.html")
+        
+@app.route("/request/")
+def index():
+    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    ads = image_ad_read_index_request()
+    if 'user' not in session:
+        return render_template("new.html", ads = ads)
+    else:
+        try:
+            user_info = read_user_info()
+            for user in user_info:
+                if session['user'] == user[0]:
+                    liked_ads = check_liked_ads_main()
+                    unmatched_values = []
+                    for ad in ads:
+                        matched = False
+                        for x in liked_ads:
+                            if x[0] == session['user'] and x[1] == ad[0]:
+                                matched = True
+                                break
+                        if not matched and ad[4]!= session['user']:
+                            unmatched_values.append(ad[0])
+                    return render_template("new.html", ads = ads, session = session, liked_ads = liked_ads, unmatched_values = unmatched_values)
+        except:
+            return redirect("Error_500.html")
+        
 
 @app.route("/login/")
 def login():
