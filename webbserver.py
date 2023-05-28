@@ -421,7 +421,7 @@ def image_ad_read_index():
         return redirect("Error_500.html")
     
 def image_ad_read_index_buy():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = sälj"""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -444,7 +444,7 @@ def image_ad_read_index_buy():
         return redirect("Error_500.html")
     
 def image_ad_read_index_trade():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = byt """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -467,7 +467,7 @@ def image_ad_read_index_trade():
         return redirect("Error_500.html")
     
 def image_ad_read_index_request():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = efterfråga """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
