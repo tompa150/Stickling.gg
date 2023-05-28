@@ -319,3 +319,10 @@ background-size: cover;
 .remove_annons{
   margin-bottom: 0%;
 }
+
+
+/* Styles for the back button */
+.back_button {
+  width: 40px;
+  height: auto;
+}

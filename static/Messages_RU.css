@@ -212,25 +212,13 @@ a{
     display: flex;
   } 
 
- .all_message_link{
-  justify-content: space-evenly;
-  display: flex;
- }
-
- .message_image{
-  width: 100px;
-  height: auto;
-  
- }
-
- .message_link{
-  align-items: center;
-  font-size: 20px;
-  color: #090909;
- }
-
-
 
 .title{
   margin-top: 80px;
 }
+
+/* Styles for the back button */
+.back_button {
+    width: 40px;
+    height: auto;
+  }

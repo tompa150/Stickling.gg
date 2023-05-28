@@ -1,13 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="se">
     <head>
         <meta charset="utf-8">
         <title>Stickling.gg</title>
-        <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='Messages_RU.css') }}" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
-        
     </head>
     <body> 
         <nav>
@@ -39,31 +39,19 @@
             </div>
         </nav>
         <main> 
-            <div>
-                <article>
-                    <p class="redigera_profile"> 
-                        TEXT HERE
-                    </p>
-                </article>
+        <a href="http://127.0.0.1:8080/messages/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}" alt="tillaka"></a>
+        <p class="title">Olästa meddelanden</p>
+            <div class="Allmessages">
+                {% for message in All_Messages %}
+                <div class="messages">
+                    <a  class="Mlink"href="http://127.0.0.1:8080/messages/{{message[0]}}/">
+                        <h4><b>Sender: {{ message[1] }}</b></h4> 
+                        <p>{{ message[4] }}</p> 
+                        <p>Mottagit: {{ message[5] }}</p> 
+                    </a>
+                </div>
+                {% endfor %}
             </div>
-            <div class="title_box">
-                <h3 class="A-title">Aktiva annonser</h3>
-                <h3 class="A-title">Inaktiv annonser</h3>
-            </div>
-            <article class="new-old-box">
-                    <div class="box">
-                        {% for message in UnreadMessages %}
-                        <div class="card">
-                            <div class="container">
-                                <h4><b>Sender: {{ message[1] }}</b></h4> 
-                                <p>{{ message[4] }}</p> 
-                                <p>Mottagit: {{ message[5] }}</p> 
-                            </div>
-                            <a href="http://127.0.0.1:8080/messages/{{message[0]}}/">Se meddelande</a>
-                        </div>
-                        {% endfor %}
-                    </div>
-            </article>
         </main>
         <footer id="information">
             <p class="linkfoot">  © 2023 Stickling, Inc.</p>
