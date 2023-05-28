@@ -41,7 +41,7 @@
         <a href="http://127.0.0.1:8080/messages/"><img class="back_button" src="{{ url_for('static', filename='pngegg-12.png') }}" alt="tillaka"></a>
         <p class="title">Lästa meddelanden</p>
             <div class="Allmessages">
-                {% for message in All_Messages %}
+                {% for message in ReadMessages %}
                 <div class="messages">
                     <a  class="Mlink"href="http://127.0.0.1:8080/messages/{{message[0]}}/">
                         <h4><b>Sender: {{ message[1] }}</b></h4> 
