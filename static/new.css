@@ -245,8 +245,9 @@ main{
 /* CSS styles for the card on mouse hover */
 .card:hover {
   box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2); /* add shadow effect */
-  background-color: #f0dfd1;
+  background-color: #62937c;
   border-bottom: none;
+  color: #f0dfd1;
 }
 
 /* CSS styles for the container inside the card */
