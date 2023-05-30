@@ -57,7 +57,7 @@
             <p class="error_message">{{invalid_email}}</p>
           {% endif %}
           <div class="field">
-            <input type="text" placeholder="Email Address" required name="Email">
+            <input type="text" placeholder="Email Address" required name="Email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}">
           </div>
           {% if invalid_username != "": %}
             <p class="error_message">{{invalid_username}}</p>
