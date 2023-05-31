@@ -236,7 +236,6 @@ main{
 
 /* CSS styles for the "new-old-box" element */
 .new-old-box {
-  padding-right: 40%; /* add padding */
   column-count: 2;
   column-gap: 40px; /* add gap between columns */
 }
@@ -260,6 +259,6 @@ padding: 20px;
 
 .title_box{
   display: flex;
-  gap: 15%;
+  gap: 40%;
 }
 
