@@ -916,10 +916,10 @@ def save():
                         image.filename = f'{title}_{username}_{image.filename}'
                         if os.path.exists(os.path.join(f'{config.save_image_path}/{image.filename}')):
                             image.save(f'{config.save_image_path}/{image.filename}')
-                            image_paths.append(f'/images/{image.filename}')
+                            image_paths.append(f'/static/{image.filename}')
                         else:    
                             image.save(f'{config.save_image_path}/{image.filename}')
-                            image_paths.append(f'/images/{image.filename}')
+                            image_paths.append(f'/static/{image.filename}')
                 insert_ad(title, description, price, type, username, image_paths)
                 return redirect("/")
 
@@ -1095,10 +1095,10 @@ def update():
                         image.filename = f'{ad_id}_{username}_{image.filename}'
                         if os.path.exists(os.path.join(f'{config.save_image_path}/{image.filename}')):
                             image.save(f'{config.save_image_path}/{image.filename}')
-                            image_paths.append(f'/images/{image.filename}')
+                            image_paths.append(f'/static/{image.filename}')
                         else:    
                             image.save(f'{config.save_image_path}/{image.filename}')
-                            image_paths.append(f'/images/{image.filename}')
+                            image_paths.append(f'/static/{image.filename}')
 
                 if Removed_images and images:
                     update_ad(title, ad_id, description, price, image_paths, type)
