@@ -2,15 +2,20 @@
 Repository for Stickling.gg
 
 Prerequisites:
-För att kunna köra programmet behöver ni importera följande moduler.
+För att kunna köra programmet behöver ni installera följande moduler.
 psycopg2
 Flask
 bcrypt
 flask_mail
+datetime
+os
+secrets
+config
+json
 
 Koden kommer inte att fungera utan dessa. 
 
-Ni behöver skapa en config.py-fil som innehåller följer mallen i config.py.ex. 
+Ni kommer att få medskickad en config.py-fil som innehåller följande. 
 
 mail_server='**'
 mail_port= **
@@ -29,9 +34,7 @@ Se exempel nedan:
 save_path = 'C:/Users/andym/OneDrive/Dokument/Github/Stickling.gg'
 save_image_path = 'C:/Users/andym/OneDrive/Dokument/GitHub/Stickling.gg/static/
 
-Inloggningsuppgifterna kommer att skickas i en fil på canvas till er, denna FINNS INTE PÅ GITHUB.
-
-
+Inloggningsuppgifterna för vår mail, och databasuppggifterna kommer att skickas i en fil på canvas till er i ZIP, denna FINNS INTE PÅ GITHUB.
 
 Steg 1:
 Gå till webbserver.py filen och tryck på run-knappen längst uppe till höger.
