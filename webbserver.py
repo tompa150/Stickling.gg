@@ -38,7 +38,7 @@ def make_session_permanent():
     app.permanent_session_lifetime = timedelta(days=1)
 
 def new_token(email):
-    '''Här skapas ett temporärt token och lagras i databasen'''
+    '''Här skapas ett temporärt token och lagras i databasen. Om den misslyckas får vi ett error.'''
     try:
         deadline = datetime.now() + timedelta(hours=1)
         token = secrets.token_urlsafe(20)
@@ -52,7 +52,7 @@ def new_token(email):
         return redirect("Error_500.html")
 
 def send_reset(email):
-    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
+    '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail. Om den misslyckas får vi ett error.'''
     try:
         token = new_token(email)
         reset_url = url_for('password_reset', token=token, _external=True)
@@ -67,7 +67,7 @@ def send_reset(email):
 
 def send_reset_confirmation(email):
     try:
-        '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail'''
+        '''Här tas en email emot av funktionen och skapar ett token som skickas i ett mail så användaren kan använda det för att återställa sitt mail. Om den misslyckas får vi ett error.'''
         message = Message('Lösenord ändrat.', recipients=[email])
         message.body = f"""Hej!
             Ditt lösenord har nu ändrats.\n
@@ -111,7 +111,7 @@ def send_welcome(email, username):
         return
 
 def send_message_notification(email, id):
-    '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan.'''
+    '''Här tas en email och meddelande id emot av funktionen och skickar iväg en notifikation om en ny intresseanmälan. Om den misslyckas får vi ett error.'''
     try:
         notification = url_for('the_message', id=id, _external=True)
         message = Message('Stickling.gg - Nytt meddelande', recipients=[email])
@@ -122,7 +122,7 @@ def send_message_notification(email, id):
         return redirect("Error_500.html")
 
 def retrieve_token_expiration(token):
-    '''Denna funktion hämtar tokens med ett visst id'''
+    '''Denna funktion hämtar tokens med ett visst id. Om den misslyckas får vi ett error.'''
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -152,7 +152,7 @@ def password_reset(token):
          
 @app.route("/get_reset_mail/", methods = ['POST', 'GET'])
 def reset_ur():
-    '''Denna route tar emot den email användaren ville skicka ett återställningsmail till'''
+    '''Denna route tar emot den email användaren ville skicka ett återställningsmail till. Om den misslyckas får vi ett error.'''
     try:
         if request.method == 'POST':
             session.pop('user', None)
@@ -169,7 +169,7 @@ def reset_pass():
        
 @app.route("/validation_forgot/", methods = ['POST', 'GET'])
 def validation_pass():
-    '''Denna route tar emot användarens nyangivna lösenord och uppdaterar det i databasen.'''
+    '''Denna route tar emot användarens nyangivna lösenord och uppdaterar det i databasen. Om den misslyckas får vi ett error.'''
     try:
         if request.method == 'POST':
             session.pop('user', None)
@@ -194,7 +194,7 @@ def validation_pass():
         return redirect("Error_500.html")
             
 def update_password(email, password):
-    '''Denna funktion uppdaterar lösenordet i databasen'''
+    '''Denna funktion uppdaterar lösenordet i databasen. Om den misslyckas får vi ett error.'''
     try:
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
@@ -209,7 +209,7 @@ def update_password(email, password):
         return redirect("Error_500.html")
 
 def new_ad_id():
-    '''Denna funktion skapar ett nytt id åt en ny artikel.'''
+    '''Denna funktion skapar ett nytt id åt en ny artikel. Om den misslyckas får vi ett error.'''
     try:
         largest_id = 1
         ads = ad_read_for_new_id()
@@ -221,7 +221,7 @@ def new_ad_id():
         return redirect("Error_500.html")
 
 def new_chat_id():
-    '''Denna funktion skapar ett nytt id åt en ny chat.'''
+    '''Denna funktion skapar ett nytt id åt ett nytt chat-meddelande. Om den misslyckas får vi ett error.'''
     try:
         largest_id = 1
         chats = read_chat_info()
@@ -233,7 +233,7 @@ def new_chat_id():
         return redirect("Error_500.html")
 
 def new_message_id():
-    '''Denna funktion skapar ett nytt id åt en ny artikel.'''
+    '''Denna funktion skapar ett nytt id åt en ny artikel. Om den misslyckas får vi ett error.'''
     try:
         largest_id = 1
         ads = get_messages()
@@ -245,7 +245,7 @@ def new_message_id():
         return redirect("Error_500.html")
     
 def read_user_info():
-    """Här läses alla användaruppgifter in från databasen"""
+    """Här läses alla användaruppgifter in från databasen. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -258,7 +258,7 @@ def read_user_info():
         return redirect("Error_500.html")
     
 def read_chat_info():
-    """Här läses alla användaruppgifter in från databasen"""
+    """Här läses alla chat-medellanden in in från databasen. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -272,7 +272,7 @@ def read_chat_info():
 
 
 def read_user_specific(user):
-    """Här läses alla användaruppgifter in från databasen"""
+    """Här läses alla användaruppgifter från en viss användare in från databasen baserat på ett användarnamn. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -287,7 +287,7 @@ def read_user_specific(user):
         return user
 
 def read_user_mail(Email):
-    """Här läses alla användaruppgifter in från databasen"""
+    """Här läses alla användaruppgifter från en viss användare in från databasen baserat på en email. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -301,7 +301,7 @@ def read_user_mail(Email):
         return redirect("Error_500.html")
     
 def ad_read():
-    """Här läses alla annonser från databasen där statusen = active """
+    """Här läses alla annonser från databasen där statusen = active. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -314,7 +314,7 @@ def ad_read():
         return redirect("Error_500.html")
     
 def ad_read_for_new_id():
-    """Här läses alla annonser från databasen där statusen = active """
+    """Här läses alla annonser in från databasen """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -327,7 +327,7 @@ def ad_read_for_new_id():
         return redirect("Error_500.html")
     
 def image_ad_read_active(user):
-    """Här läses alla annonser från databasen in, tillsammans med alla dess bilders sökvägar, där statusen = active """
+    """Här läses alla annonser från databasen in, tillsammans med alla dess bilders sökvägar, där statusen = active. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -363,7 +363,7 @@ def id_ad(id):
         return redirect("Error_500.html")
 
 def image_ad_read_inactive(user):
-    """Här läses alla annonser in från databasen, tillsammans med 1 bild per annons, där status = inactive"""
+    """Här läses alla annonser in från databasen, tillsammans med 1 bild per annons, där status = inactive. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -385,7 +385,7 @@ def image_ad_read_inactive(user):
         return redirect("Error_500.html")
 
 def liked_ads(username):
-    """Ansluter till databasen och hämtar alla gillade annonser. """
+    """Ansluter till databasen och hämtar alla gillade annonser. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -398,7 +398,7 @@ def liked_ads(username):
         return redirect("Error_500.html") 
     
 def image_ad_read_index():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active """
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -421,7 +421,7 @@ def image_ad_read_index():
         return redirect("Error_500.html")
     
 def image_ad_read_index_buy():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = sälj"""
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = sälj. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -444,7 +444,7 @@ def image_ad_read_index_buy():
         return redirect("Error_500.html")
     
 def image_ad_read_index_trade():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = byt """
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = byt. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -467,7 +467,7 @@ def image_ad_read_index_trade():
         return redirect("Error_500.html")
     
 def image_ad_read_index_request():
-    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = efterfråga """
+    """Här läses alla annonser från databasen in tillsammans med sökvägen till 1 bild per annons, där status = active och ad_type = efterfråga. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -490,7 +490,7 @@ def image_ad_read_index_request():
         return redirect("Error_500.html")  
 
 def get_messages():
-    """Hämtar meddelanden mellan användare från databasen."""
+    """Hämtar meddelanden mellan användare från databasen. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -503,7 +503,7 @@ def get_messages():
         return redirect("Error_500.html")
 
 def get_all_messages(username):
-    """Hämtar alla meddelanden som skickats till en specifik användare."""
+    """Hämtar alla meddelanden som skickats till en specifik användare genom att funktionen tar emot ett användarnamn som parameter. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -516,7 +516,7 @@ def get_all_messages(username):
         return redirect("Error_500.html")
 
 def get_read_messages(username):
-    """Funktionen hämtar alla lästa meddelanden"""
+    """Funktionen hämtar alla lästa meddelanden baserat på ett användarnamn som funktionen tar emot. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -529,7 +529,7 @@ def get_read_messages(username):
         return redirect("Error_500.html")
     
 def get_unread_messages(username):
-    """Hämtar olästa meddelanden som skickats till en specifik användare."""
+    """Hämtar olästa meddelanden som skickats till en specifik användare baserat på ett användarnamn som funktionen tar emot. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -542,7 +542,7 @@ def get_unread_messages(username):
         return redirect("Error_500.html")
     
 def get_sent_messages(username):
-    """Hämtar alla meddelanden som skickats av en specifik användare"""
+    """Hämtar alla meddelanden som skickats av en specifik användare baserat på ett användarnamn funktionen tar emot. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -555,7 +555,7 @@ def get_sent_messages(username):
         return redirect("Error_500.html")
 
 def change_message_status(message_id):
-    """Ändrar statusen för ett meddelande till 'läst' i databasen"""
+    """Ändrar statusen för ett meddelande till 'läst' i databasen baserat på ett meddelande id som funktionen tar emot. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -567,8 +567,7 @@ def change_message_status(message_id):
         return redirect("Error_500.html")
 
 def get_the_message(id):
-    """Hämtar ett specifikt meddelande baserat på dess ID.
-    Använder ID som ett argument"""
+    """Hämtar ett specifikt meddelande baserat på dess ID som funktionen tar emot. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -582,7 +581,7 @@ def get_the_message(id):
         return redirect("Error_500.html")
     
 def read_ad_images(id):
-    '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id'''
+    '''Denna funktion läser in bild sökvägar som tillhör ett givet ad_id som funktionen tar emot. Om den misslyckas får vi ett error.'''
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -596,7 +595,7 @@ def read_ad_images(id):
 
 def insert_ad(title, description, price, type, username, image_paths):
     """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilderna finns, annars
-    skickas användaren tillbaka till hemsidan"""
+    skickas användaren tillbaka till hemsidan. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -620,7 +619,7 @@ def insert_ad(title, description, price, type, username, image_paths):
         return redirect("Error_500.html")
 
 def delete_images(Removed_images):
-    '''Denna funktion tar emot alla bild sökvägar som ska raderas och raderar dom i databasen'''
+    '''Denna funktion tar emot alla bild sökvägar som ska raderas och raderar dom i databasen. Om den misslyckas får vi ett error.'''
     try:
         if Removed_images != "":
             conn = connect_to_db()
@@ -637,8 +636,8 @@ def delete_images(Removed_images):
         return redirect("Error_500.html")
 
 def update_ad(title, ad_id, description, price, image_paths, type):
-    """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilerna finns, annars
-    skickas användaren tillbaka till hemsidan"""
+    """Denna funktionen tar emot titel, beskrivning, pris, typ, användarnamn och bildsökvägar och lägger in detta i databasen om bilderna finns baserat på ett id som funktionen tar emot, annars
+    skickas användaren tillbaka till hemsidan. Om den misslyckas med att göra något av detfår vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -658,7 +657,7 @@ def update_ad(title, ad_id, description, price, image_paths, type):
         return redirect("Error_500.html")
 
 def check_liked_ads(id, username):
-    '''Denna funktion tar emot ett annons id och ett användarnamn och hämtar alla annonser som gillats av denna och annons med det givna id:et'''
+    '''Denna funktion tar emot ett annons id och ett användarnamn och hämtar alla annonser som gillats av denna och annons med det givna id:et. Om den misslyckas får vi ett error.'''
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -676,7 +675,7 @@ def check_liked_ads(id, username):
         return redirect("Error_500.html")
     
 def check_liked_ads_main():
-    '''Denna funktion hämtar all data från liked_ads databasen.'''
+    '''Denna funktion hämtar all data från liked_ads databasen. Om den misslyckas får vi ett error.'''
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -710,7 +709,7 @@ def liking_ad(id):
     })
 
 def read_all_but_one(username):
-    """Här läses alla användaruppgifter in från databasen"""
+    """Här läses alla användaruppgifter in från databasen baserat på ett användarnamn som funktionen tar emot. Om den misslyckas får vi ett error."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -724,7 +723,7 @@ def read_all_but_one(username):
         return redirect("Error_500.html")
     
 def read_specific_chats(username, recieving_user):
-    """Här läses alla användaruppgifter in från databasen"""
+    """Här läses alla chat-meddelanden in från databasen baserat på en avsändare och en sändare som funktionen tar emot. Om den misslyckas får vi ett error. """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -738,7 +737,7 @@ def read_specific_chats(username, recieving_user):
 
 @app.route("/chats/<recieving_user>/")
 def send_chat(recieving_user):
-    """Denna route används för att skicka meddelanden till en specifik användare. """
+    """Denna route används för att skicka meddelanden till en specifik användare. Om den misslyckas får vi ett error. """
     try:
         username = session['user']
         chat_messages = read_specific_chats(username, recieving_user)
@@ -748,7 +747,8 @@ def send_chat(recieving_user):
     
 @app.route("/receive_latest_message/<username>/<receiving_user>/", methods=['POST'])  
 def receive_latest_message(username, receiving_user):
-    """Funktionen gör en SQL-förfrågan och ansluter till databasen och skriver ut de senaste meddelandena. Om det sker ett fel returneras ett felmeddelande som en JSON-fil."""
+    """Funktionen gör en SQL-förfrågan till denna routeoch ansluter till databasen och skriver ut de senaste meddelandena baserat på ett en avsändare och en mottagare som funktionen tar emot. 
+    Om det sker ett fel returneras ett felmeddelande som en JSON-fil."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -773,7 +773,8 @@ def receive_latest_message(username, receiving_user):
 
 @app.route('/send_message/<username>/<receiving_user>/', methods=['POST'])
 def send_message(username, receiving_user):
-    """Den här funktionen skriver ett meddelande från en användare till en annan. Om det sker något fel returneras ett error-meddelande som en JSON-fil.""" 
+    """Den här funktionen skriver ett meddelande från en användare till en annan baserat på en avsändare och mottagare som funktionen tar emot. 
+    Om det sker något fel returneras ett error-meddelande som en JSON-fil.""" 
     try:
         message = request.form['message']
         id = new_chat_id()
@@ -792,7 +793,7 @@ def send_message(username, receiving_user):
 
 @app.route("/chats/")
 def chats():
-    """Funktionen hämtar användarnamnet från sessionen och hämtar sedan alla chatter. """
+    """Funktionen hämtar användarnamnet från sessionen och hämtar sedan alla övriga användares användaruppgifter och returnerar chats.html. Om den misslyckas får vi ett error. """
     try:
         username = session['user']
         users = read_all_but_one(username)
@@ -823,8 +824,8 @@ def unliking_ad(id):
 
 @app.route("/profile/")
 def profile():
-    """Här för denna URI så returneras profile.html tillsammans med alla aktiva och inaktiva annonser som en 
-    specifik användare har """
+    """Här för denna route så returneras profile.html tillsammans med alla aktiva och inaktiva annonser som en 
+    specifik användare har. Om den misslyckas får vi ett error. """
     if 'user' not in session:
         return redirect('/')
 
@@ -843,7 +844,8 @@ def profile():
 
 @app.route("/profile/liked_ads/")
 def user_liked_ads():
-    """Hanterar en GET-förfrågan till '/profile/liked_ads/' """
+    """Denna route hämtar alla användares användaruppgifter och kollar om användaren i session matchar det. Om den gör det hämtar den alla gillade annonser som den användaren har.
+    Om den misslyckas får vi ett error. """
     ads = image_ad_read_index()
     if 'user' not in session:
         return redirect('/')
@@ -860,7 +862,7 @@ def user_liked_ads():
 @app.route("/ad/<id>/")
 def ad(id):
     """Här tar funktionen emot ett id från URI och letar sedan i databasen efter en annons med ett matchande id, finns det
-    så returneras annonsen.html tillsammans med titeln, priset och beskrivningen och bilderna för annonsen."""
+    så returneras annonsen.html tillsammans med titeln, priset och beskrivningen och bilderna för annonsen. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -893,8 +895,8 @@ def ad(id):
            
 @app.route("/save/", methods = ['POST', 'GET'])
 def save():
-    """I denna funktionen tas titel, beskrivning, typ, pris, användarnamn, bildsökvägar emot från ett formulär.
-        om någon av dessa är tomma får användaren göra om annonsen den vill skapa. om ingen av dessa är tomma läggs dessa in i databasen."""
+    """I denna funktionen hämtas titel, beskrivning, typ, pris, användarnamn, bildsökvägar från ett formulär i HTML.
+    om någon av dessa är tomma får användaren göra om annonsen den vill skapa. om ingen av dessa är tomma läggs dessa in i databasen. . Om detta misslyckas får vi ett error."""
     try:
         if request.method == 'POST':
             title = request.form.get("Title")
@@ -929,7 +931,7 @@ def save():
 
 @app.route("/send/", methods = ['POST', 'GET'])
 def send():
-    """Hanterar en POST eller GET-förfrågan till '/send/' """
+    """ Denna route hanterar en POST eller GET-förfrågan till '/send/'. Om den misslyckas får vi ett error. """
     if 'user' not in session:
         return redirect('/')
     else:
@@ -948,7 +950,7 @@ def send():
             return redirect("Error_500.html")
 
 def message_insert(message_id, Message, sending_user, recieving_user, id):
-    """Infogar ett meddelande i databasen."""
+    """ Denna funktion infogar ett meddelande i databasen."""
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -962,7 +964,7 @@ def message_insert(message_id, Message, sending_user, recieving_user, id):
 
 @app.route("/messages/")
 def check_all_messages():
-    """Hanterar en GET förfrågan till '/messages/' för att visa alla meddelanden för en användare"""
+    """Hanterar en GET förfrågan till '/messages/' för att visa alla meddelanden för en användare. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -975,7 +977,7 @@ def check_all_messages():
     
 @app.route("/messages/read/")
 def check_read_messages():
-    """ Routefunktion för att kontrollera lästa meddelanden, om användaren inte finns omdirigeras de till startsidan."""
+    """ Route för att se lästa meddelanden, om användaren inte finns omdirigeras de till startsidan. Om detta misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -988,7 +990,7 @@ def check_read_messages():
     
 @app.route("/messages/unread/")
 def check_unread_messages():
-    """Routefunktion för att kontrollera olästa meddelanden"""
+    """Route föratt se olästa meddelanden"""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1001,7 +1003,7 @@ def check_unread_messages():
 
 @app.route("/messages/sent/")
 def check_sent_messages():
-    """Routefunktion för att kontrollera skickade meddelanden"""
+    """Route för att läsa sina skickade meddelanden"""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1015,7 +1017,7 @@ def check_sent_messages():
     
 @app.route("/messages/<id>/")
 def the_message(id):
-    """Funktionen visar ett enskilt meddelande baserat på ID."""
+    """Denna route visar ett enskilt meddelande baserat på ID. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1037,7 +1039,7 @@ def the_message(id):
         
 @app.route("/messages/sent/<id>/")
 def sent_message(id):
-    """Funktionen hämtar skickade meddelanden. Om användaren inte finns med i sessionen omdirigeras den till startsidan. """
+    """Denna route visar skickade meddelanden. Om användaren inte finns med i sessionen omdirigeras den till startsidan. Om detta misslyckas får vi ett error. """
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1054,7 +1056,7 @@ def sent_message(id):
 
 @app.route("/edit/<id>/")
 def edit_article(id):
-    '''Denna route tar emot ett id och returnerar olika html dokument beroende på vad det är för typ av annons som idet tillhör.'''
+    '''Denna route tar emot ett id och returnerar olika html dokument beroende på vad det är för typ av annons som idet tillhör. Om detta misslyckas får vi ett error.'''
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1074,7 +1076,7 @@ def edit_article(id):
  
 @app.route("/update/", methods = ['POST', 'GET'])
 def update():
-    '''Denna funktionen tar emot information som en annons ska uppdateras med och sparar det i databasen.'''
+    '''Denna funktionen tar emot information som en annons ska uppdateras med och sparar det i databasen. Om den misslyckas får vi ett error.'''
     if 'user' not in session:
         return redirect('/')
     else:
@@ -1113,7 +1115,7 @@ def update():
             
 @app.route("/remove/", methods = ['POST', 'GET'])
 def remove():
-    '''Denna funktion ändrar en annons status i databasen från active till inactive.'''
+    '''Denna route ändrar en annons status i databasen från active till inactive. Om den misslyckas får vi ett error.'''
     try:
         if request.method == 'POST':
             AdToDelete = request.form.get("ad_id")
@@ -1131,7 +1133,7 @@ def remove():
    
 @app.route("/")
 def index():
-    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    """För denna route returneras new.html tillsammans med alla annonser och användarens session. Om den misslyckas får vi ett error."""
     ads = image_ad_read_index()
     if 'user' not in session:
         return render_template("new.html", ads = ads)
@@ -1157,7 +1159,7 @@ def index():
 
 @app.route("/buy/")
 def buy():
-    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    """För denna route returneras new_köp.html tillsammans med alla annonser och användarens session. Om den misslyckas får vi ett error."""
     ads = image_ad_read_index_buy()
     if 'user' not in session:
         return render_template("new_köp.html", ads = ads)
@@ -1182,7 +1184,7 @@ def buy():
         
 @app.route("/trade/")
 def trade():
-    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    """För denna URI returneras new_byt.html tillsammans med alla annonser och användarens session. Om den misslyckas får vi ett error."""
     ads = image_ad_read_index_trade()
     if 'user' not in session:
         return render_template("new_byt.html", ads = ads)
@@ -1207,7 +1209,7 @@ def trade():
         
 @app.route("/request/")
 def requests():
-    """För denna URI returneras new.html tillsammans med alla annonser och användarens session."""
+    """För denna route returneras new.html tillsammans med alla annonser och användarens session. Om den misslyckas får vi ett error."""
     ads = image_ad_read_index_request()
     if 'user' not in session:
         return render_template("new_sök.html", ads = ads)
@@ -1233,7 +1235,7 @@ def requests():
 
 @app.route("/login/")
 def login():
-    """Här returneras login.html"""
+    """I denna route returneras login.html. Om den misslyckas får vi ett error."""
     try:
         return render_template("Login&register.html")
     except:
@@ -1241,7 +1243,7 @@ def login():
 
 @app.route("/new/choose_ad/")
 def choose_ad():
-    """Här returneras choose_ad.html"""
+    """I denna route returneras choose_ad.html. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -1252,7 +1254,7 @@ def choose_ad():
 
 @app.route("/new/1/")
 def new_1():
-    """Här returneras ad_sälj.html"""
+    """I denna route returneras Sreate_Sell.html. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -1264,7 +1266,7 @@ def new_1():
     
 @app.route("/new/2/")
 def new_2():
-    """Här returneras ad_byt.html"""
+    """I denna route returneras ad_byt.html. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -1277,7 +1279,7 @@ def new_2():
     
 @app.route("/new/3/")
 def new_3():
-    """Här returneras ad_efterfråga.html"""
+    """I denna route returneras ad_efterfråga.html. Om den misslyckas får vi ett error."""
     if 'user' not in session:
         return redirect("/")
     else:
@@ -1289,7 +1291,7 @@ def new_3():
 
 @app.route("/logout/")
 def logout():
-    """Här loggas användaren ut och skickar användaren till hemskärmen """
+    """I denna route loggas användaren ut och skickar användaren till hemskärmen. Om den misslyckas får vi ett error. """
     try:
         session.pop('user', None)
         return redirect("/")
@@ -1298,7 +1300,7 @@ def logout():
 
 @app.route("/validation/", methods = ['POST', 'GET'])
 def validation():
-    """Här loggas användaren ut om den är inloggad, den tar sen emot användarnamn och lösen ord och sparar användaren i en session"""
+    """I denna route loggas användaren ut om den är inloggad, den tar sen emot användarnamn och lösen ord och sparar användaren i en session. Om den misslyckas får vi ett error."""
     try:
         if request.method == 'POST':
             session.pop('user', None)
@@ -1324,7 +1326,7 @@ def validation():
 
 @app.route("/register/")
 def register():
-    """Här returneras Login&register.html"""
+    """I denna route returneras Login&register.html. Om den misslyckas får vi ett error."""
     try:
         return render_template("Login&register.html")
     except:
@@ -1333,28 +1335,26 @@ def register():
     
 @app.errorhandler(404)
 def page_not_found(e):
+    """I denna funktion returneras Error_404.html"""
     # note that we set the 404 status explicitly
     return render_template('Error_404.html')
 
 @app.errorhandler(500)
 def internal_server_error(e):
+    """I denna funktion returneras Error_500.html"""
     # note that we set the 500 status explicitly
     return render_template('Error_500.html')
  
 @app.route("/register/new/success/")
 def register_new_success():
-    """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
+    """I denna route funktion returneras register_success.html vid lyckad registrering. Om den misslyckas får vi ett error. """
     return render_template("Register_success.html")
 
-@app.route("/custom/")
-def register_login():
-    """Denna funktion skickar användaren till register_success.html vid lyckad registrering. """
-    return render_template("Login&register.html")
 
 @app.route("/register/new/", methods = ['POST', 'GET'])
 def register_user():
-    """Här tas användaruppgifter emot från ett formulär, sedan läses alla befintliga användare in. Om inget av dom krocka med befintliga användaruppgifter
-    läggs användarens uppgifter in i databasen."""
+    """I denna route hämtas användaruppgifter emot från ett formulär, sedan läses alla befintliga användare in. Om inget av dom krocka med befintliga användaruppgifter
+    läggs användarens uppgifter in i databasen. Om detta misslyckas får vi ett error."""
     try:
         if request.method == 'POST':
             email = request.form.get("Email")
@@ -1411,5 +1411,6 @@ def register_user():
         return redirect("Error_500.html")
             
 
-if __name__ == "__main__":      
+if __name__ == "__main__":
+    """Här körs själva webbapplikationen"""     
     app.run(host="127.0.0.1", port=8080, debug=True) #Här körs programmet
